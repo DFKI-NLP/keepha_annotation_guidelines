@@ -1,0 +1,666 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage[most]{tcolorbox}
+\usepackage{colortbl}
+\usepackage{philex}
+\usepackage{booktabs}
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}[section]
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm]{geometry}
+
+
+% ↓ this package enables Japanese-text input anywhere without using commands (added by Yada 2022-05-20)
+\usepackage[whole]{bxcjkjatype}
+
+\definecolor{seabornOrange}{HTML}{DE8F05}
+\definecolor{fuchsia}{HTML}{966FD6}
+\definecolor{asparagus}{HTML}{87A96B}
+\definecolor{ashgrey}{HTML}{B2BEB5}
+\definecolor{babyblue}{HTML}{A1CAF1}
+\definecolor{banana}{HTML}{FFE135}
+\definecolor{bittersweet}{HTML}{FE6F5E}
+\definecolor{brass}{HTML}{B5A642}
+\definecolor{sienna}{HTML}{E97451}
+\definecolor{burlywood}{HTML}{DEB887}
+\definecolor{celadon}{HTML}{ACE1AF}
+\definecolor{chestnut}{HTML}{CD5C5C}
+\definecolor{cyan}{HTML}{008B8B}
+\definecolor{dollarbill}{HTML}{85BB65}
+\definecolor{heliotrope}{HTML}{DF73FF}
+\definecolor{indianyellow}{HTML}{E3A857}
+
+\newcommand{\entity}[1]{\colorbox{seabornOrange}{#1}}
+\newcommand{\drug}[1]{\colorbox{brass}{#1$_{\texttt{drug}}$}}
+% \newcommand{\drugNeg}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{negated}}$}}
+\newcommand{\drugStop}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{stopped}}$}\ }
+\newcommand{\drugStart}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{started}}$}\ }
+\newcommand{\drugInc}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{increased}}$}\ }
+\newcommand{\drugDec}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{decreased}}$}\ }
+\newcommand{\drugUD}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{unique\_dose}}$}\ }
+
+
+\newcommand{\anatomy}[1]{\colorbox{dollarbill}{#1$_{\texttt{anatomy}}$}\ }
+
+\newcommand{\disorder}[1]{\colorbox{fuchsia}{#1$_{\texttt{disorder}}$}\ }
+\newcommand{\disorderNeg}[1]{\colorbox{fuchsia}{#1$_{\texttt{disorder}}^{\textcolor{red}{negated}}$}\ }
+
+\newcommand{\test}[1]{\colorbox{asparagus}{#1$_{\texttt{test}}$}\ }
+\newcommand{\testNeg}[1]{\colorbox{asparagus}{#1$_{\texttt{test}}^{\textcolor{red}{negated}}$}\ }
+
+\newcommand{\function}[1]{\colorbox{banana}{#1$_{\texttt{function}}$}\ }
+\newcommand{\eval}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}$}\ }
+\newcommand{\evalPos}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{positive}}$}\ }
+\newcommand{\evalNeg}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{negative}}$}\ }
+\newcommand{\evalNeut}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{neutral}}$}\ }
+
+
+\newcommand{\measure}[1]{\colorbox{bittersweet}{#1$_{\texttt{measure}}$}\ }
+
+\newcommand{\timex}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}$}}
+\newcommand{\timexDur}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{duration}}$}\ }
+\newcommand{\timexFreq}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{frequency}}$}\ }
+\newcommand{\timexPIT}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{rel.~point~in~time}}$}\ }
+\newcommand{\timexDate}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{date}}$}\ }
+
+
+\newcommand{\route}[1]{\colorbox{sienna}{#1$_{\texttt{route}}$}\ }
+\newcommand{\trigger}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}$}\ }
+% \newcommand{\triggerInc}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{increase}}$}}
+% \newcommand{\triggerDec}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{decrease}}$}}
+% \newcommand{\triggerUD}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{unique\_dose}}$}}
+% \newcommand{\triggerStart}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{started}}$}}
+% \newcommand{\triggerStop}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{stopped}}$}}
+
+
+
+\newcommand{\other}[1]{\colorbox{burlywood}{#1$_{\texttt{other}}$}\ }
+\newcommand{\user}[1]{\colorbox{chestnut}{#1$_{\texttt{user}}$}\ }
+\newcommand{\link}[1]{\colorbox{cyan}{#1$_{\texttt{url}}$}\ }
+\newcommand{\info}[1]{\colorbox{heliotrope}{#1$_{\texttt{perso\_info}}$}\ }
+\newcommand{\doctor}[1]{\colorbox{indianyellow}{#1$_{\texttt{doctor}}$}\ }
+
+
+\newcommand{\dis}{\texttt{disorder}\ }
+\newcommand{\dr}{\texttt{drug}\ }
+
+\newcommand{\examples}[5]{%
+    \lb{#1}{
+        \lba[en]{en}{#2}
+        \lbb[fr]{fr}{#3}
+        \lbb[de]{de}{#4}
+        \lbz[ja]{ja}{#5}
+    }
+}
+
+
+\usepackage{ulem}
+
+\title{Annotation Guidelines\\ Version 07/22}
+
+\author{KEEPHA}
+\date{July 2022}
+
+\usepackage{hyperref}
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\clearpage
+
+\section{Introduction}
+Overview about all entities:
+
+\begin{itemize}
+    \item \dr, with the attributes \texttt{increase}, \texttt{decrease}, \texttt{stopped}, \texttt{started}, and \texttt{unique\_dose}
+    \item \dis
+    \item \anatomy{anatomy}
+    \item \test{test}
+    \item \function{function}
+    \item \eval{evaluation / assessment} with the attributes \texttt{positive}, \texttt{negative}, and \texttt{neutral}
+    \item \measure{measure}
+    \item \timex{timex}, with the attributes \texttt{frequency}, \texttt{duration}, \texttt{date}, and \texttt{point}
+    \item \route{route}
+    \item \trigger{drug status change trigger}
+    \item \user{user}
+    \item \link{url}
+    \item \info{personal information}
+    \item \doctor{doctor}
+    \item \other{other}
+\end{itemize}
+
+
+\section{Entities}
+
+
+\subsection{General Guidelines for Entity Annotation}
+
+In the following, we define general rules for the annotation of entities.
+
+\subsubsection*{Scope}
+
+Regarding scope, we annotate entities in form of noun or verb phrases together with their modifying parts, e.g.~adjectives, adverbs etc. 
+We always prefer the smallest core noun phrase. 
+If this does not work, a long span of the whole verb phrase is allowed.
+
+\examples{ex:scope}
+    {I have \disorder{absolutely no appetite} and \disorder{constantly feel sick} to my \anatomy{stomach}.}
+    {}
+    {*Ich habe \disorder{absolut keinen Appetit} und mir ist \disorder{durchgehend übel}.}
+    {}
+
+\subsubsection*{Metaphors and descriptive language}
+
+Further, we annotate descriptive expressions based on the patient's perspective even if they do not occur in a medical dictionary.
+We always try to follow the patient's perspective: If the patient thinks a symptom is a disorder, then we annotate it as \dis.
+
+\examples{ex:descriptions}
+    {}
+    {}
+    {Die \anatomy{Beine} \disorder{fühlen sich nicht stark} man hat \disorder{Gefühle des Ungleichgewichts}.}
+    {}
+
+%Seit zwei Tagen ist meine \entity{Übelkeit}$^{\attribute{negated}}$ wieder weg, doch da dieses Kopfkino mich vollkommen fertig macht und mir viel an Lebensqualität und -freude nimmt, .. || Ich habe nun das Problem, dass meine Haut sehr juckt. || Ich habe auch immer wieder mal seltsames Herzstolpern. Manchmal überschlägt sich das Herz, dann setzt es mal wieder kurz aus, manchmal hab ich für ein paar Sekunden ein Rasen, ||
+
+
+
+Since metaphors are descriptive language as well, we annotate them as we would annotate explicit symptom descriptions.
+Later, we can re-investigate those ``special disorders''.
+
+\examples{ex:metaphors}
+    {\disorder{veil over my head}}
+    {}
+    {**Meine \anatomy{Beine} \disorder{fühlen sich an wie Blei}.}
+    {}
+
+
+\subsubsection*{Negation}
+
+If an entity mention is negated, we add a negation attribute to the entity (see Section~\ref{sec:attributes}). The negation clue itself is not included in the span of the entity mention.
+We provide more details on negation in section \ref{sec:neg}.
+
+\examples{negation}
+    {There is no \disorderNeg{abnormality}.}
+    {}
+    {Folgende Beschwerden sind schon weg: \disorderNeg{Nackenschmerzen}, ...}
+    {}
+
+
+\subsubsection*{Determiners}
+
+We do not include determiners in an entity.
+
+\examples{determiners}
+    {*I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
+    {}
+    {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da ...}
+    {}
+
+
+\subsubsection*{Enumerations}
+
+Consecutive entities or enumerations that are, for example, separated by commas or conjunctions are to be split apart and annotated separately.
+
+\examples{enumerations}
+    {I felt \disorder{pain} in my \anatomy{arms}, \anatomy{legs}, \anatomy{ears} and \anatomy{toes}.}
+    {}
+    {*Ich fühle die \disorder{Schmerzen} in meinen \anatomy{Armen}, \anatomy{Beinen}, \anatomy{Ohren} und \anatomy{Zehen}.}
+    {}
+
+\subsubsection*{Nested Entities}
+
+Nested entities are not permitted, we always annotate the biggest phrase.
+For example, in the case of ``headache'' we do not split the word into ``head'' and ``ache''. 
+The general rule is to apply a syntax-based decision, i.e.~basic noun phrases (without preposition, particle, etc.) are annotated as one entity.
+
+This is also language-dependant:
+\begin{itemize}
+    \item German: do not split compound words, e.g.~``\disorder{Kopfschmerzen}'' is annotated as one entity.
+    \item Japanese: 
+    \begin{itemize}
+        \item do not split compound words based on standard tokenization
+        \item split noun phrases (including compound nouns) at ``prepositions'' (particles てにをは)
+        \item  形容詞的な修飾語を含む複合名詞全体（後置修飾除く）
+        \item   節的な修飾は含まない（目が美しいXX）
+    \end{itemize}
+    
+    \item French: basic noun phrase (``\disorder{douleur thoracique}'') is annotated as one \dis, otherwise  we separate the annotations, e.g.~``\disorder{douleur} au \anatomy{thorax}''.
+\end{itemize}
+
+
+\subsubsection*{Discontinuous Entities}
+
+Discontinuous entities are allowed if there is no easier solution, i.e.~when annotation as one entity is not possible or does not make sense.
+
+Example with ``lung'':
+\begin{enumerate}
+    \item[1] ``it hurts in the \anatomy{left lung} and \anatomy{right lung}'' (two entities)
+    
+    \item[2] ``pain on the left lung, but no issues were found on the right'' $\rightarrow$ annotation using two separate entities, one continuous and one discontinuous as shown below:
+    \begin{itemize}
+        \item ``\disorder{pain} on the \anatomy{left lung}, but no issues were found on the right'' (continuous)
+        \item ``\disorder{pain} on the left \anatomy{lung}, but no issues were found on the \anatomy{right}'' (discontinuous) 
+    \end{itemize}
+
+    \item[3] Similarly as above, the phrase ``nerves / muscle cramps'' is annotated as two entities:
+    \begin{itemize}
+        \item ``\disorder{nerves} / muscle \disorder{cramps}'' (discontinuous)
+        \item ``nerves / \disorder{muscle cramps}'' (continuous)
+    \end{itemize}
+
+
+\end{enumerate}
+
+
+
+\subsubsection*{Punctuation}
+
+Punctuation is not to be included in the annotation (except for e.g.~hyphens or abbreviations etc.).
+
+
+\subsection{Drug}
+
+With \dr, we annotate any mention of a medication name, brand or agent.
+We also include dietary supplements.
+
+\examples{ex:drug}
+    {}
+    {l'\drug{entyvio} c 'est pas miracle mais \evalPos{bon ça aide}. bon courage à tous.}
+    {Ich nehme \entity{Betablocker}.}
+    {}
+    
+\subsubsection*{Abbreviations}
+
+We also annotate abbreviations or colloquial names of drugs. 
+
+\examples{ex:drug_abbr}
+    {}
+    {}
+    {Hatte in meiner Verzweiflung ja auch ein \drug{AD} ausprobiert.}
+    {}
+    
+\subsubsection*{Mentions referring to a drug}
+
+Further, mentions referring to a drug but not clearly stating the drug's name are also annotated.
+
+\examples{ex:drug_ref}
+    {The \drug{pill} \evalPos{does its job}, (...)}
+    {}
+    {}
+    {}
+
+
+\subsection{Disorder}
+
+A \dis annotation denotes any disease, sign or symptom related to the patient's health.
+Sometimes a \dis may be expressed as a parameter in combination with a value: e.g., \disorder{high LDL} (parameter=LDL, value=high). 
+When the value is outside the normal range, this describes a \dis.
+
+%If there are hypernyms (e.g.~ ``experience'' for a list of different disorders)
+
+
+\examples{ex:disorder}
+    {}
+    {}
+    {\timexDur{Nach langen, qualvollen 11 Monaten}. wurde eine \disorder{Gürtelrose ohne Ausschlag} diagnostiziert.}
+    {}
+
+
+\subsubsection*{Disorder vs. Function}
+
+We annotate adverse biological processes as \dis, and neutral/positive processes as \texttt{function}, i.e.,~a negated \texttt{function} is a \dis (but not vice versa).
+
+\examples{ex:dis_vs_func}
+    {... could not \disorder{urinate} ..}
+    {}
+    {*... konnte nicht \disorder{pinkeln} ..}
+    {}
+
+\subsection{Anatomy} 
+
+With this, we annotate all organs or anatomical parts.
+
+\examples{ex:anatomy}
+    {*I have got only one \anatomy{kidney} left.}
+    {}
+    {Ich besitze nur noch eine \anatomy{Niere}.}
+    {}
+
+
+\texttt{Anatomy} entities are not annotated when within a larger entity such as within a \dis or \texttt{test}.
+
+\examples{ex:anatomy_embedded}
+    {**My father suffers \disorder{kidney insufficiency}.}
+    {}
+    {**Mein Vater leidet unter \disorder{Niereninsuffizienz}.}
+    {}
+
+
+\subsection{Test} 
+
+With \texttt{test}, we mark all medical tests, interviews, examinations or any other procedure that produces a result to be used in medical diagnoses.
+
+\examples{ex:test}
+    {}
+    {des \disorder{douleurs} dans mes \anatomy{pouces} surtout celui de gauche, je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \other{perf}, (...)}
+    {Ich habe ganz \timexPIT{zu Beginn} der \function{WJ} auch mal \test{Speicheltests} machen lassen, mit zum Teil abstrusen Werten.}
+    {} 
+    
+    
+\subsection{Function} 
+
+With \texttt{function}, we mark all body functions and processes.
+\examples{ex:function}
+    {}
+    {}
+    {\drugStop{Opripramol} \trigger{hatte} ich ja nur \timexDur{zwei Abende lang}~zum \function{Schlafen} je \measure{eine halbe} genommen, also nur eine \measure{winzige Dosis}.}
+    {} 
+
+However, as stated above, adverse physiological processes are annotated as \dis and therefore, only \emph{working} body functions are annotated as \texttt{function}.
+
+\subsection{Evaluation / Assessment} 
+This denotes the patient's personal assessment of a drug, health state or biological process.
+Usually, these assessments are rather colloquial and it is difficult to find an appropriate span.
+Therefore, we follow again the principle of taking the shortest span possible.
+
+The evaluation assessment always comes with an attribute: either \texttt{positive}, \texttt{negative}, or \texttt{neutral}.
+A \texttt{positive} assessment is often associated with an improvement of a disease or with a good experience of the patient with a medication.
+\underline{We do not annotate negation in this context}.
+
+\examples{ex:eval}
+    % {*I also \trigger{had} \drugStop{antibiotics} but that \evalNeut{didn't change anything}.\\ Then, after \trigger{starting} \drugStart{Trisequen's hormone pills}, just \timexDur{1 week later}, I was \evalPos{like in 7th heaven}.}
+    {\drug{Lipidor} \evalPos{did the job} on my \function{cholesterol} both LDL and HDL.}
+    {l'\drug{entyvio} c 'est pas miracle mais \evalPos{bon ça aide}. }
+    {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \evalPos{lief auch richtig gut}.}
+    {} 
+
+\subsection{Measure} 
+
+With \texttt{measure}, we mark all kinds of measurements, e.g.~drug dosages, test results, etc.
+
+\examples{ex:measure}
+    {}
+    {}
+    {Das \drug{Utrogest} sind \route{Weichkapseln} mit \measure{100 mg} \drug{naturid.~Progesteron} und sie sind verschreibungspflichtig.}
+    {} 
+
+\subsection{Timex} 
+
+As temporal markers we define all mentions of frequency, duration, date, or relative points in time. 
+For a more narrow description we use those characteristics (frequency, duration, \ldots) as attributes.
+Also, we include prepositions in the annotation, since these carry relevant information specifying the semantics of the expression.
+
+Time expressions include e.g.~``night'', ``afternoon'', ``for one week'' (mostly \texttt{duration}), but also expressions like ``last Monday'', ``in two weeks'' (\texttt{relative points in time}), ``every morning'', ``after lunch'' (\texttt{frequency}) or ``11.07.2022`` (\texttt{date}).
+
+
+\examples{ex:time}
+    {}
+    {Bonjour, Je suis sous \drug{entyvio} \timexDur{depuis juillet 2019}~et ce traitement\\ \evalPos{fonctionne fort bien} au niveau de la \disorder{colite}. }
+    {Hallo liebe $<$user$>$, \timexPIT{vor 2 Monaten}~habe ich meine \doctor{Frauenärztin} gefragt, da ich zwischendurch einen \test{Hormontest} wollte.}
+    {} 
+
+\subsection{Route} 
+
+\texttt{Route} annotates the means of medication intake, e.g.~via pill, injection.
+If a mention like ``pill'' refers to a drug (and not to the means of intake), it should be annotated as \dr.
+\examples{ex:route}
+    {}
+    {}
+    {Ich habe das leider nur mit \route{Tabletten} gemacht (mir wollte keiner meiner Ärzte eine \route{Infusion} verschreiben).}
+    {} 
+
+\subsection{Drug status change trigger} 
+Here, we annotate phrases describing a change in medication intake.
+To specify the change, we add the attributes \texttt{start} (the trigger specifies that a medication was just started), \texttt{stop} (a medication was stopped), \texttt{increase} (the dosage was increased), \texttt{decrease} (the dosage was decreased), and \texttt{unique\_dose} (the medication was only given/taken once) \emph{to the \dr they refer to}.
+
+\examples{ex:change}
+    {}
+    {}
+    {Ich hatte \timex{vor einer Woche}. die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \trigger{auf die Hälfte}.}
+    {} 
+
+
+\subsection{User} 
+
+Since social media users use creative names that are not necessarily easy to find using pre-processing tools, we mark user names as well, to de-identify them afterwards if necessary.
+
+\examples{ex:user}
+    {*Dear \user{lucy203}, thank you for your message.}
+    {}
+    {Liebe \user{Westy} danke für deinen Bericht.}
+    {} 
+
+\subsection{URL} 
+In case there were any URLs or e-mail addresses missed when de-identifying the data, we mark them to be removed later.
+
+\examples{ex:url}
+    {}
+    {}
+    {**Du findest interessante Beiträge hierzu unter \link{www.lifeline.de}.}
+    {} 
+
+\subsection{Personal information} 
+
+With this marker, we annotate all other personal information that needs to be removed before data publication (jobs, city, doctors' names ..).
+This kind if annotation is only necessary if the de-identification failed.
+
+\examples{ex:info}
+    {}
+    {}
+    {**\timex{Morgen}~ habe ich dann einen Termin bei \info{Doktor Sommer} \\in \info{Musterhausen}.}
+    {} 
+
+
+\subsection{Doctor} 
+We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurse, (psycho) therapist \ldots).
+
+\examples{ex:doctor}
+    {}
+    {( peut etre de \disorder{l'arthrose} dixit mon \doctor{docteur traitant}).......}
+    {(...), hatte ich \timexPIT{gestern} einen Termin bei meinem \doctor{Internisten}.}
+    {} 
+
+% \subsection{EXPERIENCER} 
+% The person experiencing the \sout{side effects} disorder or function.
+
+% \textcolor{green}{ABANDON?}
+
+% \textcolor{blue}{Find some other way to make a difference between (1) self-reported events and (2) general knowledge / hearsay? $\rightarrow$ postpone this annotation to a future task.}
+
+\subsection{Other} 
+With \other{other}, we annotate all other entities that seem important during annotation, but for which we do not have a category.
+
+\examples{ex:other}
+    {}
+    {(...) je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \other{perf}, (...)}
+    {}
+    {} 
+
+
+\section{Attributes}\label{sec:attributes}
+
+Attributes are used to add more precise semantics to some of the entity annotations.
+In Table \ref{tab:attributes}, we show all available attributes.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llllll@{}}
+\toprule
+ \textbf{entity} &  &  &  &  &\\ \midrule
+ \texttt{disorder} & negated &  & &  &\\
+ \texttt{evaluation / assessment} & positive & negative & neutral &  &\\
+ \texttt{timex} & frequency & duration & date & relative point in time & \\
+\textbf{\dr} & started & stopped  & increased & decreased & unique dose  \\ \bottomrule
+\end{tabular}
+\caption{The available attributes of the entities \dis, \texttt{evaluation}, \texttt{timex}, and \dr.}
+\label{tab:attributes}
+\end{table}
+
+Currently we only apply the negation attribute to the entity annotation \dis, as negated \texttt{function} entities are annotated as \dis. 
+A negation of drugs is not necessary, since we cover a stopped medication treatment using the \dr attributes.
+
+% \subsection{Negation}\label{sec:neg}
+
+
+\section{Relations}
+
+
+
+\textcolor{green}{
+\begin{enumerate}
+% \item link all mentions sharing a concept (those with the same surface form do not need to be linked (e.g.~ Lipitor \& Lipitor)
+    \item link super/subordinate/generic concepts? 
+    \item use ``chaining rule'' to link same concepts
+\end{enumerate}
+}
+
+
+\subsection{Caused}
+
+\textcolor{green}{Patrick's proposal}
+
+The \texttt{caused} relation was defined to be language independent and to be used also with little linguistic knowledge.
+We only annotate a \texttt{caused} relation, when the entities \dr, \dis, or \texttt{function} are concerned. 
+
+We do \emph{not} annotate this relation if one of the following points apply:
+
+\begin{itemize}
+    \item the above mentioned entities are not concerned
+    \item the document at hand is hypothetical or speculative
+    \item the document is formulated as a question
+    \item the cause--consequence is not explicitly attributed to the author of the text, nor to a particular person or group of people identified via cotext or context (including the meta data of the document)
+\end{itemize}
+
+
+
+\examples{ex:caused}
+    {(..) The pill does its job, by I constantly feel sick to my stomach and have absolutely no appetite. (..)}
+    {Ensuite elle a pris infliximab mais au bout de 3 perfusion elle a développé des anticorps et grosse réaction allergique avec tachycardie importante et malaise, elle devient tout rouge et nausée, donc arrêt aussi.}
+    {Hatte in meiner Verzweiflung ja auch ein AD ausprobiert. Bei mir hat es den TSH voll hochgetrieben!}
+    {} 
+
+
+\subsection{Refers\_to (formerly is\_identical)}
+
+The \texttt{refers\_to} relation represents a unidirectional link for the entities \dr, \dis, \texttt{anatomy}, and \texttt{function}.
+It is used to associate similar concepts, but \emph{not} to connect the same surface forms (e.g.~ ``Lipitor'' and ``Lipitor''). 
+
+Further, via the \texttt{refers\_to} relation, we can propagate the \texttt{caused} relation to all connected targets.
+
+\begin{enumerate}
+    \item Let all \texttt{refers\_to} relations point to the first mention in the text.
+    \item The first relation (\texttt{caused} / \texttt{treatment\_for}) is drawn to the concept the annotator thinks is most important to the understanding of the meaning of the sentences / document.
+\end{enumerate}
+
+\examples{ex:refers}
+    {}
+    {}
+    {}
+    {} 
+
+
+\subsection{Treatment\_for}
+
+This relation connects a \dr and the underlying \dis. 
+
+\examples{ex:treatment}
+    {I have insomnia and fibromyalgia. The pain from the fibromyalgia is worsened when I can't sleep well.  My doctor prescribed this medication to me mainly for better sleep.}
+    {atteinte de Crohn depuis 2017, actuellement sous perfusion entyvio depuis début 2019, le remsima ayant eu trop d'effets secondaires pour moi a  été abandonné.}
+    {}
+    {} 
+
+\subsection{Dosage}
+
+\texttt{Dosage} relates a measurement, e.g.~the number of pills (\texttt{measure}), with a medication name (\dr).
+
+\examples{ex:dosage}
+    {}
+    {}
+    {}
+    {} 
+
+\subsection{Experienced\_in}
+
+This relation associates a \dis with the location it is felt / experienced in, i.e.~a part of the body (\texttt{anatomy}).
+
+
+\examples{ex:experienced}
+    {}
+    {}
+    {}
+    {} 
+
+\subsection{Examined\_with}
+
+This relation associates a \dis with a \texttt{test}: the \texttt{test} is used to examine the \dis.
+
+\examples{ex:examined}
+    {}
+    {}
+    {}
+    {} 
+    
+\subsection{Resulted\_in}
+
+Following the line of thought from above, the \texttt{resulted\_in} relation then relates the \texttt{test} with its result, usually a \texttt{measure}.
+This relation should not be used for \texttt{caused} relations.
+
+\examples{ex:resulted}
+    {}
+    {}
+    {}
+    {} 
+    
+\subsection{Interacted\_with}
+
+In some cases, a \dr--\dr interaction results in a \dis. 
+The relation \texttt{interacted\_with} is defined for exactly this purpose.
+
+\examples{ex:interacted}
+    {}
+    {}
+    {}
+    {} 
+
+\subsection{Change}
+
+For connecting the \texttt{drug status change triggers} with the \dr that is affected, we use the \texttt{change} relation.
+
+\examples{ex:change}
+    {}
+    {depuis que j'ai arrêté deroxat pour effexor j'ai perdu 3 kilos sans rien foutre et en mangeant peut être mm +}
+    {}
+    {} 
+
+
+\subsection{BRAT Overview Relations Schema}
+
+\begin{table}[htbp]
+\centering
+
+\begin{tabular}{| c | c | c |}
+\hline
+\textbf{Relation Name} & \textbf{Arg1} & \textbf{Arg2}  \\
+\hline
+
+CAUSED & \{DRUG, DISORDER\} & DISORDER \\
+TREATMENT\_FOR & DRUG & \{DISORDER, FUNCTION\}\\
+DOSAGE & DRUG & MEASURE\\
+EXPERIENCED\_IN & DISORDER & ANATOMY\\
+EXAMINED\_WITH & DISORDER & TEST\\
+IS\_IDENTICAL & DISORDER & DISORDER\\
+IS\_IDENTICAL & DRUG & DRUG\\
+RESULTED\_IN & TEST & MEASUREMENT\\
+INTERACTED\_WITH & DRUG & DRUG\\
+
+
+\hline
+\end{tabular}
+\caption{Overview about how entities can be connected in our BRAT annotation schema}
+
+\label{tableBratRelations}  
+\end{table}
+
+\end{document}
