@@ -6,6 +6,7 @@
 \usepackage{colortbl}
 \usepackage{philex}
 \usepackage{booktabs}
+\usepackage{tikz-dependency}
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm]{geometry}
@@ -14,6 +15,7 @@
 % ↓ this package enables Japanese-text input anywhere without using commands (added by Yada 2022-05-20)
 \usepackage[whole]{bxcjkjatype}
 
+% colors: https://latexcolor.com/
 \definecolor{seabornOrange}{HTML}{DE8F05}
 \definecolor{fuchsia}{HTML}{966FD6}
 \definecolor{asparagus}{HTML}{87A96B}
@@ -31,60 +33,92 @@
 \definecolor{heliotrope}{HTML}{DF73FF}
 \definecolor{indianyellow}{HTML}{E3A857}
 
+% The following are macros for ENTITY ANNOTATION
+% generic entity
 \newcommand{\entity}[1]{\colorbox{seabornOrange}{#1}}
+% DRUG and different versions containing attributes
 \newcommand{\drug}[1]{\colorbox{brass}{#1$_{\texttt{drug}}$}}
-% \newcommand{\drugNeg}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{negated}}$}}
 \newcommand{\drugStop}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{stopped}}$}\ }
 \newcommand{\drugStart}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{started}}$}\ }
 \newcommand{\drugInc}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{increased}}$}\ }
 \newcommand{\drugDec}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{decreased}}$}\ }
 \newcommand{\drugUD}[1]{\colorbox{brass}{#1$_{\texttt{drug}}^{\textcolor{red}{unique\_dose}}$}\ }
-
-
+% ANATOMY
 \newcommand{\anatomy}[1]{\colorbox{dollarbill}{#1$_{\texttt{anatomy}}$}\ }
-
+% DISORDER & Negated DISORDER
 \newcommand{\disorder}[1]{\colorbox{fuchsia}{#1$_{\texttt{disorder}}$}\ }
 \newcommand{\disorderNeg}[1]{\colorbox{fuchsia}{#1$_{\texttt{disorder}}^{\textcolor{red}{negated}}$}\ }
-
+% TEST & Negated Test
 \newcommand{\test}[1]{\colorbox{asparagus}{#1$_{\texttt{test}}$}\ }
 \newcommand{\testNeg}[1]{\colorbox{asparagus}{#1$_{\texttt{test}}^{\textcolor{red}{negated}}$}\ }
-
+% FUNCTION
 \newcommand{\function}[1]{\colorbox{banana}{#1$_{\texttt{function}}$}\ }
+% EVALUATION & positive / negative / neutral EVALUATION
 \newcommand{\eval}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}$}\ }
 \newcommand{\evalPos}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{positive}}$}\ }
 \newcommand{\evalNeg}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{negative}}$}\ }
 \newcommand{\evalNeut}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{neutral}}$}\ }
-
-
+% MEASURE
 \newcommand{\measure}[1]{\colorbox{bittersweet}{#1$_{\texttt{measure}}$}\ }
-
+% TIME expressions and correspondign attributes
 \newcommand{\timex}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}$}}
 \newcommand{\timexDur}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{duration}}$}\ }
 \newcommand{\timexFreq}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{frequency}}$}\ }
 \newcommand{\timexPIT}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{rel.~point~in~time}}$}\ }
 \newcommand{\timexDate}[2]{\colorbox{ashgrey}{#1$_{\texttt{timex}}^{\textcolor{red}{date}}$}\ }
-
-
+% ROUTE
 \newcommand{\route}[1]{\colorbox{sienna}{#1$_{\texttt{route}}$}\ }
+% TRIGGER
 \newcommand{\trigger}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}$}\ }
-% \newcommand{\triggerInc}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{increase}}$}}
-% \newcommand{\triggerDec}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{decrease}}$}}
-% \newcommand{\triggerUD}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{unique\_dose}}$}}
-% \newcommand{\triggerStart}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{started}}$}}
-% \newcommand{\triggerStop}[1]{\colorbox{celadon}{#1$_{\texttt{change\_trigger}}^{\textcolor{red}{stopped}}$}}
-
-
-
+% OTHER
 \newcommand{\other}[1]{\colorbox{burlywood}{#1$_{\texttt{other}}$}\ }
+% USER
 \newcommand{\user}[1]{\colorbox{chestnut}{#1$_{\texttt{user}}$}\ }
+% URL
 \newcommand{\link}[1]{\colorbox{cyan}{#1$_{\texttt{url}}$}\ }
+% PERSONAL INFORMATION
 \newcommand{\info}[1]{\colorbox{heliotrope}{#1$_{\texttt{perso\_info}}$}\ }
+% DOCTOR
 \newcommand{\doctor}[1]{\colorbox{indianyellow}{#1$_{\texttt{doctor}}$}\ }
 
-
+% two short-cuts to write frequent terms in texttt mode
 \newcommand{\dis}{\texttt{disorder}\ }
 \newcommand{\dr}{\texttt{drug}\ }
 
+% The following are macros for RELATION ANNOTATION:
+% #1: argument 1
+% #2: argument 2 of the relation 
+\newcommand{\causedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{caused}}}
+
+\newcommand{\treatmentRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{treatment\_for}}}
+
+\newcommand{\dosageRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{dosage}}}
+
+\newcommand{\experiencedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{experienced\_in}}}
+
+\newcommand{\examinedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{examined\_with}}}
+
+\newcommand{\refersRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{refers\_to}}}
+
+\newcommand{\resultedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{resulted\_in}}}
+
+\newcommand{\interactedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{interacted\_with}}}
+
+\newcommand{\changeRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{change}}}
+
+\newcommand{\timeRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{time}}}
+
+% the RELATIONS environment; only the sentence chunks have to be defined in the respective texts
+\newcommand{\drawRelations}[2]{
+    \begin{dependency}[theme=default]
+        \begin{deptext}
+            #1 \\   % here goes the text, already split with "\&" into chunks
+        \end{deptext}
+        #2          % here go the relations (defined above), as many as you like, e.g. \causedRel{1}{5}, \causedRel{3}{8}
+    \end{dependency}
+}
+
+% the EXAMPLE environment -- there is probably a much better solution.
 \newcommand{\examples}[5]{%
     \lb{#1}{
         \lba[en]{en}{#2}
@@ -259,6 +293,9 @@ Example with ``lung'':
 
 Punctuation is not to be included in the annotation (except for e.g.~hyphens or abbreviations etc.).
 
+\subsubsection*{Spelling Mistakes / Slang}
+
+Since spelling mistakes can occur often particularly when writing medication names, we treat them as if correctly written as long as we can easily understand what the user meant.
 
 \subsection{Drug}
 
@@ -506,7 +543,9 @@ A negation of drugs is not necessary, since we cover a stopped medication treatm
 
 \section{Relations}
 
-
+In the following, we will give details on how we annotate the relations between the entities.
+For a better visualizations, we highlight only the relations and entities of the current section.
+Also, we cut off parts of the original documents to keep every example on one line.
 
 \textcolor{green}{
 \begin{enumerate}
@@ -533,14 +572,37 @@ We do \emph{not} annotate this relation if one of the following points apply:
     \item the cause--consequence is not explicitly attributed to the author of the text, nor to a particular person or group of people identified via cotext or context (including the meta data of the document)
 \end{itemize}
 
-
+% \begin{dependency}[theme=default]
+%     \begin{deptext}
+%         The \& \drug{pill} \& does \& its \& job \& , \& by \& I \& \disorder{constantly feel sick to my stomach} \& (\ldots)\\
+%     \end{deptext}
+%     \depedge[edge unit distance=0.5ex]{2}{9}{\texttt{caused}}
+% \end{dependency}
 
 \examples{ex:caused}
-    {(..) The pill does its job, by I constantly feel sick to my stomach and have absolutely no appetite. (..)}
-    {Ensuite elle a pris infliximab mais au bout de 3 perfusion elle a développé des anticorps et grosse réaction allergique avec tachycardie importante et malaise, elle devient tout rouge et nausée, donc arrêt aussi.}
-    {Hatte in meiner Verzweiflung ja auch ein AD ausprobiert. Bei mir hat es den TSH voll hochgetrieben!}
+    {\drawRelations{
+        The \& \drug{pill} \& does \& its \& job \& , \& by \& I \& \disorder{constantly feel sick} \& to my stomach}
+        {
+        \causedRel{2}{9}
+        }
+    }
+    {\drawRelations{
+        Elle a pris \& \drugStop{infliximab} \& mais (\ldots) elle devient \& \disorder{tout rouge} \& et \& \disorder{nausée}}
+        {
+        \causedRel{2}{4} 
+        \causedRel{2}{6}
+        }
+    }
+    {\drawRelations{
+        Hatte (\ldots) auch ein \& \drug{AD} \& ausprobiert. Bei mir hat es den \& \disorder{TSH hochgetrieben}!}
+        {
+        \causedRel{2}{4}
+        }
+    }
     {} 
 
+%Ensuite elle a pris infliximab mais au bout de 3 perfusion elle a développé des anticorps et grosse réaction allergique avec tachycardie importante et malaise, elle devient tout rouge et nausée, donc arrêt aussi.
+% Hatte in meiner Verzweiflung ja auch ein AD ausprobiert. Bei mir hat es den TSH voll hochgetrieben!
 
 \subsection{Refers\_to (formerly is\_identical)}
 
@@ -628,39 +690,66 @@ The relation \texttt{interacted\_with} is defined for exactly this purpose.
 
 For connecting the \texttt{drug status change triggers} with the \dr that is affected, we use the \texttt{change} relation.
 
-\examples{ex:change}
+\examples{ex:re_change}
     {}
-    {depuis que j'ai arrêté deroxat pour effexor j'ai perdu 3 kilos sans rien foutre et en mangeant peut être mm +}
+    {depuis que j'ai \trigger{arrêté} \drugStop{deroxat} pour \drugStart{effexor} j'ai perdu 3 kilos sans rien foutre et en mangeant peut être mm +}
     {}
     {} 
 
 
 \subsection{BRAT Overview Relations Schema}
 
-\begin{table}[htbp]
+% \begin{table}[htbp]
+% \centering
+
+% \begin{tabular}{| c | c | c |}
+% \hline
+% \textbf{Relation Name} & \textbf{Arg1} & \textbf{Arg2}  \\
+% \hline
+
+% CAUSED & \{DRUG, DISORDER\} & DISORDER \\
+% TREATMENT\_FOR & DRUG & \{DISORDER, FUNCTION\}\\
+% DOSAGE & DRUG & MEASURE\\
+% EXPERIENCED\_IN & DISORDER & ANATOMY\\
+% EXAMINED\_WITH & DISORDER & TEST\\
+% IS\_IDENTICAL & DISORDER & DISORDER\\
+% IS\_IDENTICAL & DRUG & DRUG\\
+% RESULTED\_IN & TEST & MEASUREMENT\\
+% INTERACTED\_WITH & DRUG & DRUG\\
+
+
+% \hline
+% \end{tabular}
+% \caption{Overview about how entities can be connected in our BRAT annotation schema}
+
+% \label{tableBratRelations}  
+% \end{table}
+
+
+\begin{table}[h]
 \centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{relation} & \textbf{argument 1} & \textbf{argument 2}\\ \midrule
+\texttt{caused} & \{\dr, \dis\} & \{\dis\} \\
+\texttt{treatment\_for} & \{\dr\} & \{\dis, \texttt{function}\} \\
+\texttt{dosage} & \{\dr\} & \{\texttt{measure}\} \\
+\texttt{experienced\_in} & \{\dis\} & \{\texttt{anatomy}\} \\
+\texttt{examined\_with} & \{\dis\} & \{\texttt{test}\} \\
+\texttt{refers\_to} & \{\dis\} & \{\dis\} \\
+\texttt{refers\_to} & \{\dr\} & \{\dr\} \\
+\texttt{resulted\_in} & \{\texttt{test}\} & \{\texttt{measure}\} \\
+\texttt{interacted\_with} & \{\dr\} & \{\dr\} \\
+\texttt{change} & \{\texttt{drug\_status\_change\_trigger}\} & \{\dr\} \\
+\texttt{time} & \{\texttt{timex}\} & \{\dr, \dis\} \\
 
-\begin{tabular}{| c | c | c |}
-\hline
-\textbf{Relation Name} & \textbf{Arg1} & \textbf{Arg2}  \\
-\hline
-
-CAUSED & \{DRUG, DISORDER\} & DISORDER \\
-TREATMENT\_FOR & DRUG & \{DISORDER, FUNCTION\}\\
-DOSAGE & DRUG & MEASURE\\
-EXPERIENCED\_IN & DISORDER & ANATOMY\\
-EXAMINED\_WITH & DISORDER & TEST\\
-IS\_IDENTICAL & DISORDER & DISORDER\\
-IS\_IDENTICAL & DRUG & DRUG\\
-RESULTED\_IN & TEST & MEASUREMENT\\
-INTERACTED\_WITH & DRUG & DRUG\\
 
 
-\hline
+\bottomrule
 \end{tabular}
-\caption{Overview about how entities can be connected in our BRAT annotation schema}
-
-\label{tableBratRelations}  
+\caption{Overview of available relations and the entities they associate.}
+\label{tab:relations}
 \end{table}
+
 
 \end{document}
