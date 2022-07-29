@@ -6,6 +6,7 @@
 \usepackage{colortbl}
 \usepackage{philex}
 \usepackage{booktabs}
+\usepackage{tabu}
 \usepackage{tikz-dependency}
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
@@ -14,6 +15,8 @@
 
 % ↓ this package enables Japanese-text input anywhere without using commands (added by Yada 2022-05-20)
 \usepackage[whole]{bxcjkjatype}
+\usepackage{ulem}
+
 
 % colors: https://latexcolor.com/
 \definecolor{seabornOrange}{HTML}{DE8F05}
@@ -84,11 +87,12 @@
 % two short-cuts to write frequent terms in texttt mode
 \newcommand{\dis}{\texttt{disorder}\ }
 \newcommand{\dr}{\texttt{drug}\ }
-
+\newcommand{\cause}{$<$\texttt{cause}$>$\ }
+\newcommand{\conseq}{$<$\texttt{consequence}$>$\ }
 % The following are macros for RELATION ANNOTATION:
 % #1: argument 1
 % #2: argument 2 of the relation 
-\newcommand{\causedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{caused}}}
+\newcommand{\causedRel}[2]{\depedge[edge unit distance=0.8ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{caused}}}
 
 \newcommand{\treatmentRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{treatment\_for}}}
 
@@ -129,14 +133,13 @@
 }
 
 
-\usepackage{ulem}
 
 \title{Annotation Guidelines\\ Version 07/22}
 
 \author{KEEPHA}
 \date{July 2022}
 
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
 \begin{document}
 
 \maketitle
@@ -145,33 +148,74 @@
 \clearpage
 
 \section{Introduction}
-Overview about all entities:
+In the following, we describe the annotation scheme we developed for our multi-lingual corpus KEEPHA.
+The data for this corpus origins from different sources, e.g., patient fora, social media like Twitter, \textcolor{red}{TBD}.
+In Table \ref{tab:data}, we give an overview of the current annotated documents, their origin and the language they are written in.
 
-\begin{itemize}
-    \item \dr, with the attributes \texttt{increase}, \texttt{decrease}, \texttt{stopped}, \texttt{started}, and \texttt{unique\_dose}
-    \item \dis
-    \item \anatomy{anatomy}
-    \item \test{test}
-    \item \function{function}
-    \item \eval{evaluation / assessment} with the attributes \texttt{positive}, \texttt{negative}, and \texttt{neutral}
-    \item \measure{measure}
-    \item \timex{timex}, with the attributes \texttt{frequency}, \texttt{duration}, \texttt{date}, and \texttt{point}
-    \item \route{route}
-    \item \trigger{drug status change trigger}
-    \item \user{user}
-    \item \link{url}
-    \item \info{personal information}
-    \item \doctor{doctor}
-    \item \other{other}
-\end{itemize}
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{name}   & {\textbf{language}}   & \textbf{\#examples}   & \textbf{source} \\ \midrule
+
+Lifeline-v1     &  German (de)          & 4,169                 &  www.lifeline.de \\ 
+
+                & French (fr)           &                       &                   \\
+                & Japanese (ja)         &                       &                   \\
+\midrule
+
+Total           & de, fr, ja            &                       & \\
+
+\bottomrule
+\end{tabular}
+\caption{Overview of the current KEEPHA dataset.}
+\label{tab:data}
+\end{table}
 
 
-\section{Entities}
+We first define the entities we annotated (Section \ref{sec:entities}), including their attributes (Section \ref{sec:attributes}), using examples to highlight their usage.
+Subsequently, we define the relations connecting these entities (Section \ref{sec:relations}).
+
+
+\section{Entities}\label{sec:entities}
+
+In Table \ref{tab:all_entities}, we show all available entities and their respective attributes.
+
+\begin{table}[h]
+\centering
+% \renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{entity}   & {\textbf{attributes}} \\ \midrule
+
+\drug{\dr}                          & \texttt{increase}, \texttt{decrease}, \texttt{stopped}, \texttt{started}, \texttt{unique\_dose} \\
+\disorder{\dis}                     & \\
+\anatomy{\texttt{anatomy}}          & \\              
+\test{\texttt{test}}                & \\          
+\function{\texttt{function}}        & \\                
+\eval{\texttt{evaluation / assessment}}    & \texttt{positive}, \texttt{negative}, \texttt{neutral} \\
+\measure{\texttt{measure}}          & \\
+\timex{\texttt{timex}}~             & \texttt{frequency}, \texttt{duration}, \texttt{date}, \texttt{point} \\
+\route{\texttt{route}}              & \\
+\trigger{\texttt{drug\ status change trigger}}  & \\
+\user{\texttt{user}}                & \\
+\link{\texttt{url}}                 & \\
+\info{\texttt{personal information}}   & \\
+\doctor{\texttt{doctor}}            & \\
+\other{\texttt{other}}              & \\
+
+\bottomrule
+\end{tabular}
+\caption{Overview of the entities and their attributes.}
+\label{tab:all_entities}
+\end{table}
+
 
 
 \subsection{General Guidelines for Entity Annotation}
 
-In the following, we define general rules for the annotation of entities.
+We now define general rules for the annotation of entities.
 
 \subsubsection*{Scope}
 
@@ -188,7 +232,7 @@ If this does not work, a long span of the whole verb phrase is allowed.
 \subsubsection*{Metaphors and descriptive language}
 
 Further, we annotate descriptive expressions based on the patient's perspective even if they do not occur in a medical dictionary.
-We always try to follow the patient's perspective: If the patient thinks a symptom is a disorder, then we annotate it as \dis.
+We always try to follow the patient's perspective: If the patient thinks something (e.g., a symptom, an irregularity) is a disorder, then we annotate it as \dis.
 
 \examples{ex:descriptions}
     {}
@@ -200,19 +244,22 @@ We always try to follow the patient's perspective: If the patient thinks a sympt
 
 
 
+Often, patients use metaphors for describing their suffering or, on the other side, a good experience with the medication therapy.
 Since metaphors are descriptive language as well, we annotate them as we would annotate explicit symptom descriptions.
 Later, we can re-investigate those ``special disorders''.
 
 \examples{ex:metaphors}
     {\disorder{veil over my head}}
     {}
-    {**Meine \anatomy{Beine} \disorder{fühlen sich an wie Blei}.}
+    {(\ldots) nur \timexDur{1 Woche später}~war ich \evalPos{wie im 7. Himmel}.}
     {}
 
 
 \subsubsection*{Negation}
 
-If an entity mention is negated, we add a negation attribute to the entity (see Section~\ref{sec:attributes}). The negation clue itself is not included in the span of the entity mention.
+If an entity mention is negated, we add a negation attribute to the entity (see Section~\ref{sec:attributes}). 
+The negation clue itself is not included in the span of the entity mention.
+Currently, only \dis entities can carry a negation attribute.
 We provide more details on negation in section \ref{sec:neg}.
 
 \examples{negation}
@@ -240,7 +287,8 @@ Consecutive entities or enumerations that are, for example, separated by commas 
 \examples{enumerations}
     {I felt \disorder{pain} in my \anatomy{arms}, \anatomy{legs}, \anatomy{ears} and \anatomy{toes}.}
     {}
-    {*Ich fühle die \disorder{Schmerzen} in meinen \anatomy{Armen}, \anatomy{Beinen}, \anatomy{Ohren} und \anatomy{Zehen}.}
+    % {*Ich fühle die \disorder{Schmerzen} in meinen \anatomy{Armen}, \anatomy{Beinen}, \anatomy{Ohren} und \anatomy{Zehen}.}
+    {\timexPIT{Vor einem Jahr} bekam ich kurz hintereinander zwei \disorder{Herzinfarkte}, \\einen \disorder{Schlaganfall} und eine \disorder{Embolie}.}
     {}
 
 \subsubsection*{Nested Entities}
@@ -291,7 +339,7 @@ Example with ``lung'':
 
 \subsubsection*{Punctuation}
 
-Punctuation is not to be included in the annotation (except for e.g.~hyphens or abbreviations etc.).
+Punctuation is not to be included in the annotation (except for, e.g., hyphens or abbreviations etc.).
 
 \subsubsection*{Spelling Mistakes / Slang}
 
@@ -303,8 +351,8 @@ With \dr, we annotate any mention of a medication name, brand or agent.
 We also include dietary supplements.
 
 \examples{ex:drug}
-    {}
-    {l'\drug{entyvio} c 'est pas miracle mais \evalPos{bon ça aide}. bon courage à tous.}
+    {\drug{Lipidor} \evalPos{did the job} on my \function{cholesterol} both LDL and HDL.}
+    {l'\drug{entyvio} c 'est pas miracle mais bon \evalPos{ça aide}. bon courage à tous.}
     {Ich nehme \entity{Betablocker}.}
     {}
     
@@ -409,7 +457,7 @@ A \texttt{positive} assessment is often associated with an improvement of a dise
 \examples{ex:eval}
     % {*I also \trigger{had} \drugStop{antibiotics} but that \evalNeut{didn't change anything}.\\ Then, after \trigger{starting} \drugStart{Trisequen's hormone pills}, just \timexDur{1 week later}, I was \evalPos{like in 7th heaven}.}
     {\drug{Lipidor} \evalPos{did the job} on my \function{cholesterol} both LDL and HDL.}
-    {l'\drug{entyvio} c 'est pas miracle mais \evalPos{bon ça aide}. }
+    {l'\drug{entyvio} c 'est pas miracle mais bon \evalPos{ça aide}. }
     {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \evalPos{lief auch richtig gut}.}
     {} 
 
@@ -461,7 +509,7 @@ To specify the change, we add the attributes \texttt{start} (the trigger specifi
 
 \subsection{User} 
 
-Since social media users use creative names that are not necessarily easy to find using pre-processing tools, we mark user names as well, to de-identify them afterwards if necessary.
+Since social media users use creative names that are not necessarily easy to find using pre-processing tools, we mark ``left-over'' user names as well, to de-identify them afterwards if necessary.
 
 \examples{ex:user}
     {*Dear \user{lucy203}, thank you for your message.}
@@ -496,7 +544,7 @@ We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurs
 \examples{ex:doctor}
     {}
     {( peut etre de \disorder{l'arthrose} dixit mon \doctor{docteur traitant}).......}
-    {(...), hatte ich \timexPIT{gestern} einen Termin bei meinem \doctor{Internisten}.}
+    {(...), hatte ich \timexPIT{gestern}~einen Termin bei meinem \doctor{Internisten}.}
     {} 
 
 % \subsection{EXPERIENCER} 
@@ -512,7 +560,7 @@ With \other{other}, we annotate all other entities that seem important during an
 \examples{ex:other}
     {}
     {(...) je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \other{perf}, (...)}
-    {}
+    {Ohne BH fallen die \other{Implantate} runter.}
     {} 
 
 
@@ -535,17 +583,59 @@ In Table \ref{tab:attributes}, we show all available attributes.
 \label{tab:attributes}
 \end{table}
 
-Currently we only apply the negation attribute to the entity annotation \dis, as negated \texttt{function} entities are annotated as \dis. 
+\subsection{Negation}\label{sec:neg}
+
+Currently, we only apply the negation attribute to the entity annotation \dis, as negated \texttt{function} entities are annotated as \dis. 
 A negation of drugs is not necessary, since we cover a stopped medication treatment using the \dr attributes.
 
-% \subsection{Negation}\label{sec:neg}
+\examples{ex:neg_attribute}
+    {}
+    {}
+    {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da ...}
+    {} 
+
+\subsection{Sentiment}
+
+When patients describe their current state of health or when they assess the consequences of a medication they took, they often use emotional words.
+Therefore, we add, if applicable, the sentiment markers \texttt{positive}, \texttt{negative}, or \texttt{neutral} to the phrases annotated with \texttt{eval}.
+
+\examples{ex:sentiment}
+    {}
+    {}
+    {Dann, nachdem ich mit \drugStart{Triseqenz Hormontabl.} \trigger{angefangen} habe, nur \timexDur{1 Woche später}~war ich \evalPos{wie im 7. Himmel}.}
+    {} 
 
 
-\section{Relations}
+\section{Relations}\label{sec:relations}
 
 In the following, we will give details on how we annotate the relations between the entities.
 For a better visualizations, we highlight only the relations and entities of the current section.
 Also, we cut off parts of the original documents to keep every example on one line.
+In Table \ref{sec:relations} we provide an overview of all relations and their arguments.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{relation} & \textbf{argument 1} & \textbf{argument 2}\\ \midrule
+\texttt{caused} & \{\dr, \dis\} & \{\dis\} \\
+\texttt{treatment\_for} & \{\dr\} & \{\dis, \texttt{function}\} \\
+\texttt{dosage} & \{\dr\} & \{\texttt{measure}\} \\
+\texttt{experienced\_in} & \{\dis\} & \{\texttt{anatomy}\} \\
+\texttt{examined\_with} & \{\dis\} & \{\texttt{test}\} \\
+\texttt{refers\_to} & \{\dis\} & \{\dis\} \\
+\texttt{refers\_to} & \{\dr\} & \{\dr\} \\
+\texttt{resulted\_in} & \{\texttt{test}\} & \{\texttt{measure}\} \\
+\texttt{interacted\_with} & \{\dr\} & \{\dr\} \\
+\texttt{change} & \{\texttt{drug\_status\_change\_trigger}\} & \{\dr\} \\
+\texttt{time} & \{\texttt{timex}\} & \{\dr, \dis\} \\
+
+\bottomrule
+\end{tabular}
+\caption{Overview of available relations and the entities they associate.}
+\label{tab:relations}
+\end{table}
+
 
 \textcolor{green}{
 \begin{enumerate}
@@ -562,8 +652,55 @@ Also, we cut off parts of the original documents to keep every example on one li
 
 The \texttt{caused} relation was defined to be language independent and to be used also with little linguistic knowledge.
 We only annotate a \texttt{caused} relation, when the entities \dr, \dis, or \texttt{function} are concerned. 
+For this, we take into account the following
+\begin{itemize}
+    \item the interpreted intention of the author if the annotator(s) judge it to be clearly identifiable
+    \item common world knowledge (e.g., the action -- reaction principle) and common sense (e.g., a broken leg can not be caused by brushing one's teeth)
+    \item a possible contextual cue from meta data (e.g., the meta data might contain the drug name, which is not necessarily mentioned in the text itself)
+    \item explicit formulation of \cause-- \conseq relation, i.e., supported by linguistic markers like:
+    \begin{itemize}
+        \item explicit discourse inter clause/sentence articulators: because, so, then, ... (including conjunction coordination hinting at  causal entailment like ``and'', ``then'') %      <cause clause> then <consequence clause>
+        \item conditional constructions: ``when \cause , \conseq'',  \\ ``\cause and \conseq'', \ldots
+        \item restrictive formulations, e.g., ``only when \cause , \conseq''
+    \end{itemize}
+    \item lexical semantics of nouns or verbs, e.g.,:
+    \begin{itemize}
+        \item \cause  provokes \conseq
+        \item \conseq is the consequence of \cause
+        \item \cause was followed by \conseq
+        \item \cause entailed \conseq
+        \item \conseq is correlated with \cause
+        \item \cause is correlated with \conseq and \cause is preceding \conseq
+        \item \cause is probably linked with \conseq and \cause is preceding \conseq
+    \end{itemize}
+    \item ($R_0$ is a \texttt{refers\_to} relation) and (\conseq is the target of a \texttt{caused} relation) and (\cause is the source of a \texttt{caused} relation pointing  to the source of $R_0$)
+    \item \cause \conseq relations are reported by the author of the text (first person) or attributed to another person by the author of the text (second/third person)
+    \item being part of a juxtaposition of linguistic element/clauses/sentences (but only if supported by other context, either cotext and/or metadata elements):
+    \begin{itemize}
+        \item \cause \conseq
+        \item \cause, \conseq
+        \item \cause. \conseq.
+    \end{itemize}
+    \item being part of a successive temporal relation
+    \begin{itemize}
+        \item \conseq after \cause
+        \item before \conseq \cause
+        \item every time \cause \conseq
+    \end{itemize}
+    \item juxtaposition of \cause--\conseq clause and change of factuality / belief / veracity / opinion:
+    \begin{itemize}
+        \item \cause--\conseq belief clause  $<$veracity expression about previous clause$>$
+        \item ``I though I would not have \conseq because of \cause. I was wrong!''
+        \item ``I had never never thought that \cause would yield \conseq
+        \item ``I would not have expected that \cause would yield \conseq
+    \end{itemize}
 
-We do \emph{not} annotate this relation if one of the following points apply:
+
+ 
+\end{itemize}
+
+
+However, we do \emph{not} annotate this relation if one of the following points apply:
 
 \begin{itemize}
     \item the above mentioned entities are not concerned
@@ -572,12 +709,6 @@ We do \emph{not} annotate this relation if one of the following points apply:
     \item the cause--consequence is not explicitly attributed to the author of the text, nor to a particular person or group of people identified via cotext or context (including the meta data of the document)
 \end{itemize}
 
-% \begin{dependency}[theme=default]
-%     \begin{deptext}
-%         The \& \drug{pill} \& does \& its \& job \& , \& by \& I \& \disorder{constantly feel sick to my stomach} \& (\ldots)\\
-%     \end{deptext}
-%     \depedge[edge unit distance=0.5ex]{2}{9}{\texttt{caused}}
-% \end{dependency}
 
 \examples{ex:caused}
     {\drawRelations{
@@ -692,64 +823,15 @@ For connecting the \texttt{drug status change triggers} with the \dr that is aff
 
 \examples{ex:re_change}
     {}
-    {depuis que j'ai \trigger{arrêté} \drugStop{deroxat} pour \drugStart{effexor} j'ai perdu 3 kilos sans rien foutre et en mangeant peut être mm +}
+    {\drawRelations{
+        depuis que j'ai \& \colorbox{celadon}{arrêté$_{\texttt{trigger\_1}}$} \& \drugStop{deroxat} \& \colorbox{celadon}{pour$_{\texttt{trigger\_2}}$} \& \drugStart{effexor} \& j'ai perdu 3 kilos (\ldots)}
+        {
+        \changeRel{2}{3}
+        \changeRel{2}{5}
+        }
+    }
     {}
     {} 
-
-
-\subsection{BRAT Overview Relations Schema}
-
-% \begin{table}[htbp]
-% \centering
-
-% \begin{tabular}{| c | c | c |}
-% \hline
-% \textbf{Relation Name} & \textbf{Arg1} & \textbf{Arg2}  \\
-% \hline
-
-% CAUSED & \{DRUG, DISORDER\} & DISORDER \\
-% TREATMENT\_FOR & DRUG & \{DISORDER, FUNCTION\}\\
-% DOSAGE & DRUG & MEASURE\\
-% EXPERIENCED\_IN & DISORDER & ANATOMY\\
-% EXAMINED\_WITH & DISORDER & TEST\\
-% IS\_IDENTICAL & DISORDER & DISORDER\\
-% IS\_IDENTICAL & DRUG & DRUG\\
-% RESULTED\_IN & TEST & MEASUREMENT\\
-% INTERACTED\_WITH & DRUG & DRUG\\
-
-
-% \hline
-% \end{tabular}
-% \caption{Overview about how entities can be connected in our BRAT annotation schema}
-
-% \label{tableBratRelations}  
-% \end{table}
-
-
-\begin{table}[h]
-\centering
-\begin{tabular}{@{}lll@{}}
-\toprule
-\textbf{relation} & \textbf{argument 1} & \textbf{argument 2}\\ \midrule
-\texttt{caused} & \{\dr, \dis\} & \{\dis\} \\
-\texttt{treatment\_for} & \{\dr\} & \{\dis, \texttt{function}\} \\
-\texttt{dosage} & \{\dr\} & \{\texttt{measure}\} \\
-\texttt{experienced\_in} & \{\dis\} & \{\texttt{anatomy}\} \\
-\texttt{examined\_with} & \{\dis\} & \{\texttt{test}\} \\
-\texttt{refers\_to} & \{\dis\} & \{\dis\} \\
-\texttt{refers\_to} & \{\dr\} & \{\dr\} \\
-\texttt{resulted\_in} & \{\texttt{test}\} & \{\texttt{measure}\} \\
-\texttt{interacted\_with} & \{\dr\} & \{\dr\} \\
-\texttt{change} & \{\texttt{drug\_status\_change\_trigger}\} & \{\dr\} \\
-\texttt{time} & \{\texttt{timex}\} & \{\dr, \dis\} \\
-
-
-
-\bottomrule
-\end{tabular}
-\caption{Overview of available relations and the entities they associate.}
-\label{tab:relations}
-\end{table}
 
 
 \end{document}
