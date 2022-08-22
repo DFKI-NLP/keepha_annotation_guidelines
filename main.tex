@@ -185,25 +185,25 @@ In Table \ref{tab:all_entities}, we show all available entities and their respec
 \centering
 % \renewcommand{\arraystretch}{1.3}
 \small
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{entity}   & {\textbf{attributes}} \\ \midrule
+\textbf{section} & \textbf{entity}   & {\textbf{attributes}} \\ \midrule
 
-\drug{\dr}                          & \texttt{increase}, \texttt{decrease}, \texttt{stopped}, \texttt{started}, \texttt{unique\_dose} \\
-\disorder{\dis}                     & \\
-\anatomy{\texttt{anatomy}}          & \\              
-\test{\texttt{test}}                & \\          
-\function{\texttt{function}}        & \\                
-\eval{\texttt{evaluation / assessment}}    & \texttt{positive}, \texttt{negative}, \texttt{neutral} \\
-\measure{\texttt{measure}}          & \\
-\timex{\texttt{timex}}~             & \texttt{frequency}, \texttt{duration}, \texttt{date}, \texttt{point} \\
-\route{\texttt{route}}              & \\
-\trigger{\texttt{drug\ status change trigger}}  & \\
-\user{\texttt{user}}                & \\
-\link{\texttt{url}}                 & \\
-\info{\texttt{personal information}}   & \\
-\doctor{\texttt{doctor}}            & \\
-\other{\texttt{other}}              & \\
+\ref{ent_drug} &\drug{\dr}                          & \texttt{increase}, \texttt{decrease}, \texttt{stopped}, \texttt{started}, \texttt{unique\_dose} \\
+\ref{ent_disorder}&\disorder{\dis}                     & \texttt{negated}\\
+\ref{ent_anatomy}&\anatomy{\texttt{anatomy}}          & \\              
+\ref{ent_test}&\test{\texttt{test}}                & \\          
+\ref{ent_function}&\function{\texttt{function}}        & \\                
+\ref{ent_eval}&\eval{\texttt{evaluation / assessment}}    & \texttt{positive}, \texttt{negative}, \texttt{neutral} \\
+\ref{ent_measure}&\measure{\texttt{measure}}          & \\
+\ref{ent_timex}&\timex{\texttt{timex}}~             & \texttt{frequency}, \texttt{duration}, \texttt{date}, \texttt{point} \\
+\ref{ent_route}&\route{\texttt{route}}              & \\
+\ref{ent_drug_status}&\trigger{\texttt{drug\ status change trigger}}  & \\
+\ref{ent_user}&\user{\texttt{user}}                & \\
+\ref{ent_url}&\link{\texttt{url}}                 & \\
+\ref{ent_personal}&\info{\texttt{personal information}}   & \\
+\ref{ent_doctor}&\doctor{\texttt{doctor}}            & \\
+\ref{ent_other}&\other{\texttt{other}}              & \\
 
 \bottomrule
 \end{tabular}
@@ -219,7 +219,7 @@ We now define general rules for the annotation of entities.
 
 \subsubsection*{Scope}
 
-Regarding scope, we annotate entities in form of noun or verb phrases together with their modifying parts, e.g.~adjectives, adverbs etc. 
+Regarding scope, we annotate entities in form of noun or verb phrases together with their modifying parts, e.g.~adjectives, adverbs etc., though clause-level modifiers (e.g. relative clauses; ``a pain \textit{that is} \ldots'') are excluded.
 We always prefer the smallest core noun phrase. 
 If this does not work, a long span of the whole verb phrase is allowed.
 
@@ -277,7 +277,7 @@ We do not include determiners in an entity.
     {*I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
     {}
     {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da ...}
-    {}
+    {(no determiners in Japanese)}
 
 
 \subsubsection*{Enumerations}
@@ -303,9 +303,7 @@ This is also language-dependant:
     \item Japanese: 
     \begin{itemize}
         \item do not split compound words based on standard tokenization
-        \item split noun phrases (including compound nouns) at ``prepositions'' (particles てにをは)
-        \item  形容詞的な修飾語を含む複合名詞全体（後置修飾除く）
-        \item   節的な修飾は含まない（目が美しいXX）
+        \item split noun phrases (including compound nouns) at ``prepositions'' (particles て, に, を, は, の)
     \end{itemize}
     
     \item French: basic noun phrase (``\disorder{douleur thoracique}'') is annotated as one \dis, otherwise  we separate the annotations, e.g.~``\disorder{douleur} au \anatomy{thorax}''.
@@ -345,9 +343,9 @@ Punctuation is not to be included in the annotation (except for, e.g., hyphens o
 
 Since spelling mistakes can occur often particularly when writing medication names, we treat them as if correctly written as long as we can easily understand what the user meant.
 
-\subsection{Drug}
+\subsection{Drug}\label{ent_drug}
 
-With \dr, we annotate any mention of a medication name, brand or agent.
+With \dr, we annotate any mention of a medication name, brand, or agent.
 We also include dietary supplements.
 
 \examples{ex:drug}
@@ -377,10 +375,10 @@ Further, mentions referring to a drug but not clearly stating the drug's name ar
     {}
 
 
-\subsection{Disorder}
+\subsection{Disorder}\label{ent_disorder}
 
 A \dis annotation denotes any disease, sign or symptom related to the patient's health.
-Sometimes a \dis may be expressed as a parameter in combination with a value: e.g., \disorder{high LDL} (parameter=LDL, value=high). 
+Sometimes a \dis may be expressed as a parameter in combination with a value: e.g., \disorder{high LDL} (parameter=LDL, value=high)\footnote{If the value does not directly modify the target noun, the corresponding appropriate entities should be labeled separately. E.g. ``\test{LDL} was \measure{high}''}. 
 When the value is outside the normal range, this describes a \dis.
 
 %If there are hypernyms (e.g.~ ``experience'' for a list of different disorders)
@@ -403,7 +401,7 @@ We annotate adverse biological processes as \dis, and neutral/positive processes
     {*... konnte nicht \disorder{pinkeln} ..}
     {}
 
-\subsection{Anatomy} 
+\subsection{Anatomy}\label{ent_anatomy}
 
 With this, we annotate all organs or anatomical parts.
 
@@ -423,20 +421,21 @@ With this, we annotate all organs or anatomical parts.
     {}
 
 
-\subsection{Test} 
+\subsection{Test}\label{ent_test}
 
 With \texttt{test}, we mark all medical tests, interviews, examinations or any other procedure that produces a result to be used in medical diagnoses.
 
 \examples{ex:test}
     {}
-    {des \disorder{douleurs} dans mes \anatomy{pouces} surtout celui de gauche, je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \other{perf}, (...)}
+    {des \disorder{douleurs} dans mes \anatomy{pouces} surtout celui de gauche, je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \drug{perf}, (...)}
     {Ich habe ganz \timexPIT{zu Beginn} der \function{WJ} auch mal \test{Speicheltests} machen lassen, mit zum Teil abstrusen Werten.}
     {} 
     
     
-\subsection{Function} 
+\subsection{Function} \label{ent_function}
 
 With \texttt{function}, we mark all body functions and processes.
+This includes mental functions, too. 
 \examples{ex:function}
     {}
     {}
@@ -445,8 +444,8 @@ With \texttt{function}, we mark all body functions and processes.
 
 However, as stated above, adverse physiological processes are annotated as \dis and therefore, only \emph{working} body functions are annotated as \texttt{function}.
 
-\subsection{Evaluation / Assessment} 
-This denotes the patient's personal assessment of a drug, health state or biological process.
+\subsection{Evaluation} \label{ent_eval}
+This denotes the patient's personal evaluation or assessment of a drug, health state or biological process.
 Usually, these assessments are rather colloquial and it is difficult to find an appropriate span.
 Therefore, we follow again the principle of taking the shortest span possible.
 
@@ -461,7 +460,7 @@ A \texttt{positive} assessment is often associated with an improvement of a dise
     {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \evalPos{lief auch richtig gut}.}
     {} 
 
-\subsection{Measure} 
+\subsection{Measure} \label{ent_measure}
 
 With \texttt{measure}, we mark all kinds of measurements, e.g.~drug dosages, test results, etc.
 
@@ -471,9 +470,9 @@ With \texttt{measure}, we mark all kinds of measurements, e.g.~drug dosages, tes
     {Das \drug{Utrogest} sind \route{Weichkapseln} mit \measure{100 mg} \drug{naturid.~Progesteron} und sie sind verschreibungspflichtig.}
     {} 
 
-\subsection{Timex} 
+\subsection{Time} \label{ent_timex}
 
-As temporal markers we define all mentions of frequency, duration, date, or relative points in time. 
+As temporal markers we define all mentions of \textit{frequency}, \textit{duration}, \textit{date}, or \textit{relative points in time}. 
 For a more narrow description we use those characteristics (frequency, duration, \ldots) as attributes.
 Also, we include prepositions in the annotation, since these carry relevant information specifying the semantics of the expression.
 
@@ -486,9 +485,9 @@ Time expressions include e.g.~``night'', ``afternoon'', ``for one week'' (mostly
     {Hallo liebe $<$user$>$, \timexPIT{vor 2 Monaten}~habe ich meine \doctor{Frauenärztin} gefragt, da ich zwischendurch einen \test{Hormontest} wollte.}
     {} 
 
-\subsection{Route} 
+\subsection{Route} \label{ent_route}
 
-\texttt{Route} annotates the means of medication intake, e.g.~via pill, injection.
+\texttt{Route} annotates the means of medication intake, e.g.~via pills, via injection.
 If a mention like ``pill'' refers to a drug (and not to the means of intake), it should be annotated as \dr.
 \examples{ex:route}
     {}
@@ -496,7 +495,7 @@ If a mention like ``pill'' refers to a drug (and not to the means of intake), it
     {Ich habe das leider nur mit \route{Tabletten} gemacht (mir wollte keiner meiner Ärzte eine \route{Infusion} verschreiben).}
     {} 
 
-\subsection{Drug status change trigger} 
+\subsection{Medication Status} \label{ent_drug_status}
 Here, we annotate phrases describing a change in medication intake.
 To specify the change, we add the attributes \texttt{start} (the trigger specifies that a medication was just started), \texttt{stop} (a medication was stopped), \texttt{increase} (the dosage was increased), \texttt{decrease} (the dosage was decreased), and \texttt{unique\_dose} (the medication was only given/taken once) \emph{to the \dr they refer to}.
 
@@ -507,7 +506,7 @@ To specify the change, we add the attributes \texttt{start} (the trigger specifi
     {} 
 
 
-\subsection{User} 
+\subsection{User} \label{ent_user}
 
 Since social media users use creative names that are not necessarily easy to find using pre-processing tools, we mark ``left-over'' user names as well, to de-identify them afterwards if necessary.
 
@@ -517,7 +516,7 @@ Since social media users use creative names that are not necessarily easy to fin
     {Liebe \user{Westy} danke für deinen Bericht.}
     {} 
 
-\subsection{URL} 
+\subsection{URL} \label{ent_url}
 In case there were any URLs or e-mail addresses missed when de-identifying the data, we mark them to be removed later.
 
 \examples{ex:url}
@@ -526,7 +525,7 @@ In case there were any URLs or e-mail addresses missed when de-identifying the d
     {**Du findest interessante Beiträge hierzu unter \link{www.lifeline.de}.}
     {} 
 
-\subsection{Personal information} 
+\subsection{Personal information} \label{ent_personal}
 
 With this marker, we annotate all other personal information that needs to be removed before data publication (jobs, city, doctors' names ..).
 This kind if annotation is only necessary if the de-identification failed.
@@ -538,7 +537,7 @@ This kind if annotation is only necessary if the de-identification failed.
     {} 
 
 
-\subsection{Doctor} 
+\subsection{Doctor} \label{ent_doctor}
 We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurse, (psycho) therapist \ldots).
 
 \examples{ex:doctor}
@@ -554,9 +553,9 @@ We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurs
 
 % \textcolor{blue}{Find some other way to make a difference between (1) self-reported events and (2) general knowledge / hearsay? $\rightarrow$ postpone this annotation to a future task.}
 
-\subsection{Other} 
+\subsection{Other} \label{ent_other}
 With \other{other}, we annotate all other entities that seem important during annotation, but for which we do not have a category.
-
+For example, since we do not have an entity for treatments that are not drugs (e.g., \textit{chemo therapy}), we would annotate this term as \other{chemo therapy}.
 \examples{ex:other}
     {}
     {(...) je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \other{perf}, (...)}
@@ -571,13 +570,13 @@ In Table \ref{tab:attributes}, we show all available attributes.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}llllll@{}}
+\begin{tabular}{@{}lll@{}}
 \toprule
- \textbf{entity} &  &  &  &  &\\ \midrule
- \texttt{disorder} & negated &  & &  &\\
- \texttt{evaluation / assessment} & positive & negative & neutral &  &\\
- \texttt{timex} & frequency & duration & date & relative point in time & \\
-\textbf{\dr} & started & stopped  & increased & decreased & unique dose  \\ \bottomrule
+\textbf{section} & \textbf{entity} & \textbf{attributes} \\ \midrule
+\ref{sec:neg} & \texttt{disorder} & negated \\
+\ref{sec:sent}& \texttt{evaluation / assessment} & positive; negative; neutralß\\
+\ref{sec:timex_attributes}& \texttt{timex} & frequency; duration; date; relative point in time \\
+\ref{sec:durg_change_attributes}& \textbf{\dr} & started; stopped; increased; decreased; unique dose  \\ \bottomrule
 \end{tabular}
 \caption{The available attributes of the entities \dis, \texttt{evaluation}, \texttt{timex}, and \dr.}
 \label{tab:attributes}
@@ -594,7 +593,7 @@ A negation of drugs is not necessary, since we cover a stopped medication treatm
     {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da ...}
     {} 
 
-\subsection{Sentiment}
+\subsection{Sentiment}\label{sec:sent}
 
 When patients describe their current state of health or when they assess the consequences of a medication they took, they often use emotional words.
 Therefore, we add, if applicable, the sentiment markers \texttt{positive}, \texttt{negative}, or \texttt{neutral} to the phrases annotated with \texttt{eval}.
@@ -605,30 +604,51 @@ Therefore, we add, if applicable, the sentiment markers \texttt{positive}, \text
     {Dann, nachdem ich mit \drugStart{Triseqenz Hormontabl.} \trigger{angefangen} habe, nur \timexDur{1 Woche später}~war ich \evalPos{wie im 7. Himmel}.}
     {} 
 
+\subsection{Timex-Attributes}\label{sec:timex_attributes}
+
+The following attributes of timex expressions are considered in our annotations:
+frequency, duration, date and relative point in time. The attributes should help to specify the annotated timex expressions in more detail. Some examples below:
+
+\examples{ex:att_timex}
+    {}
+    {}
+    {}
+    {} 
+
+\subsection{Drug Changes}\label{sec:durg_change_attributes}
+
+The attributes referring to the entity drug, provide additional more details about its intake. We consider the attributes started, stopped, increased, decreased and unique dose. Some examples are provided below:
+
+\examples{ex:att_drug}
+    {}
+    {}
+    {}
+    {} 
+
 
 \section{Relations}\label{sec:relations}
 
 In the following, we will give details on how we annotate the relations between the entities.
 For a better visualizations, we highlight only the relations and entities of the current section.
 Also, we cut off parts of the original documents to keep every example on one line.
-In Table \ref{sec:relations} we provide an overview of all relations and their arguments.
+In Table \ref{sec:relations} we provide an overview of all relations and their arguments.\footnote{Exceptionally, \other{other} can take and accept all relations, for practical reason.}
 
 \begin{table}[h]
 \centering
-\begin{tabular}{@{}lll@{}}
+\begin{tabular}{@{}llll@{}}
 \toprule
-\textbf{relation} & \textbf{argument 1} & \textbf{argument 2}\\ \midrule
-\texttt{caused} & \{\dr, \dis\} & \{\dis\} \\
-\texttt{treatment\_for} & \{\dr\} & \{\dis, \texttt{function}\} \\
-\texttt{dosage} & \{\dr\} & \{\texttt{measure}\} \\
-\texttt{experienced\_in} & \{\dis\} & \{\texttt{anatomy}\} \\
-\texttt{examined\_with} & \{\dis\} & \{\texttt{test}\} \\
-\texttt{refers\_to} & \{\dis\} & \{\dis\} \\
-\texttt{refers\_to} & \{\dr\} & \{\dr\} \\
-\texttt{resulted\_in} & \{\texttt{test}\} & \{\texttt{measure}\} \\
-\texttt{interacted\_with} & \{\dr\} & \{\dr\} \\
-\texttt{change} & \{\texttt{drug\_status\_change\_trigger}\} & \{\dr\} \\
-\texttt{time} & \{\texttt{timex}\} & \{\dr, \dis\} \\
+\textbf{section} & \textbf{relation} & \textbf{argument 1} & \textbf{argument 2}\\ \midrule
+\ref{rel_caused} & \texttt{caused} & \{\dr, \dis\} & \{\dis\} \\
+\ref{rel_treat} & \texttt{treatment\_for} & \{\dr\} & \{\dis, \texttt{function}\} \\
+\ref{rel_dosage} & \texttt{dosage} & \{\dr\} & \{\texttt{measure}\} \\
+\ref{rel_experienced} & \texttt{experienced\_in} & \{\dis\} & \{\texttt{anatomy}\} \\
+\ref{rel_examined} & \texttt{examined\_with} & \{\dis\} & \{\texttt{test}\} \\
+\ref{rel_refers} & \texttt{refers\_to} & \{\dis\} & \{\dis\} \\
+ & \texttt{refers\_to} & \{\dr\} & \{\dr\} \\
+\ref{rel_resulted} & \texttt{resulted\_in} & \{\texttt{test}\} & \{\texttt{measure}\} \\
+\ref{rel_interacted} & \texttt{interacted\_with} & \{\dr\} & \{\dr\} \\
+\ref{rel_change} & \texttt{change} & \{\texttt{drug\_status\_change\_trigger}\} & \{\dr\} \\
+\ref{rel_time} & \texttt{time} & \{\texttt{timex}\} & \{\dr, \dis\} \\
 
 \bottomrule
 \end{tabular}
@@ -646,7 +666,7 @@ In Table \ref{sec:relations} we provide an overview of all relations and their a
 }
 
 
-\subsection{Caused}
+\subsection{Caused}\label{rel_caused}
 
 \textcolor{green}{Patrick's proposal}
 
@@ -735,7 +755,53 @@ However, we do \emph{not} annotate this relation if one of the following points 
 %Ensuite elle a pris infliximab mais au bout de 3 perfusion elle a développé des anticorps et grosse réaction allergique avec tachycardie importante et malaise, elle devient tout rouge et nausée, donc arrêt aussi.
 % Hatte in meiner Verzweiflung ja auch ein AD ausprobiert. Bei mir hat es den TSH voll hochgetrieben!
 
-\subsection{Refers\_to (formerly is\_identical)}
+\subsection{Treatment\_for}\label{rel_treat}
+
+This relation connects a \dr and the underlying \dis. 
+
+\examples{ex:treatment}
+    {I have insomnia and fibromyalgia. The pain from the fibromyalgia is worsened when I can't sleep well.  My doctor prescribed this medication to me mainly for better sleep.}
+    {atteinte de Crohn depuis 2017, actuellement sous perfusion entyvio depuis début 2019, le remsima ayant eu trop d'effets secondaires pour moi a  été abandonné.}
+    {}
+    {} 
+
+
+\subsection{Dosage}\label{rel_dosage}
+
+\texttt{Dosage} relates a measurement, e.g.~the number of pills (\texttt{measure}), with a medication name (\dr).
+
+\examples{ex:dosage}
+    {}
+    {}
+    {}
+    {} 
+    
+
+\subsection{Experienced\_in}\label{rel_experienced}
+
+This relation associates a \dis with the location it is felt / experienced in, i.e.~a part of the body (\texttt{anatomy}).
+
+
+\examples{ex:experienced}
+    {}
+    {}
+    {}
+    {} 
+
+\subsection{Examined\_with}\label{rel_examined}
+
+This relation associates a \dis with a \texttt{test}: the \texttt{test} is used to examine the \dis.
+
+\examples{ex:examined}
+    {}
+    {}
+    {}
+    {}    
+    
+    
+
+
+\subsection{Refers\_to (formerly is\_identical)}\label{rel_refers}
 
 The \texttt{refers\_to} relation represents a unidirectional link for the entities \dr, \dis, \texttt{anatomy}, and \texttt{function}.
 It is used to associate similar concepts, but \emph{not} to connect the same surface forms (e.g.~ ``Lipitor'' and ``Lipitor''). 
@@ -754,48 +820,11 @@ Further, via the \texttt{refers\_to} relation, we can propagate the \texttt{caus
     {} 
 
 
-\subsection{Treatment\_for}
-
-This relation connects a \dr and the underlying \dis. 
-
-\examples{ex:treatment}
-    {I have insomnia and fibromyalgia. The pain from the fibromyalgia is worsened when I can't sleep well.  My doctor prescribed this medication to me mainly for better sleep.}
-    {atteinte de Crohn depuis 2017, actuellement sous perfusion entyvio depuis début 2019, le remsima ayant eu trop d'effets secondaires pour moi a  été abandonné.}
-    {}
-    {} 
-
-\subsection{Dosage}
-
-\texttt{Dosage} relates a measurement, e.g.~the number of pills (\texttt{measure}), with a medication name (\dr).
-
-\examples{ex:dosage}
-    {}
-    {}
-    {}
-    {} 
-
-\subsection{Experienced\_in}
-
-This relation associates a \dis with the location it is felt / experienced in, i.e.~a part of the body (\texttt{anatomy}).
 
 
-\examples{ex:experienced}
-    {}
-    {}
-    {}
-    {} 
 
-\subsection{Examined\_with}
-
-This relation associates a \dis with a \texttt{test}: the \texttt{test} is used to examine the \dis.
-
-\examples{ex:examined}
-    {}
-    {}
-    {}
-    {} 
     
-\subsection{Resulted\_in}
+\subsection{Resulted\_in}\label{rel_resulted}
 
 Following the line of thought from above, the \texttt{resulted\_in} relation then relates the \texttt{test} with its result, usually a \texttt{measure}.
 This relation should not be used for \texttt{caused} relations.
@@ -806,7 +835,7 @@ This relation should not be used for \texttt{caused} relations.
     {}
     {} 
     
-\subsection{Interacted\_with}
+\subsection{Interacted\_with}\label{rel_interacted}
 
 In some cases, a \dr--\dr interaction results in a \dis. 
 The relation \texttt{interacted\_with} is defined for exactly this purpose.
@@ -817,7 +846,7 @@ The relation \texttt{interacted\_with} is defined for exactly this purpose.
     {}
     {} 
 
-\subsection{Change}
+\subsection{Change}\label{rel_change}
 
 For connecting the \texttt{drug status change triggers} with the \dr that is affected, we use the \texttt{change} relation.
 
@@ -833,5 +862,14 @@ For connecting the \texttt{drug status change triggers} with the \dr that is aff
     {}
     {} 
 
+\subsection{Time}\label{rel_time}
 
+The relation time connects a \texttt{timex} expression with either a \texttt{drug} or a \texttt{disorder}.
+
+\examples{ex:re_time}
+    {}
+    {}
+    {}
+    {} 
+    
 \end{document}
