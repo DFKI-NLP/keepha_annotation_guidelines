@@ -241,7 +241,7 @@ We always try to follow the patient's perspective: If the patient thinks somethi
 
 \examples{ex:descriptions}
     {(\ldots) I felt like I would imagine someone that had \disorder{MS} would feel like, \disorder{swaying}, \disorder{pulling myself up stairs}, (\ldots)}
-    {}
+    {(\ldots) J'ai \disorder{failli tomber dans les pommes}, (\ldots)}
     {Die \anatomy{Beine} \disorder{fühlen sich nicht stark} man hat \disorder{Gefühle des Ungleichgewichts}.}
     {}
 
@@ -269,7 +269,7 @@ We provide more details on negation in section \ref{sec:neg}.
 
 \examples{negation}
     {There is no \disorderNeg{abnormality}.}
-    {}
+    {Par contre j'étais pas plus \disorderNeg{fatigué} que la normale. }
     {Folgende Beschwerden sind schon weg: \disorderNeg{Nackenschmerzen}, ...}
     {}
 
@@ -280,7 +280,7 @@ We do not include determiners in an entity.
 
 \examples{determiners}
     {*I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
-    {}
+    {(\ldots) J’ai développé une très forte \disorder{sinusite chronique},(\ldots)}
     {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da ...}
     {(no determiners in Japanese)}
 
@@ -291,7 +291,7 @@ Consecutive entities or enumerations that are, for example, separated by commas 
 
 \examples{enumerations}
     {I felt \disorder{pain} in my \anatomy{arms}, \anatomy{legs}, \anatomy{ears} and \anatomy{toes}.}
-    {}
+    {\measure{4} \other{opèrations},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, (\ldots)}
     % {*Ich fühle die \disorder{Schmerzen} in meinen \anatomy{Armen}, \anatomy{Beinen}, \anatomy{Ohren} und \anatomy{Zehen}.}
     {\timexPIT{Vor einem Jahr}~ bekam ich kurz hintereinander zwei \disorder{Herzinfarkte}, einen \disorder{Schlaganfall} und eine \disorder{Embolie}.}
     {}
@@ -390,7 +390,7 @@ Further, mentions referring to a drug but not clearly stating the drug's name ar
 
 \examples{ex:drug_ref}
     {The \drug{pill} \evalPos{does its job}, (...)}
-    {}
+    {(\ldots), j'ai pris deux \drug{pilules} \timexDate{par jour}, (\ldots)}
     {Ich nehme die \drug{Tabletten} \timexDur{seit 2 Tagen}.}
     {}
 
@@ -418,7 +418,7 @@ We annotate adverse biological processes as \dis, and neutral/positive processes
 
 \examples{ex:dis_vs_func}
     {... could not \disorder{urinate} ..}
-    {}
+    {nez entièrement bloqué au point d’avoir du \disorder{mal à respirer} mais \ldots}
     {Entweder \disorder{liegt man schlaflos wach} oder man wacht nach ein paar Stunden auf und  \disorder{kann nicht mehr schlafen}.}
     {}
 
@@ -428,7 +428,7 @@ With this, we annotate all organs or anatomical parts.
 
 \examples{ex:anatomy}
     {Had numerous odd \disorder{aches}, especially in the \anatomy{leg area}.}
-    {}
+    {\ldots, des \disorder{boutons} de la \anatomy{tête} au \anatomy{pied}, \ldots}
     {Ich besitze nur noch eine \anatomy{Niere}.}
     {}
 
@@ -459,7 +459,7 @@ With \texttt{function}, we mark all body functions and processes.
 This includes mental functions, too. 
 \examples{ex:function}
     {\test{EKG} perfect, \test{tri's} were perfect, \function{blood sugar} perfect, etc }
-    {}
+     {}
     {\drugStop{Opripramol} \trigger{hatte} ich ja nur \timexDur{zwei Abende lang}~zum \function{Schlafen} je \measure{eine halbe} genommen, also nur eine \measure{winzige Dosis}.}
     {} 
 
@@ -488,7 +488,7 @@ With \texttt{measure}, we mark all kinds of measurements, e.g.~drug dosages, tes
 
 \examples{ex:measure}
     {}
-    {}
+    {\ldots, bon ça fait beaucoup, depuis 1 an et demi ,perfusions d entyvio tous les mois. \drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), \ldots}
     {Das \drug{Utrogest} sind \route{Weichkapseln} mit \measure{100 mg} \drug{naturid.~Progesteron} und sie sind verschreibungspflichtig.}
     {} 
 
@@ -513,12 +513,12 @@ Time expressions include e.g.~``night'', ``afternoon'', ``for one week'' (mostly
 If a mention like ``pill'' refers to a drug (and not to the means of intake), it should be annotated as \dr.
 \examples{ex:route}
     {It has not eliminated the need for \route{oral} \drug{pain meds} in all situatations but \evalPos{has helped}.}
-    {}
+    {\ldots, depuis 1 an et demi, \route{perfusion} d \drug{entyvio} tous les mois. \ldots}
     {Ich habe das leider nur mit \route{Tabletten} gemacht (mir wollte keiner meiner Ärzte eine \route{Infusion} verschreiben).}
     {} 
 
 \subsection{Medication Status} \label{ent_drug_status}
-Here, we annotate phrases describing a change in medication intake.
+Here, we annotate phrases describing or triggering a change in medication intake.
 To specify the change, we add the attributes \texttt{start} (the trigger specifies that a medication was just started), \texttt{stop} (a medication was stopped), \texttt{increase} (the dosage was increased), \texttt{decrease} (the dosage was decreased), and \texttt{unique\_dose} (the medication was only given/taken once) \emph{to the \dr they refer to}.
 
 \examples{ex:change}
@@ -534,7 +534,7 @@ Since social media users use creative names that are not necessarily easy to fin
 
 \examples{ex:user}
     {*Dear \user{XXX}, thank you for your message.}
-    {Bonjour \user{XXX} pour ma part ils n’ont pas été efficace (\ldots)}
+    {Bonjour \user{XXX} pour ma part ils n'ont pas été efficace (\ldots)}
     {Liebe \user{XXX} danke für deinen Bericht.}
     {} 
 
@@ -543,7 +543,7 @@ In case there were any URLs or e-mail addresses missed when de-identifying the d
 
 \examples{ex:url}
     {Go to \link{www.xxxxx.xx.xx} for more info.}
-    {}
+    {Si vous souhaitez discuter plus avant: \link{www.xxx xxxx xxx xxx}.}
     {Wenn du möchtest, geh doch mal auf die Seite \link{www.xxx xxxx xxx xxx}.}
     {} 
 
@@ -626,10 +626,10 @@ Therefore, we add, if applicable, the sentiment markers \texttt{positive}, \text
     {Dann, nachdem ich mit \drugStart{Triseqenz Hormontabl.} \trigger{angefangen} habe, nur \timexDur{1 Woche später}~war ich \evalPos{wie im 7. Himmel}.}
     {} 
 
-\subsection{Timex-Attributes}\label{sec:timex_attributes}
+\subsection{Temporality}\label{sec:timex_attributes}
 
 The following attributes of timex expressions are considered in our annotations:
-frequency, duration, date and relative point in time. The attributes should help to specify the annotated timex expressions in more detail. Some examples below:
+\texttt{frequency}, \texttt{duration}, \texttt{date} and \texttt{relative point in time}. The attributes should help to specify the annotated timex expressions in more detail. Some examples below:
 
 \examples{ex:att_timex}
     {}
@@ -639,13 +639,14 @@ frequency, duration, date and relative point in time. The attributes should help
 
 \subsection{Drug Changes}\label{sec:durg_change_attributes}
 
-The attributes referring to the entity drug, provide additional more details about its intake. We consider the attributes started, stopped, increased, decreased and unique dose. Some examples are provided below:
+The attributes referring to the entity \dr provide additional details about the context in which the medication is taken. We consider the attributes \texttt{started}, \texttt{stopped}, \texttt{increased}, \texttt{decreased} and \texttt{unique dose}. Some examples are provided below:
 
 \examples{ex:att_drug}
+    {I now have \trigger{increased} my intake of \drugInc{Vitamin C} to \measure{16,000 mg / day}, and we'll see how this works out.}
     {}
-    {}
-    {}
+    {Ich hatte \timexPIT{vor einer Woche}. die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \trigger{auf die Hälfte}.}
     {} 
+
 
 
 \section{Relations}\label{sec:relations}
