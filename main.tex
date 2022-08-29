@@ -153,7 +153,7 @@
 
 \section{Introduction}
 In the following, we describe the annotation scheme we developed for our multi-lingual corpus KEEPHA.
-The data for this corpus consists of different sources, e.g., patient forums, social media like Twitter, \textcolor{red}{TBD}.
+The data for this corpus consists of different sources, e.g., patient forums, social media like Twitter,  \textcolor{red}{TBD}.
 In Table \ref{tab:data}, we give an overview of the current annotated documents, their origin and the language they are written in.
 
 \begin{table}[h]
@@ -266,9 +266,9 @@ Later, we can re-investigate those ``special disorders''.
 
 
 
-\subsubsection*{Determiners}
+\subsubsection*{Determiners and Possessives}
 
-We do not include determiners in an entity.
+We do not include determiners or possessive pronouns in an entity.
 
 \examples{determiners}
     {*I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
@@ -324,7 +324,7 @@ Example with ``lung'':
             (discontinuous) 
     \end{itemize}
 
-    \item[3] Similarly as above, the phrase ``nerves / muscle cramps'' is annotated as two separate, partially overlapped entities:
+    \item[3] Similarly as above, the phrase ``nerves / muscle cramps'' is annotated as two separate, partially overlapping entities:
     \begin{itemize}
         \item \drawRelations
             {\disorder{nerves} \& / muscle \& \disorder{cramps}}
@@ -397,7 +397,14 @@ Further, mentions referring to a drug but not clearly stating the drug's name ar
 
 \examples{ex:drug_ref}
     {The \drug{pill} \evalPos{does its job}, (...)}
-    {(\ldots), j'ai pris deux \drug{pilules} \timexDate{par jour}, (\ldots)}
+    {
+    % (\ldots), j'ai pris \measure{deux} \drug{pilules} \timexDate{par jour}, (\ldots)
+    \drawRelations{
+    (\ldots), j'ai pris \& \measure{deux} \& \drug{pilules} \& \measure{par jour}\&, (\ldots)}
+            {
+            \discontRel{2}{4}
+            }
+    }
     {Ich nehme die \drug{Tabletten} \timexDur{seit 2 Tagen}.}
     {\drug{漢方薬}を購入して\trigger{飲み始めた}所、(\ldots)} % Once I started taking purchased Chinese medicine, ...
 
@@ -415,7 +422,7 @@ These expressions are also treated as disorders.
 \examples{ex:disorder}
     {I \trigger{tried} the advertised \drugStop{Arthritis medicines} with \disorder{severe side-effects} and only tried this one because the \doctor{doctor} had samples.}
     {J'ai une \disorder{maladie de crohn} \timexDur{depuis 36 ans}~ (\dots)}
-    {\timexDur{Nach langen, qualvollen 11 Monaten}. wurde eine \disorder{Gürtelrose ohne Ausschlag} diagnostiziert.}
+    {\timexDur{Nach langen, qualvollen 11 Monaten} wurde eine \disorder{Gürtelrose ohne Ausschlag} diagnostiziert.}
     {\timexPIT{昼間}の\drug{レクサプロ}が\disorder{副作用}\evalNeg{ひどくて}未だに\disorder{気持ち悪い}} % Daytime Lexapro still makes me sick because the side effects are so bad.
 
 
@@ -445,11 +452,12 @@ However, if a sentence describes a disorder found in a cell, the cell could be a
 
 
 \noindent \texttt{Anatomy} entities are \textit{not annotated} when within a larger entity such as within a \dis or \texttt{test}.
+Therefore, we prioritize the annotation of \dis and \texttt{test}.
 
 \examples{ex:anatomy_embedded}
     {\disorder{Pain} under \anatomy{ribs} , \disorder{restless legs} .}
     {}
-    {\other{Magen/Darmspiegelung}~, weil ich immer \disorder{Magenschmerzen} hatte.}
+    {\test{Magen/Darmspiegelung}~, weil ich immer \disorder{Magenschmerzen} hatte.}
     {**\disorder{肺がん}と宣告されてしまった} % I was diagnosed with lung cancer.
 
 
@@ -458,7 +466,7 @@ However, if a sentence describes a disorder found in a cell, the cell could be a
 With \texttt{test}, we mark all medical tests, interviews, examinations or any other procedure that produces a result to be used in medical diagnoses.
 
 \examples{ex:test}
-    {\test{Blood test} was normal.}
+    {\test{Blood test} was \measure{normal}.}
     % {des \disorder{douleurs} dans mes \anatomy{pouces} surtout celui de gauche, 
     {je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \drug{perf}, (...)}
     {Ich habe ganz \timexPIT{zu Beginn}~ der \function{WJ} auch mal \test{Speicheltests} machen lassen, mit zum Teil abstrusen Werten.}
@@ -473,7 +481,7 @@ This includes mental functions, too.
 %(e.g. ``I feel \function{anxiety} about how long this \disorder{pain} continues'') ; feeling anxiety against a pain seems a working mental function although it should be a \texttt{disorder} if it appeared as a mental issue). ← not applicable. negative mental function should be disorder always.
 
 \examples{ex:function}
-    {\test{EKG} perfect, \test{tri's} were perfect, \function{blood sugar} perfect, etc }
+    {\test{EKG} \measure{perfect}, \test{tri's} were \measure{perfect}, \function{blood sugar} \measure{perfect}, etc }
      {}
     {\drugStop{Opripramol} \trigger{hatte} ich ja nur \timexDur{zwei Abende lang}~zum \function{Schlafen} je \measure{eine halbe} genommen, also nur eine \measure{winzige Dosis}.}
     {**\function{白血球}は問題なかった。} % no problem with leukocyte
@@ -546,6 +554,7 @@ Note that, however, temporal measurements (e.g. ``5 times per month'') should be
 As temporal markers we define all mentions of \textit{frequency}, \textit{duration}, \textit{date}, or \textit{relative points in time}. 
 For a more narrow description, we use those characteristics (frequency, duration, \ldots) as attributes.
 Also, we include prepositions (e.g. ``in'', ``from'', ``before'', and ``since'') in the entity since these carry relevant information specifying the semantics of the expression.
+If there is no suitable attribute, we leave it blank.
 
 \textcolor{red}{``\timexDate{on around February (in) three years ago}'' (3年前の2月ごろに)? or split this into two parts?}
 
@@ -554,7 +563,7 @@ Time expressions include e.g.~``night'', ``afternoon'', ``for one week'' (mostly
 \textcolor{red}{``about \timexDate{two years ago}''? or ``\timexDate{about two years ago}''?}
 
 \examples{ex:time}
-    {{\color{red} Instead of taking the \drugDec{pill} \measure{2X daily}, as prescribed I take it (\ldots) usually \timexDur{about 3-4 times per week}, but often skipping \timexFreq{a week or two at a time}.}}
+    {{\color{red} Instead of taking the \drugDec{pill} \measure{2X daily}, as prescribed I take it (\ldots) usually \measure{about 3-4 times per week}, but often skipping \timexFreq{a week or two at a time}.}}
     {Bonjour, Je suis sous \drug{entyvio} \timexDur{depuis juillet 2019}~et ce traitement\\ \evalPos{fonctionne fort bien} au niveau de la \disorder{colite}. }
     {Hallo liebe $<$user$>$, \timexPIT{vor 2 Monaten}~habe ich meine \doctor{Frauenärztin} gefragt, da ich zwischendurch einen \test{Hormontest} wollte.}
     {\timexDate{3年前の2月ごろに}\disorder{乳がん}が発覚} % Breast cancer was discovered around February 3 years ago.
@@ -576,8 +585,13 @@ To specify the change, we add the attributes \texttt{start} (the trigger specifi
 
 \examples{ex:change}
     {I now have \trigger{increased} my intake of \drugInc{Vitamin C} to \measure{16,000 mg / day}, and we'll see how this works out.}
+    {
+        \drawRelations{*I took \& \measure{{three days' worth}} \& of \drugInc{medicines} \& \measure{at once} \& \timexDate{today}.}{
+        \discontRel{2}{4}
+        }
+    }
     {}
-    {Ich hatte \timex{vor einer Woche}. die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \trigger{auf die Hälfte}.}
+    {Ich hatte \timex{vor einer Woche} die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \trigger{auf die Hälfte}.}
     {} 
 
 
@@ -631,7 +645,7 @@ We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurs
 % \textcolor{blue}{Find some other way to make a difference between (1) self-reported events and (2) general knowledge / hearsay? $\rightarrow$ postpone this annotation to a future task.}
 
 \subsection{Other} \label{ent_other}
-With \other{other}, we annotate all other entities that seem important during annotation, but for which we do not have a category.
+With \other{other}, we annotate all other entities that refer to a kind of treatment or medical event (pregnancy, wound etc.), but for which we do not have a category.
 For example, since we do not have an entity for treatments that are not drugs (e.g., \textit{cognitive behavioral therapy}), we would annotate this term as \other{cognitive behavioral therapy}.
 Possible examples in addition are clinical tools (e.g. ``syringe'') and medical devices (e.g. ``wig'', ``dental implant'', and ``pacemaker'')
 \examples{ex:other}
@@ -884,7 +898,14 @@ This relation connects a \dr and the targeted \dis.
 \texttt{Dosage} relates a measurement, e.g.~the number of pills (\texttt{measure}), with a medication name (\dr).
 
 \examples{ex:dosage}
-    {I took \drugInc{lipitor} \measure{10mg} \timexDur{for only about two months},then \doctor{cardiologist} \trigger{increased} it to \measure{20mg}.}
+    {\drawRelations{
+        I took \& \drugInc{lipitor} \& \measure{10mg} \& \timexDur{for only about two months}, \ldots
+    % then \doctor{cardiologist} \trigger{increased} it to \& \measure{20mg}.}
+        }{
+        \dosageRel{2}{3}
+        % \dosageRel{2}{5}
+        }
+    }
     {}
     {}
     {\drawRelations{
@@ -971,17 +992,18 @@ Further, via the \texttt{refers\_to} relation, we can propagate the \texttt{caus
     }
 
 
-https://www.overleaf.com/project/6286261f32b55975e02946e6
-
-
     
 \subsection{Resulted\_in}\label{rel_resulted}
 
 Following the line of thought from above, the \texttt{resulted\_in} relation then relates the \texttt{test} with its result, usually a \texttt{measure}.
-This relation should not be used for \texttt{caused} relations.
+This relation should not be used for \texttt{caused} scenarios.
 
 \examples{ex:resulted}
-    {}
+    {    
+    \drawRelations{\test{Blood test} \& was \& \measure{normal}.}
+    {
+    \resultedRel{1}{3}
+    }}
     {}
     {}
     {} 
@@ -1034,9 +1056,8 @@ The relation time connects a \texttt{time} expression with either a \texttt{drug
     {}
     {\drawRelations{
     Bonjour, Je suis sous \&
-    \drugStart{entyvio} depuis \&
-    \&
-    \timexDate{juillet 2019} \&
+    \drugStart{entyvio} \&
+    \timexDate{depuis juillet 2019} \&
     et ce traitement (\ldots)
     }
     {\timeRel{3}{2}}
@@ -1049,5 +1070,30 @@ The relation time connects a \texttt{time} expression with either a \texttt{drug
         \timeRel{3}{1}
         }
     } 
+    
+    
+\section{Difficult Cases}
+
+In the following sections, we show examples that we found difficult to annotate.
+They are either ambiguous or it is in general not clear what is meant by the patient.
+
+\subsection{English}
+
+\begin{description}
+    \item[Semantics] \drawRelations{
+        \disorder{pain} \& on the \& \anatomy{left lung} \&, but \& \disorderNeg{no issues} \& were found on the \& \anatomy{right}}{
+        \discontRel{3}{7}
+        \experiencedRel{1}{3}
+        \experiencedRel{5}{7}
+        
+        }
+
+\end{description}
+
+\subsection{French}
+
+\subsection{German}
+
+\subsection{Japanese}
     
 \end{document}
