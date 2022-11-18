@@ -8,6 +8,17 @@
 \usepackage{booktabs}
 \usepackage{tabu}
 \usepackage{tikz-dependency}
+\usepackage{ocgx}
+\usepackage{tcolorbox}
+\usepackage{tablefootnote}
+\usepackage{float}
+\tcbset{%any default parameters
+  width=0.7\textwidth,
+  halign=justify,
+  center,
+  breakable,
+  colback=white    
+}
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
 \usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm]{geometry}
@@ -24,7 +35,7 @@
 \definecolor{asparagus}{HTML}{006B3C}
 \definecolor{ashgrey}{HTML}{B2BEB5}
 \definecolor{babyblue}{HTML}{A1CAF1}
-\definecolor{banana}{HTML}{FFE135}
+\definecolor{banana}{HTML}{FFA812}
 \definecolor{bittersweet}{HTML}{FE6F5E}
 \definecolor{brass}{HTML}{B5A642}
 \definecolor{sienna}{HTML}{E75480}
@@ -57,11 +68,12 @@
 \newcommand{\testNeg}[1]{\colorbox{asparagus}{#1$_{\texttt{test}}^{\textcolor{red}{negated}}$}\ }
 % FUNCTION
 \newcommand{\function}[1]{\colorbox{banana}{#1$_{\texttt{function}}$}\ }
-% EVALUATION & positive / negative / neutral EVALUATION
-\newcommand{\eval}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}$}\ }
-\newcommand{\evalPos}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{positive}}$}\ }
-\newcommand{\evalNeg}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{negative}}$}\ }
-\newcommand{\evalNeut}[1]{\colorbox{babyblue}{#1$_{\texttt{eval}}^{\textcolor{red}{neutral}}$}\ }
+\newcommand{\functionNeg}[1]{\colorbox{banana}{#1$_{\texttt{function}}^{\textcolor{red}{negated}}$}\ }
+% OPINION & positive / negative / neutral EVALUATION
+\newcommand{\op}[1]{\colorbox{babyblue}{#1$_{\texttt{opinion}}$}\ }
+\newcommand{\opPos}[1]{\colorbox{babyblue}{#1$_{\texttt{opinion}}^{\textcolor{red}{positive}}$}\ }
+\newcommand{\opNeg}[1]{\colorbox{babyblue}{#1$_{\texttt{opinion}}^{\textcolor{red}{negative}}$}\ }
+\newcommand{\opNeut}[1]{\colorbox{babyblue}{#1$_{\texttt{opinion}}^{\textcolor{red}{neutral}}$}\ }
 % MEASURE
 \newcommand{\measure}[1]{\colorbox{bittersweet}{#1$_{\texttt{measure}}$}\ }
 % TIME expressions and correspondign attributes
@@ -93,25 +105,32 @@
 % The following are macros for RELATION ANNOTATION:
 % #1: argument 1
 % #2: argument 2 of the relation 
-\newcommand{\causedRel}[2]{\depedge[edge unit distance=0.8ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{caused}}}
+\newcommand{\causedRel}[2]{\depedge[edge unit distance=0.8ex, label style={fill=yellow, font= \large}]{#1}{#2}{\texttt{caused}}}
 
-\newcommand{\treatmentRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{treatment\_for}}}
+\newcommand{\treatmentRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex,  label style={fill=yellow, font= \large}]{#1}{#2}{\texttt{treatment\_for}}}
 
-\newcommand{\dosageRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{dosage}}}
+\newcommand{\dosageRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font= \large}]{#1}{#2}{\texttt{has\_dosage}}}
 
-\newcommand{\experiencedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=airforceblue, font= \large}]{#1}{#2}{\texttt{experienced\_in}}}
+\newcommand{\experiencedRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font= \large}]{#1}{#2}{\texttt{experienced\_in}}}
 
-\newcommand{\examinedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{examined\_with}}}
+\newcommand{\examinedRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font= \large}]{#1}{#2}{\texttt{examined\_with}}}
 
-\newcommand{\refersRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{refers\_to}}}
+\newcommand{\refersRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font= \large}]{#1}{#2}{\texttt{refers\_to}}}
 
-\newcommand{\resultedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{resulted\_in}}}
+\newcommand{\resultedRel}[2]{\depedge[edge unit distance=0.8ex, edge height=4ex, label style={fill=yellow, font=\large}]{#1}{#2}{\texttt{has\_result}}}
 
-\newcommand{\interactedRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{interacted\_with}}}
+\newcommand{\interactedRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font= \large}]{#1}{#2}{\texttt{interacted\_with}}}
 
-\newcommand{\changeRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{change}}}
+\newcommand{\changeRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font=\large}]{#1}{#2}{\texttt{signals\_change\_of}}}
 
-\newcommand{\timeRel}[2]{\depedge[edge unit distance=0.5ex, label style={fill=brass, font= \large}]{#1}{#2}{\texttt{time}}}
+\newcommand{\timeRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font=\large}]{#1}{#2}{\texttt{has\_time}}}
+
+\newcommand{\evalRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font=\large}]{#1}{#2}{\texttt{is\_opinion\_about}}}
+
+\newcommand{\meansRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font=\large}]{#1}{#2}{\texttt{has\_route}}}
+
+\newcommand{\miscRel}[2]{\depedge[edge unit distance=0.5ex, edge height=4ex, label style={fill=yellow, font=\large}]{#1}{#2}{\texttt{misc}}}
+
 
 \newcommand{\discontRel}[2]{\depedge[edge unit distance=0.5ex, hide label, dashed]{#1}{#2}{\texttt{discontinuous}}}
 
@@ -129,19 +148,22 @@
 \newcommand{\examples}[5]{%
     {\small
     \lb{#1}{
-        \lba[en]{en}{#2}
-        \lbb[fr]{fr}{#3}
-        \lbb[de]{de}{#4}
-        \lbz[ja]{ja}{#5}
+        \lba[en]{}{#2}
+        \lbb[fr]{}{#3}
+        \lbb[de]{}{#4}
+        \lbz[ja]{}{#5}
     }}
 }
 
+% the translation environment; set to 0 to hide translations
+% \newcommand{\translation}[1]{\begin{ocg}{translation}{translation}{1}\footnotesize{\\\begin{tcolorbox}[hbox]\textit{#1}\end{tcolorbox}}\end{ocg}}
+\newcommand{\translation}[1]{\begin{ocg}{translation}{translation}{1}\footnotesize{\\\textit{[#1]}}\end{ocg}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%% MAIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Annotation Guidelines\\ Version 09/22}
 
-\title{Annotation Guidelines\\ Version 07/22}
-
-\author{KEEPHA}
-\date{July 2022}
+\author{KEEPHA team}
+\date{\today}
 
 \usepackage[hidelinks]{hyperref}
 \begin{document}
@@ -149,27 +171,29 @@
 \maketitle
 
 \tableofcontents
+% \vspace{2cm}
+
 \clearpage
 
 \section{Introduction}
 In the following, we describe the annotation scheme we developed for our multi-lingual corpus KEEPHA.
-The data for this corpus consists of different sources, e.g., patient forums, social media like Twitter,  \textcolor{red}{TBD}.
+The data for this corpus consists of different sources, e.g., patient fora, social media like Twitter,  \textcolor{red}{TBD}.
 In Table \ref{tab:data}, we give an overview of the current annotated documents, their origin and the language they are written in.
 
-\begin{table}[h]
+\begin{table}[ht]
 \centering
-\begin{tabular}{@{}llll@{}}
+\begin{tabular}{@{}lllll@{}}
 \toprule
-\textbf{name}   & {\textbf{language}}   & \textbf{\#examples}   & \textbf{source} \\ \midrule
+\textbf{name}   & {\textbf{language}}   & \textbf{\#documents}   & \textbf{source} & \textbf{description} \\ \midrule
 
-Lifeline-v1     &  German (de)          & 4,169                 &  www.lifeline.de \\ 
+Lifeline-v1     &  German (de)          & 4,169                 &  www.lifeline.de &\\ 
 
-                & French (fr)           &                       &                   \\
-lexapro\_ade    & Japanese (ja)         & 560                   & Twitter                  \\
-chiebukuro & Japanese (ja) & 59 & Yahoo! JAPAN Q\&A\\
+                & French (fr)           &                       &                 &  \\
+lexapro\_ade    & Japanese (ja)         & 560                   & Twitter              &    \\
+chiebukuro & Japanese (ja) & 59 & Yahoo! JAPAN Q\&A &\\
 \midrule
 
-Total           & de, fr, ja            &                       & \\
+Total           & de, fr, ja            &                       & &\\
 
 \bottomrule
 \end{tabular}
@@ -177,20 +201,31 @@ Total           & de, fr, ja            &                       & \\
 \label{tab:data}
 \end{table}
 
+\paragraph{Lifeline-v1} DESCRIPTION OF DATASET 
+\paragraph{french\_data} DESCRIPTION OF DATASET 
+\paragraph{lexapro\_ade} DESCRIPTION OF DATASET 
+\paragraph{chiebukuro} DESCRIPTION OF DATASET 
 
-\noindent We first define the entities we annotated (Section \ref{sec:entities}), including their attributes (Section \ref{sec:attributes}), using examples to highlight their usage.
+\noindent The annotation schema include entities, attributes and relations. First, we define the annotated entities (Section \ref{sec:entities}), including possible attributes. Moreover, together with each entity different examples of their usage are presented. Examples marked with \textbf{*} denote sentences which have been translated from a different language and sentences marked with \textbf{**} denote `artificial' examples, which have been completely made up. All other examples are real.
 Subsequently, we define the relations connecting these entities (Section \ref{sec:relations}).
 English examples are extracted from the CADEC corpus \textcolor{red}{CITATION}, while German examples are taken from the Lifeline data (v1 and unlabeled data).
 The French examples are from AFA.
 Lastly, the Japanese examples are taken from social media (Twitter) and forum (Yahoo! JAPAN Q\&A) posts.
-\textbf{**} denotes completely made-up examples, while \textbf{*} marks examples that are translations from another language. 
 
 
-\section{Entities}\label{sec:entities}
+\textcolor{blue}{You can toggle the translations of the non-English examples by clicking here\footnote{this feature is  unfortunately not supported by all PDF viewers}:}
 
-In Table \ref{tab:all_entities}, we show all available entities and their respective attributes.
+\begin{center}
+\begin{tcolorbox}[hbox]
+\switchocg{translation}{
+\textcolor{blue}{\texttt{show/hide translations}}
+}
+\end{tcolorbox}
+\end{center}
 
-\begin{table}[h]
+\noindent Note, sometimes the translated sentences do not perfectly fit the original translations of the target languages. However we keep the original annotation of the target language.
+
+\begin{table}[htbp]
 \centering
 % \renewcommand{\arraystretch}{1.3}
 \small
@@ -199,19 +234,19 @@ In Table \ref{tab:all_entities}, we show all available entities and their respec
 \textbf{section} & \textbf{entity}   & {\textbf{attributes}} \\ \midrule
 
 \ref{ent_drug} &\drug{\dr}                          & \texttt{increase}, \texttt{decrease}, \texttt{stopped}, \texttt{started}, \texttt{unique\_dose} \\
+\ref{ent_drug_status}&\trigger{\texttt{change trigger}}  & \\
 \ref{ent_disorder}&\disorder{\dis}                     & \texttt{negated}\\
+\ref{ent_function}&\function{\texttt{function}}        & \texttt{negated}\\                
 \ref{ent_anatomy}&\anatomy{\texttt{anatomy}}          & \\              
 \ref{ent_test}&\test{\texttt{test}}                & \\          
-\ref{ent_function}&\function{\texttt{function}}        & \\                
-\ref{ent_eval}&\eval{\texttt{evaluation}}    & \texttt{positive}, \texttt{negative}, \texttt{neutral} \\
+\ref{ent_eval}&\op{\texttt{opinion}}    & \texttt{positive}, \texttt{negative}, \texttt{neutral} \\
 \ref{ent_measure}&\measure{\texttt{measure}}          & \\
 \ref{ent_timex}&\timex{\texttt{time}}~             & \texttt{frequency}, \texttt{duration}, \texttt{date}, \texttt{point} \\
 \ref{ent_route}&\route{\texttt{route}}              & \\
-\ref{ent_drug_status}&\trigger{\texttt{drug\ status change trigger}}  & \\
+\ref{ent_doctor}&\doctor{\texttt{doctor}}            & \\
 \ref{ent_user}&\user{\texttt{user}}                & \\
 \ref{ent_url}&\link{\texttt{url}}                 & \\
 \ref{ent_personal}&\info{\texttt{personal information}}   & \\
-\ref{ent_doctor}&\doctor{\texttt{doctor}}            & \\
 \ref{ent_other}&\other{\texttt{other}}              & \\
 
 \bottomrule
@@ -219,6 +254,31 @@ In Table \ref{tab:all_entities}, we show all available entities and their respec
 \caption{Overview of the entities and their attributes.}
 \label{tab:all_entities}
 \end{table}
+
+
+
+\section{Entities}\label{sec:entities}
+
+In Table \ref{tab:all_entities}, we show all available entities and their respective attributes.
+Attributes are used to add more precise semantics to some of the entity annotations.
+
+% In Table \ref{tab:attributes}, we show all available attributes.
+
+% \begin{table}[ht]
+% \centering
+% \begin{tabular}{@{}lll@{}}
+% \toprule
+% \textbf{section} & \textbf{entity} & \textbf{attributes} \\ \midrule
+% \ref{sec:dis_neg} & \texttt{disorder} & negated \\
+% \ref{sec:func_neg} & \texttt{function} & negated \\
+% \ref{sec:sent}& \texttt{evaluation} & positive; negative; neutral\\
+% \ref{sec:timex_attributes}& \texttt{time} & frequency; duration; date; relative point in time \\
+% \ref{sec:durg_change_attributes}& \textbf{\dr} & started; stopped; increased; decreased; unique dose  \\ \bottomrule
+% \end{tabular}
+% \caption{The available attributes of the entities \dis, \texttt{evaluation}, \texttt{time}, and \dr.}
+% \label{tab:attributes}
+% \end{table}
+
 
 
 
@@ -234,10 +294,10 @@ If this does not work, a long span of the whole verb phrase (or even the whole c
 
 \examples{ex:scope}
     {I have \disorder{absolutely no appetite} and \disorder{constantly feel sick} to my \anatomy{stomach}.}
-    {(\ldots) ça fait \disorder{drolement mal} et \disorder{très genant}. }
-    {(\ldots) ich hatte in der Situation auch \disorder{absolut keinen Hunger}.}
-    {\disorder{急性骨髄性白血病}と診断されました} % I was diagnosed with acute myeloid leukemia.
-        % {全く食欲がない，胃がずっとムカムカする}
+    {(\ldots) ça fait \disorder{drolement mal} et \disorder{très genant}. \translation{It \disorder{hurts awfully}, and it is a \disorder{great discomfort} }} 
+    {(\ldots) ich hatte in der Situation auch \disorder{absolut keinen Hunger}. \translation{I was also \disorder{absolutely not hungry} in this situation.}}
+    {**\disorder{激しい嘔吐}に見舞われました \translation{I suffered \disorder{severe vomiting}.}} % I suffered severe vomiting.
+
 
 \subsubsection*{Metaphors and descriptive language}
 
@@ -246,9 +306,10 @@ We always try to follow the patient's perspective: If the patient thinks somethi
 
 \examples{ex:descriptions}
     {(\ldots) I felt like I would imagine someone that had \disorder{MS} would feel like, \disorder{swaying}, \disorder{pulling myself up stairs}, (\ldots)}
-    {(\ldots) J'ai \disorder{failli tomber dans les pommes}, (\ldots)}
-    {Die \anatomy{Beine} \disorder{fühlen sich nicht stark} man hat \disorder{Gefühle des Ungleichgewichts}.}
-    {*\drug{マイスリー}を飲むと\anatomy{脳}が\disorder{強制終了}する} % Zolpidem makes my brain shut down
+    {(\ldots) J'ai \disorder{failli tomber dans les pommes}, (\ldots) \translation{I \disorder{almost passed out}}}
+    {Die \anatomy{Beine} \disorder{fühlen sich nicht stark} man hat \disorder{Gefühle des Ungleichgewichts}. \translation{The \anatomy{legs} \disorder{do not feel strong}, there are \disorder{feelings of imbalance}}}
+    % {} % Zolpidem makes my brain shut down
+    {ずっと\anatomy{お腹}が\disorder{ゴロゴロいってる} \translation{My \anatomy{stomach} \disorder{keeps saying grrrr}}} % 
 
 %Seit zwei Tagen ist meine \entity{Übelkeit}$^{\attribute{negated}}$ wieder weg, doch da dieses Kopfkino mich vollkommen fertig macht und mir viel an Lebensqualität und -freude nimmt, .. || Ich habe nun das Problem, dass meine Haut sehr juckt. || Ich habe auch immer wieder mal seltsames Herzstolpern. Manchmal überschlägt sich das Herz, dann setzt es mal wieder kurz aus, manchmal hab ich für ein paar Sekunden ein Rasen, ||
 
@@ -260,9 +321,9 @@ Later, we can re-investigate those ``special disorders''.
 
 \examples{ex:metaphors}
     {I felt always like I had a \disorder{veil over my head} and \disorder{lead in my legs}.}
-    {(\ldots) à chaque effort, mon \anatomy{cœur} \disorder{bat la chamade} et jai ne n'ai  \disorder{pas beaucoup de souffle}.}
-    {(\ldots) nur \timexPIT{1 Woche später}~war ich \evalPos{wie im 7. Himmel}.}
-    {ずっと\anatomy{お腹}が\disorder{ゴロゴロ}いってる} % My stomach keeps saying grrrr
+    {(\ldots) à chaque effort, mon \anatomy{cœur} \disorder{bat la chamade} et jai ne n'ai \\ \disorder{pas beaucoup de souffle}. \translation{With every effort, my \anatomy{heart} is \disorder{racing} and I am \disorder{out of breath}}}
+    {(\ldots) nur \timexPIT{1 Woche später}~war ich \opPos{wie im 7. Himmel}. \translation{Just \timexPIT{one week later}, I was \opPos{on cloud nine}.}}
+    {*\drug{マイスリー}を飲むと\anatomy{脳}が\disorder{強制終了}する \translation{\drug{Zolpidem} makes my \anatomy{brain} \disorder{shut down}}}
 
 
 
@@ -272,9 +333,9 @@ We do not include determiners or possessive pronouns in an entity.
 
 \examples{determiners}
     {*I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
-    {(\ldots) J'ai développé une \disorder{très forte sinusite chronique},(\ldots)}
-    {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da ...}
-    {(no determiners in Japanese)}
+    {(\ldots) J'ai développé une \disorder{très forte sinusite chronique},(\ldots) \translation{I have developed \disorder{severe chronic sinusitis}}}
+    {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da \ldots \translation{\timexDur{Since two days}~ my \disorderNeg{nausea} is gone again, but since \ldots}}
+    {**この\drug{薬}は\opNeg{効かなかった} \translation{This \drug{drug} \opNeg{didn't work}.}}
 
 
 \subsubsection*{Enumerations}
@@ -283,10 +344,9 @@ Consecutive entities or enumerations that are, for example, separated by commas 
 
 \examples{enumerations}
     {I felt \disorder{pain} in my \anatomy{arms}, \anatomy{legs}, \anatomy{ears} and \anatomy{toes}.}
-    {\measure{4} \other{opèrations},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, (\ldots)}
-    % {*Ich fühle die \disorder{Schmerzen} in meinen \anatomy{Armen}, \anatomy{Beinen}, \anatomy{Ohren} und \anatomy{Zehen}.}
-    {\timexPIT{Vor einem Jahr}~ bekam ich kurz hintereinander zwei \disorder{Herzinfarkte}, einen \disorder{Schlaganfall} und eine \disorder{Embolie}.}
-    {\anatomy{まつ毛}や\anatomy{眉毛}も\disorder{抜けてしまった}ので} % Because my eyelashes and eyebrows have fallen out too.
+    {\measure{4} \other{opèrations},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, (\ldots) \translation{\measure{4} \other{surgeries},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, \ldots}}
+    {\timexPIT{Vor einem Jahr}~ bekam ich \timexFreq{kurz hintereinander} zwei \disorder{Herzinfarkte}, einen \disorder{Schlaganfall} und eine \disorder{Embolie}. \translation{\timexPIT{A year ago} I had two \disorder{heart attacks}, a \disorder{stroke} and an \disorder{embolism} in \timexFreq{quick succession}.}}
+    {\anatomy{まつ毛}や\anatomy{眉毛}も\disorder{抜けてしまった}ので \translation{Because my \anatomy{eyelashes} and \anatomy{eyebrows} have \disorder{fallen out} too.}}
 
 \subsubsection*{Nested Entities}
 
@@ -296,41 +356,42 @@ The general rule is to apply a syntax-based decision, i.e.~basic noun phrases (w
 
 This is also language-dependant:
 \begin{itemize}
-    \item German: do not split compound words, e.g.~``\disorder{Kopfschmerzen}'' is annotated as one entity.
+    \item German: do not split compound words, e.g.~``\disorder{Kopfschmerzen}'' \textit{[headache]} is annotated as one entity.
     \item Japanese: 
     \begin{itemize}
         \item do not split compound words based on standard tokenization
         \item split noun phrases (including compound nouns) at ``prepositions'' (particles て, に, を, は, の)
     \end{itemize}
     
-    \item French: basic noun phrase (``\disorder{douleur thoracique}'') is annotated as one \dis, otherwise  we separate the annotations, e.g.~``\disorder{douleur} au \anatomy{thorax}''.
+    \item French: basic noun phrase (``\disorder{douleur thoracique}'') \textit{[chest pain]} is annotated as one \dis, otherwise we separate the annotations, e.g.~``\disorder{douleur} au \anatomy{thorax}'' \textit{[chest pain]}.
 \end{itemize}
 
 
 \subsubsection*{Discontinuous Entities}
 
-Discontinuous entities are allowed if there is no easier solution, i.e.~when annotation as one entity is not possible or does not make sense.
+Discontinuous entities are allowed if there is no easier solution, i.e.~when annotation as one entity is not possible or does not make sense. 
+Please see the following examples:
 
-Example with ``lung'':
+% Example with ``lung'':
 \begin{enumerate}
-    \item[1] ``it hurts in the \anatomy{left lung} and \anatomy{right lung}'' (two entities)
+    \item ``it hurts in the \anatomy{left lung} and \anatomy{right lung}'' (two entities)
     
-    \item[2] ``pain on the left lung, but no issues were found on the right'' $\rightarrow$ annotation using two separate, partially overlapping entities, one continuous and one discontinuous as shown below:
+    \item ``pain on the left lung, but no issues were found on the right'' $\rightarrow$ annotation using two separate, partially overlapping entities, one continuous and one discontinuous as shown below:
     \begin{itemize}
-        \item ``\disorder{pain} on the \anatomy{left lung}, but no issues were found on the right'' (continuous)
+        \item ``\disorder{pain} on the \anatomy{left lung}, but no issues were found on the right'' (continuous entity)
         \item \drawRelations
-            {\disorder{pain} \& on the left \& \anatomy{lung} \& , but no issues were found on the \& \anatomy{right}}
+            {pain \& on the  \& left \anatomy{lung} \& , but \disorderNeg{no issues} were found on the \& \anatomy{right}}
             {\discontRel{3}{5}}\\
-            (discontinuous) 
+            (discontinuous entity) 
     \end{itemize}
 
-    \item[3] Similarly as above, the phrase ``nerves / muscle cramps'' is annotated as two separate, partially overlapping entities:
+    \item Similarly as above, the phrase ``nerves / muscle cramps'' is annotated as two separate, \textit{partially overlapping} entities:
     \begin{itemize}
         \item \drawRelations
             {\disorder{nerves} \& / muscle \& \disorder{cramps}}
             {\discontRel{1}{3}}
-            (discontinuous)
-        \item ``nerves / \disorder{muscle cramps}'' (continuous)
+            (discontinuous entity)
+        \item ``nerves / \disorder{muscle cramps}'' (continuous entity)
     \end{itemize}
 
 
@@ -342,25 +403,25 @@ Example with ``lung'':
 
 Punctuation is not to be included in the annotation (except for, e.g., hyphens or abbreviations etc.).
 
-\subsubsection*{Spelling Mistakes / Slang}
+\subsubsection*{Spelling Mistakes / Colloquial Language}
 
 Since spelling mistakes can occur often particularly when writing medication names, we treat them as if correctly written as long as we can easily understand what the user meant.
 
 \subsubsection*{Abbreviations}
 
 Further, also abbreviated expressions are to be annotated.
-Abbreviations are often used for drug names, but also for disorders or doctor's names.
+Abbreviations are often used for drug names, but also for disorders or doctors' profession names.
 
 \examples{ex:abbr_general}
     {(\ldots) I felt like I would imagine someone that had \disorder{MS} would feel like (\ldots)}
     % \disorder{swaying}, \disorder{pulling myself up stairs,} \disorder{dragging legs}.}
-    {Pour l'instant le \doctor{gastro} ne me parle pas de \other{rémission} !}
-    {Ich glaube, ich bleibe auch erst einmal bei dem \doctor{Gyn} der letzten Jahre, (\ldots).}
-    {*\drug{ドセ}の\disorder{浮腫み}も気になる} % I'm concerned about swelling by doce(taxel)
+    {Pour l'instant le \doctor{gastro} ne me parle pas de \other{rémission} ! \\ \translation{so far, my \doctor{GI} hasn't said anything about \other{remission} !}}
+    {Ich glaube, ich bleibe auch erst einmal bei dem \doctor{Gyn} der letzten Jahre, (\ldots). \translation{I think I'll stay with my \doctor{gyn} of the last years for the time being.}}
+    {*\drug{ドセ}の\disorder{浮腫み}も気になる \translation{I'm concerned about \disorder{swelling} by \drug{doce(taxel)}}} % I'm concerned about swelling by doce(taxel)
 
 \subsection{Drug}\label{ent_drug}
 
-With \dr, we annotate any mention of a medication name, brand, or agent.
+With \drug{\dr}, we annotate any mention of a medication name, brand, or agent.
 We also include dietary supplements.
 
 % {\color{blue} [Original]
@@ -374,44 +435,78 @@ However, we label completely non-drug involving therapies \texttt{other} instead
 % }
 
 \examples{ex:drug}
-    {\drug{Lipidor} \evalPos{did the job} on my \function{cholesterol} both LDL and HDL.}
-    {l'\drug{entyvio} c 'est pas miracle mais bon \evalPos{ça aide}. bon courage à tous.}
-    {Ich nehme \drug{Betablocker}.}
-    {\timexPIT{夜}は\drug{睡眠導入剤}で\function{眠れている}んですけど、(\ldots)} % I can sleep at night with a sleep aid,
+    {\drug{Lipidor} \opPos{did the job} on my \function{cholesterol} both LDL and HDL.}
+    {l'\drug{entyvio} c 'est pas miracle mais bon \opPos{ça aide}. bon courage à tous. \\ \translation{\drug{entyvio} is no miracle, but well, \opPos{it does help}. good luck to all.}}
+    {Ich nehme \drug{Betablocker}. \translation{I take \drug{beta blockers}.}}
+    {\timexFreq{夜}は\drug{デパス}で\function{眠れている}んですけど、(\ldots) \translation{I can \function{sleep} \timexFreq{at night}~ with \drug{Etizolam}}}
+
+
+\subsubsection{Triggers for Medication Status Changes} \label{ent_drug_status}
+Here, we annotate phrases describing or triggering a change in medication intake with the entity tag \trigger{\texttt{change\_trigger}}.
+Typical words might be, for example, \textit{increase}, \textit{reduce}, \textit{begin}, \textit{one dose of}, etc.
+
+To specify what kind of change occurred, we add the attributes \texttt{start} (the trigger specifies that a medication was just started), \texttt{stop} (a medication was stopped), \texttt{increase} (the dosage was increased), \texttt{decrease} (the dosage was decreased), and \texttt{unique\_dose} (the medication was only given/taken once) \emph{to the \dr they refer to} (see below in Section \ref{sec:drug_change_attributes}).
+
+\examples{ex:change}
+    {I now have \trigger{increased} my intake of \drugInc{Vitamin C} to \measure{16,000 mg / day}, and we'll see how this works out.}
+    {J'ai \trigger{oublié} de prendre mon \drugDec{citalopram} \timexDur{pendant 3 jours}\\\translation{I \trigger{forgot} to take my \drugDec{citalopram} \timexDur{for 3 days}}}
+    {Ich hatte \timexPIT{vor einer Woche}~ die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \measure{auf die Hälfte}. \translation{I had \trigger{reduced} \drugDec{beta blockers} \timexPIT{a week ago}~ but only from \measure{23mg} to \measure{half of it}}}
+    {\timexPIT{10日後くらいに}\drugStart{ドセタキセル}が\trigger{始まります} \translation{\drugStart{Docetaxel} \trigger{starts} \timexPIT{in about 10 days}.}}
     
-\subsubsection*{Abbreviations}
+
+
+\subsubsection{Attribute: Drug Changes}\label{sec:drug_change_attributes}
+
+The attributes referring to the entity \dr provide additional details about the context in which the medication is taken. We consider the attributes \texttt{started}, \texttt{stopped}, \texttt{increased}, \texttt{decreased} and \texttt{unique dose}. Some examples are provided below:
+
+\examples{ex:att_drug}
+    {I now have \trigger{increased} my intake of \drugInc{Vitamin C} to \measure{16,000 mg / day}, and we'll see how this works out.}
+    {Je suis sous \drug{sertraline} (\measure{25} \trigger{puis} \measure{50} en dosage) \\ \textit{[I've been taking \drug{sertraline} (dosage \measure{25} \trigger{then} \measure{50} )]} }
+    {Ich hatte \timexPIT{vor einer Woche}. die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \trigger{auf die Hälfte}.}
+    {*\disorder{副作用}が強くて、\drugStop{レクサプロ}\trigger{辞めました}！ \translation{I \trigger{stopped} \drugStop{Lexapro} because a \disorder{side effect} was strong}} 
+
+If the patient describes having forgotten the medicine, we add the attribute \texttt{decrease} except the context suggest a complete stop (then we add \texttt{stop}).
+Conversely, if she describes taking, for example, a double dose, this is to be marked as an \texttt{increase}.
+
+
+\subsubsection*{Abbreviations of drug names}
 
 We also annotate abbreviations or colloquial names of drugs. 
 
 \examples{ex:drug_abbr}
     {*In my desperation, I also tried an \drug{AD}.}
     % {des \disorder{douleurs} dans mes \anatomy{pouces} surtout celui de gauche, 
-    {(\ldots) je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \drug{perf}, (...)}
+    {(\ldots) je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \drug{perf}, (...)\\ \translation{I'm having a \test{CT} for \anatomy{both hands} on \timexPIT{Wednesday morning}, before my \drug{IV}}}
     % {Hatte in meiner Verzweiflung ja auch ein \drug{AD} ausprobiert.}
-    {Nun habe ich also mit \drugStop{Candesartan} und \drugStop{Opi} (\ldots) \trigger{aufgehört}.}
-    {なんか\drug{SSRI}増やしてほしい。} % I need more SSRI (lit.: (I) want (the doctor) to increase my SSRI)
+    {Nun habe ich also mit \drugStop{Candesartan} und \drugStop{Opi} (\ldots) \trigger{aufgehört}. \translation{So now I have \trigger{stopped} using \drugStop{Candesartan} and \drugStop{Opi}.}}
+    {なんか\drug{SSRI}増やしてほしい。\translation{I need more \drug{SSRI}}} % I need more SSRI (lit.: (I) want (the doctor) to increase my SSRI)
     
 \subsubsection*{Mentions referring to a drug}
 
 Further, mentions referring to a drug but not clearly stating the drug's name are also annotated (see also example \ref{ex:disorder} (en)).
 
 \examples{ex:drug_ref}
-    {The \drug{pill} \evalPos{does its job}, (...)}
+    {The \drug{pill} \opPos{does its job}, (...)}
     {
     % (\ldots), j'ai pris \measure{deux} \drug{pilules} \timexDate{par jour}, (\ldots)
     \drawRelations{
     (\ldots), j'ai pris \& \measure{deux} \& \drug{pilules} \& \measure{par jour}\&, (\ldots)}
             {
             \discontRel{2}{4}
-            }
+            } 
+            \translation{\drawRelations{
+                I took \& \measure{two} \& \drug{pills} \& \measure{a day}}
+            {
+            \discontRel{2}{4}
+            }}
     }
-    {Ich nehme die \drug{Tabletten} \timexDur{seit 2 Tagen}.}
-    {\drug{漢方薬}を購入して\trigger{飲み始めた}所、(\ldots)} % Once I started taking purchased Chinese medicine, ...
+    {Ich nehme die \drug{Tabletten} \timexDur{seit 2 Tagen}. \translation{I take those \drug{pill} \timexDur{for two days}.}}
+    {\drug{漢方薬}を購入して\trigger{飲み始めた}所、(\ldots) \translation{Once I \trigger{started} taking purchased \drug{Chinese medicine}, \ldots}}
 
 
 \subsection{Disorder}\label{ent_disorder}
 
-A \dis annotation denotes any disease, sign or symptom related to the patient's health, including mental issues.
+A \disorder{\dis} annotation denotes any disease, sign or symptom related to the patient's health, including mental issues.
 Sometimes a \dis may be expressed as a parameter in combination with a value: e.g., \disorder{high LDL} (parameter=LDL, value=high)\footnote{If the value does not directly modify the target noun, the corresponding appropriate entities should be labeled separately. E.g. ``\function{LDL} was \measure{high}''}. 
 When the value is outside the normal range, this describes a \dis.
 Sometimes, disorders are only referred to very broadly, e.g., it might happen that the patient simply says ``I do not feel well'';
@@ -421,20 +516,87 @@ These expressions are also treated as disorders.
 
 \examples{ex:disorder}
     {I \trigger{tried} the advertised \drugStop{Arthritis medicines} with \disorder{severe side-effects} and only tried this one because the \doctor{doctor} had samples.}
-    {J'ai une \disorder{maladie de crohn} \timexDur{depuis 36 ans}~ (\dots)}
-    {\timexDur{Nach langen, qualvollen 11 Monaten} wurde eine \disorder{Gürtelrose ohne Ausschlag} diagnostiziert.}
-    {\timexPIT{昼間}の\drug{レクサプロ}が\disorder{副作用}\evalNeg{ひどくて}未だに\disorder{気持ち悪い}} % Daytime Lexapro still makes me sick because the side effects are so bad.
+    {J'ai une \disorder{maladie de crohn} \timexDur{depuis 36 ans}~ (\dots) \\ \translation{I've had \disorder{crohn's disease} \timexDur{for 36 years}~ (\dots)}}
+    {\timexDur{Nach langen, qualvollen 11 Monaten}~ wurde eine \disorder{Gürtelrose ohne Ausschlag} diagnostiziert. \translation{\timexDur{After a long, agonizing 11 months}, I was diagnosed with \disorder{shingles without a rash}.}}
+    {\timexPIT{昼間}の\drug{レクサプロ}が\disorder{副作用}\opNeg{ひどくて}未だに\disorder{気持ち悪い} \translation{\timexPIT{Daytime} \drug{Lexapro} still \disorder{makes me sick} because the \disorder{side effects} are so \opNeg{bad}}}
 
 
-\subsubsection*{Disorder vs. Function}
+\subsubsection*{Disorder vs. Function}\label{sec:dis_vs_func}
 
-We annotate adverse biological processes as \dis, and neutral/positive processes as \texttt{function}, i.e.,~a negated \texttt{function} is a \dis (but not vice versa).
+We annotate adverse biological processes as \dis, and neutral/positive processes as \texttt{function}, i.e.~in general, a negated \texttt{function} is a \dis (but not vice versa).
 
-\examples{ex:dis_vs_func}
-    {(\ldots) \disorder{could not urinate} (\ldots)}
-    {nez entièrement bloqué au point d'avoir du \disorder{mal à respirer} mais \ldots}
-    {Entweder \disorder{liegt man schlaflos wach} oder man wacht nach ein paar Stunden auf und  \disorder{kann nicht mehr schlafen}.}
-    {\drug{抗うつ剤}だからやっぱり\disorder{記憶力の低下}が見られるそうですね。} % I hear that because it's an antidepressant, you still see memory loss.
+To distinguish \dis versus \texttt{function}, we apply the following rules:
+
+\begin{enumerate}
+    \item If the entity in question is a noun phrase and describes a malfunction, we label it \disorder{\dis} rather than \functionNeg{negated function}:
+        ``I have \disorder{no appetite}.''
+    \item If, however, a malfunction is expressed beyond a continuous noun phrase, we label it \functionNeg{negated function}:
+        ``My \functionNeg{appetite} has disappeared.''
+\end{enumerate}
+
+
+\subsubsection{Negation of Disorders}\label{sec:neg_dis}
+
+Currently, we only apply the negation attribute to the entity annotation \dis and \texttt{function}. %as negated \texttt{function} entities are annotated as \dis. 
+% A negation of drugs is not necessary, since we cover a stopped medication treatment using the \dr attributes.
+For \dis, note that we do not give ``negated'' value to the disorders that do not completely disappear (e.g. ``a \disorder{long-running headache} was \opPos{almost eased}'') because they still exist at least a little.
+Most such cases would accompany \texttt{opinion} entities, which are regarded as richer descriptions of the disorders' status.
+
+\examples{negation}
+    {There is no \disorderNeg{abnormality}.}
+    {Par contre j'étais pas plus \disorderNeg{fatigué} que la normale.\translation{however, I wasn't more \disorderNeg{tired} than usual.}}
+    {Folgende Beschwerden sind schon weg: \disorderNeg{Nackenschmerzen}, \ldots \translation{The following ailments are already gone: \disorderNeg{neck pain}, }}
+    {*\disorderNeg{イライラ}などはしなかった \translation{I didn't \disorderNeg{feel irritated} or something}} % I didn't feel irritated or something
+
+
+% \examples{ex:dis_vs_func}
+%     {(\ldots) \disorder{could not urinate} (\ldots)}
+%     {nez entièrement bloqué au point d'avoir du \disorder{mal à respirer} mais \ldots \translation{my \anatomy{nose} is totally congested, I \disorder{ can barely breathe} but \ldots}}
+%     {Entweder \disorder{liegt man schlaflos wach} oder man wacht nach ein paar Stunden auf und \disorder{kann nicht mehr schlafen}. \translation{Either you \disorder{lie awake sleepless} or you wake up after a few hours and \disorder{can't sleep anymore}.}}
+%     {\drug{抗うつ剤}だからやっぱり\disorder{記憶力の低下}が見られるそうですね。\translation{I hear that because it's an \drug{antidepressant}, you still see \disorder{memory loss}.}} % I hear that because it's an antidepressant, you still see memory loss.
+
+\subsection{Function} \label{ent_function}
+
+With \texttt{function}, we mark all body functions and processes.
+Body functions are often represented in biomarkers (e.g., ``HDL'' and ``white blood cells (WBC)''.
+This includes mental functions, too. 
+
+%(e.g. ``I feel \function{anxiety} about how long this \disorder{pain} continues'') ; feeling anxiety against a pain seems a working mental function although it should be a \texttt{disorder} if it appeared as a mental issue). ← not applicable. negative mental function should be disorder always.
+
+\examples{ex:function}
+    {\drug{Lipidor} \opPos{did the job} on my \function{cholesterol} both LDL and HDL.}
+    {La seule chose qu'on m'a donné pour essayer de \function{dormir} c'est du \drug{Xanax} \translation{\drug{Xanax} is the only thing I was given to help me \function{sleep}}}
+    {\drugStop{Opripramol} \trigger{hatte} ich ja nur \timexDur{zwei Abende lang}~zum \function{Schlafen} je \measure{eine halbe} genommen, also nur eine \measure{winzige Dosis}. \translation{I \trigger{had} only taken \measure{half a dose} of \drugStop{Opripramol} \timexDur{for two evenings} for \function{sleeping}, so only a \measure{tiny dose}.}}
+    {**\function{白血球}は問題なかった。\translation{no problem with \function{leukocyte}}} % no problem with leukocyte
+
+\subsubsection{Negation of Functions}\label{sec:neg_func}
+
+
+% However, as stated above, adverse physiological processes are annotated as \dis and therefore, only \emph{working} body functions are annotated as \texttt{function}.
+For \texttt{function}, we add the negation attribute when the function goes wrong.
+It is not limited to absence or stopping (e.g. ``\functionNeg{appetite} disappears''), but also includes abnormality, i.e.~when the original body processes changes in any way (e.g. ``\functionNeg{WBC} is decreasing'').
+Note that \emph{continuous (noun/verbal) phrases} of malfunctions should be annotated not as negated \texttt{function}, but as \dis: e.g. ``I have \disorder{no appetite}'' and ``\disorder{decreased WBC} was observed'' because malfunctions can be regarded as \dis. See also Section \ref{sec:dis_vs_func}.
+
+% \bigskip (this commented paragraph is just a note, could be deleted)
+% {
+% \color{red}{
+% Especially Japanese often texts need ``negated functions'' because a style ``[function noun] is [negative adj/verbal-noun]'' often appears.
+% Without ``negated function'', we would have to annotate the \textbf{whole sentences} as \dis.
+% 
+% I have no appetite: 
+% \begin{tabular}{c|c|c|c}
+%     まったく & 食欲 & が & ない \\
+%     at all & appetite & is & nothing \\
+%     (adv) & (noun) & (verb) & (adj) \\
+% \end{tabular}\bigskip
+
+% decreased white blood cell count: 
+% \begin{tabular}{c|c|c}
+%     白血球数 & が & 低下 \\
+%     \# of WBC & is & fall \\
+%     (noun) & (verb) & (verbal-noun) \\
+% \end{tabular}
+% }}
 
 \subsection{Anatomy}\label{ent_anatomy}
 
@@ -445,10 +607,9 @@ However, if a sentence describes a disorder found in a cell, the cell could be a
 
 \examples{ex:anatomy}
     {Had numerous odd \disorder{aches}, especially in the \anatomy{leg area}.}
-    % {\ldots, des \disorder{boutons} \anatomy{de la tête au pied}, \ldots}
-    {(\ldots) mais elle a fait une \disorder{réaction} au \anatomy{pancréas}, (\ldots).}
-    {Ich besitze nur noch eine \anatomy{Niere}.}
-    {**\anatomy{お腹}が\disorder{刺すように痛い}} % I feel a stabbing pain in my stomach (範囲は全体を対象とする：e.g. お腹から頭にかけて）
+    {(\ldots) mais elle a fait une \disorder{réaction} au \anatomy{pancréas}, (\ldots). \translation{but her \anatomy{pancreas} was \disorder{affected},}}
+    {Ich besitze nur noch eine \anatomy{Niere}. \translation{I only have one \anatomy{kidney} left.}}
+    {**\anatomy{お腹}が\disorder{刺すように痛い} \translation{I feel a \disorder{stabbing pain} in my \anatomy{stomach}}} % I feel a stabbing pain in my stomach (範囲は全体を対象とする：e.g. お腹から頭にかけて）
 
 
 \noindent \texttt{Anatomy} entities are \textit{not annotated} when within a larger entity such as within a \dis or \texttt{test}.
@@ -456,9 +617,9 @@ Therefore, we prioritize the annotation of \dis and \texttt{test}.
 
 \examples{ex:anatomy_embedded}
     {\disorder{Pain} under \anatomy{ribs} , \disorder{restless legs} .}
-    {}
-    {\test{Magen/Darmspiegelung}~, weil ich immer \disorder{Magenschmerzen} hatte.}
-    {**\disorder{肺がん}と宣告されてしまった} % I was diagnosed with lung cancer.
+    { J’ai beaucoup de \disorder{douleurs} \timexFreq{au quotidien} : \disorder{maux de tête},\\ \disorder{douleurs musculaires}  \translation{I am in \disorder{pain} \timexFreq{everyday} : \disorder{headaches}, \disorder{sore muscles}}}
+    {\test{Magen/Darmspiegelung}~, weil ich immer \disorder{Magenschmerzen} hatte. \translation{\test{Gastrointestinal endoscopy} because I always had \disorder{stomach pain}}}
+    {**\disorder{肺がん}と宣告されてしまった \translation{I was diagnosed with \disorder{lung cancer}.}}
 
 
 \subsection{Test}\label{ent_test}
@@ -468,154 +629,146 @@ With \texttt{test}, we mark all medical tests, interviews, examinations or any o
 \examples{ex:test}
     {\test{Blood test} was \measure{normal}.}
     % {des \disorder{douleurs} dans mes \anatomy{pouces} surtout celui de gauche, 
-    {je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \drug{perf}, (...)}
-    {Ich habe ganz \timexPIT{zu Beginn}~ der \function{WJ} auch mal \test{Speicheltests} machen lassen, mit zum Teil abstrusen Werten.}
-    {**\test{血液検査}の結果が怖いです} % I'm afraid of the blood test results.
+    {je passe une \test{radio} des \anatomy{2 mains} \timexPIT{mercredi matin}, avant ma \drug{perf}, (...) \translation{I'm having a \test{CT} for \anatomy{both hands} on \timexPIT{Wednesday morning}, before my \drug{IV}}}
+    {Ich habe ganz \timexPIT{zu Beginn}~ der \function{WJ} auch mal \test{Speicheltests} machen lassen, mit zum Teil abstrusen Werten. \translation{\timexPIT{At the very beginning}~ of the \function{MP}, I also had \test{saliva tests} done, some of which showed abstruse values.}}
+    {**\test{血液検査}の結果が怖いです \translation{I'm afraid of the \test{blood test} results.}} % I'm afraid of the blood test results.
     
     
-\subsection{Function} \label{ent_function}
 
-With \texttt{function}, we mark all body functions and processes.
-This includes mental functions, too. 
-
-%(e.g. ``I feel \function{anxiety} about how long this \disorder{pain} continues'') ; feeling anxiety against a pain seems a working mental function although it should be a \texttt{disorder} if it appeared as a mental issue). ← not applicable. negative mental function should be disorder always.
-
-\examples{ex:function}
-    {\test{EKG} \measure{perfect}, \test{tri's} were \measure{perfect}, \function{blood sugar} \measure{perfect}, etc }
-     {}
-    {\drugStop{Opripramol} \trigger{hatte} ich ja nur \timexDur{zwei Abende lang}~zum \function{Schlafen} je \measure{eine halbe} genommen, also nur eine \measure{winzige Dosis}.}
-    {**\function{白血球}は問題なかった。} % no problem with leukocyte
-
-However, as stated above, adverse physiological processes are annotated as \dis and therefore, only \emph{working} body functions are annotated as \texttt{function}.
-{\color{red}
-(!!) Japanese text needs ``negated functions'' because a style ``[function noun] is [negative adj/verbal-noun]'' often appears.
-Without ``negated function'', we have to annotate the \textbf{whole sentences} as \dis.
-\bigskip
-
-I have no appetite: 
-\begin{tabular}{c|c|c|c}
-    まったく & 食欲 & が & ない \\
-    at all & appetite & is & nothing \\
-    (adv) & (noun) & (verb) & (adj) \\
-\end{tabular}\bigskip
-
-decreased white blood cell count: 
-\begin{tabular}{c|c|c}
-    白血球数 & が & 低下 \\
-    \# of WBC & is & fall \\
-    (noun) & (verb) & (verbal-noun) \\
-\end{tabular}
-
-}
 
 \subsection{Opinion} \label{ent_eval}
-This denotes the patient's \textit{personal} evaluation or opinion of a (\dr), health state (\dis) or biological process (\texttt{function}).
-This entity could be a detailed description of a mental function or disorder (e.g. ``My \function{feeling} is \evalPos{stable}'').
-
-% ``the \disorder{side effect} was \evalNeg{so terrible}''
+This denotes the patient's \textit{personal} evaluation or opinion of a medication (\dr), health state (\dis) or biological process (\texttt{function}).
+This entity could be a detailed description of a mental function or disorder (e.g. ``My \function{feeling} is \opPos{stable}'').
+% ``the \disorder{side effect} was \opNeg{so terrible}''
 % I'm so sad that I lost my appetite.
-
 Usually, these assessments are rather colloquial and it is difficult to find an appropriate span.
 Therefore, we follow again the principle of taking the shortest span possible.
 
-The evaluation assessment always comes with an attribute: either \texttt{positive}, \texttt{negative}, or \texttt{neutral}.
+The opinion always comes with a sentiment attribute: either \texttt{positive}, \texttt{negative}, or \texttt{neutral}.
 A \texttt{positive} assessment is often associated with an improvement of a disease or with a good experience of the patient with medication.
 We do not give \textit{negated} (the \textit{negation} attribute) to the corresponding \texttt{disorder}.
 
 \examples{ex:eval}
-    % {*I also \trigger{had} \drugStop{antibiotics} but that \evalNeut{didn't change anything}.\\ Then, after \trigger{starting} \drugStart{Trisequen's hormone pills}, just \timexDur{1 week later}, I was \evalPos{like in 7th heaven}.}
-    % {\drug{Lipidor} \evalPos{did the job} on my \function{cholesterol} both LDL and HDL.}
-    {*This \drug{drug} is a \evalNeg{nightmare} and \evalNeg{should be discontinued}. \\
-    It \evalNeg{isn't working}.}
-    {l'\drug{entyvio} c 'est pas miracle mais bon \evalPos{ça aide}. }
-    {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \evalPos{lief auch richtig gut}.}
-    {*\drug{アモキサン}\evalPos{効いてる}おかげか\function{気持ち}は\evalPos{少し楽になった}} % I'm feeling a little better now that the amoxan is working.
+    % {*I also \trigger{had} \drugStop{antibiotics} but that \opNeut{didn't change anything}.\\ Then, after \trigger{starting} \drugStart{Trisequen's hormone pills}, just \timexDur{1 week later}, I was \opPos{like in 7th heaven}.}
+    % 
+    {*This \drug{drug} is a \opNeg{nightmare} and \opNeg{should be discontinued}.}
+    {l'\drug{entyvio} c 'est pas miracle mais bon \opPos{ça aide}. \translation{\drug{entyvio} is no miracle, but well, \opPos{it does help}.}}
+    {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \opPos{lief auch richtig gut}. \translation{I \trigger{did not take} \drug{Lyrica} for \timexDur{12 weeks}~ and \trigger{instead} took \measure{50mg} of \drug{Opi} and that \opPos{went really well}, too.}}
+    {*\drug{アモキサン}\opPos{効いてる}おかげか\function{気持ち}は\opPos{少し楽になった} \translation{My \function{feeling} becomes \opPos{a little better} now that the \drug{amoxan} \opPos{is working}.}} % I'm feeling a little better now that the amoxan is working.
     
     
-\subsubsection*{Sentiment}
+\subsubsection{Attribute: Sentiment}\label{sec:sent}
+
+
+When patients describe their current state of health or when they assess the consequences of a medication they took, they often use emotional words.
+Therefore, we add, if applicable, the sentiment markers \texttt{positive}, \texttt{negative}, or \texttt{neutral} to the phrases annotated with \texttt{opinion}.
+
+\examples{ex:sentiment}
+    {I really made a difference, \opPos{improvement of quality of life}.}
+   % {Bonjour \user{xxxxxxxx} j'ai \opPos{très bien toléré} \drug{entyvio} \disorderNeg{aucun effet indésirable}.}
+    {\opNeg{C'est nul} le \drug{Xanax} \opNeg{ça marche même pas} \translation{\drug{Xanax} \opNeg{sucks}, \opNeg{it doesn't even work}]}}
+    {Dann, nachdem ich mit \drugStart{Triseqenz Hormontabl.} \trigger{angefangen} habe, nur \timexDur{1 Woche später}~war ich \opPos{wie im 7. Himmel}. \translation{Then, after I \trigger{started} \drugStart{Triseqent hormon pills}, just \timexPIT{one week later}, I was \opPos{on cloud nine}.}}
+    {\drug{レクサプロ}は\disorder{強迫}には\opNeg{効かなかったです} \translation{\drug{Lexapro} \opNeg{didn't help} with \disorder{obsessive thoughts}.}} 
 
 \subsection{Measure} \label{ent_measure}
 
 With \texttt{measure}, we mark clinically relevant measurements, such as drug dosages and test results.
 The expression is typically a numerical value that accompanies a measurement unit.
-{\color{red}
-Note that, however, temporal measurements (e.g. ``5 times per month'') should be annotated as \texttt{time} entities (see the next section) unless they indicate the amount/dosage of a drug (``I took \measure{\textcolor{white}{three days' worth}} of \drug{medicines} at once \timexDate{today}.'', and ``Mom should take \drug{this pill} \measure{\textcolor{white}{three times a day}}'').
-}
 
 \examples{ex:measure}
     {Started \timexPIT{2 years ago}~ with \measure{10 mg} then \timexDur{6 mos later}\\ \doctor{doc} upped to \measure{20}.}
     % {\ldots, bon ça fait beaucoup, \timexDur{depuis 1 an et demi} ,perfusions d entyvio tous les mois. 
-    {\drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), \ldots}
-    {Das \drug{Utrogest} sind \route{Weichkapseln} mit \measure{100 mg} \drug{naturid.~Progesteron} und sie sind verschreibungspflichtig.}
-    {\test{生検}の結果\test{Ki67}が\measure{46％}だったため、通院にて治療中です} % The biopsy results showed a Ki67 of 46%, and I am in the hospital for treatment. 
+    {\drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), \ldots \translation{\drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), \ldots}}
+    {Das \drug{Utrogest} sind \route{Weichkapseln} mit \measure{100 mg} \drug{naturid.~Progesteron} und sie sind verschreibungspflichtig. \translation{\drug{Utrogest} are \route{soft capsules} with \measure{100 mg} of \drug{nature-id. progesterone} and they are prescription-only.}}
+    {\test{生検}の結果\function{Ki67}が\measure{46％}だったため、通院にて治療中です \translation{The \test{biopsy} results showed a \function{Ki67} of \measure{46\%}, and I am in the hospital for treatment. }} % The biopsy results showed a Ki67 of 46\%, and I am in the hospital for treatment. 
+
+In some cases it might happen that it is difficult to distinguish between a phrase being a \texttt{opinion} or a \texttt{measure} when they occur together with a \texttt{test} (see for example \ref{sec:diff_cases_en}, Ambiguity). 
+In these cases, we prioritize \texttt{measure.}
+
+\subsubsection*{Temporal Measurements}
+
+Note that temporal measurements (e.g. ``5 times per month'') should be annotated as \texttt{time} entities (see Section \ref{ent_timex}) \textit{\textbf{unless}} they indicate the amount/dosage of a drug:
+If we can relate the expression with the \texttt{dosage} relation to a \dr, then it is probably a \texttt{measure}.
+
+\begin{enumerate}
+
+\item **I took \measure{\textcolor{white}{three days' worth}} of \drug{medicines} at once \timexDate{today}~.
+
+\item **Mom should take this \drug{pill} \measure{\textcolor{white}{three times a day}}.
+\end{enumerate}
 
 \subsection{Time} \label{ent_timex}
 
 As temporal markers we define all mentions of \textit{frequency}, \textit{duration}, \textit{date}, or \textit{relative points in time}. 
 For a more narrow description, we use those characteristics (frequency, duration, \ldots) as attributes.
 Also, we include prepositions (e.g. ``in'', ``from'', ``before'', and ``since'') in the entity since these carry relevant information specifying the semantics of the expression.
-If there is no suitable attribute, we leave it blank.
-
-\textcolor{red}{``\timexDate{on around February (in) three years ago}'' (3年前の2月ごろに)? or split this into two parts?}
+If there is no suitable attribute, we leave it blank (i.e. we do not add an attribute).
 
 Time expressions include e.g.~``night'', ``afternoon'', ``for one week'' (mostly \texttt{duration}), but also expressions like ``last Monday'', ``in two weeks'' (\texttt{relative points in time}), ``every morning'', ``after lunch'' (\texttt{frequency}) or ``11.07.2022`` (\texttt{date}).
 
-\textcolor{red}{``about \timexDate{two years ago}''? or ``\timexDate{about two years ago}''?}
-
 \examples{ex:time}
-    {{\color{red} Instead of taking the \drugDec{pill} \measure{2X daily}, as prescribed I take it (\ldots) usually \measure{about 3-4 times per week}, but often skipping \timexFreq{a week or two at a time}.}}
-    {Bonjour, Je suis sous \drug{entyvio} \timexDur{depuis juillet 2019}~et ce traitement\\ \evalPos{fonctionne fort bien} au niveau de la \disorder{colite}. }
-    {Hallo liebe $<$user$>$, \timexPIT{vor 2 Monaten}~habe ich meine \doctor{Frauenärztin} gefragt, da ich zwischendurch einen \test{Hormontest} wollte.}
-    {\timexDate{3年前の2月ごろに}\disorder{乳がん}が発覚} % Breast cancer was discovered around February 3 years ago.
+    {Instead of taking the \drugDec{pill} \measure{2X daily}, as prescribed I take it (\ldots) usually \measure{about 3-4 times per week}, but often skipping \timexFreq{a week or two at a time}.}
+    {Bonjour, Je suis sous \drug{entyvio} \timexDur{depuis juillet 2019}~et ce traitement\\ \opPos{fonctionne fort bien} au niveau de la \disorder{colite}. \translation{Hi, I've been taking \drug{entyvio} \timexDur{since july 2019}~and the drug\\ \opPos{has been working very well} for my \disorder{colitis}.} }
+    {Hallo liebe $<$user$>$, \timexPIT{vor 2 Monaten}~habe ich meine \doctor{Frauenärztin} gefragt, da ich zwischendurch einen \test{Hormontest} wollte. \translation{Hello dear $<$user$>$, \timexPIT{2 months ago} I asked my \doctor{gynecologist} because I wanted a \test{hormone test} in the meantime.}}
+    {\timexDate{3年前の2月ごろに}\disorder{乳がん}が発覚 \translation{\disorder{Breast cancer} was discovered \timexDate{around February 3 years ago}.}} % Breast cancer was discovered around February 3 years ago.
 
+
+\subsubsection{Attribute: Temporality}\label{sec:timex_attributes}
+
+The following attributes of timex expressions are considered in our annotations:
+\texttt{frequency}, \texttt{duration}, \texttt{date} and \texttt{relative point in time}. 
+The attributes should help to specify the annotated timex expressions in more detail. See examples in Section \ref{ent_timex}.
+If none of the attributes fits, we do not add any.
 
 \subsection{Route} \label{ent_route}
 
-\texttt{Route} annotates the means of medication intake, e.g.~via pills, via injection.
+\texttt{Route} annotates the means of medication intake, e.g.~via pills or via injection.
+We, thus, annotate verbs indicating medication intake such as ``drink'' or ``inject'', but exclude too general verbs (e.g. ``have'' and ``take'').
 If a mention like ``pill'' refers to a drug (and not to the means of intake), it should be annotated as \dr.
 \examples{ex:route}
-    {It has not eliminated the need for \route{oral} \drug{pain meds} in all situatations but \evalPos{has helped}.}
-    {\ldots, \timexDur{depuis 1 an et demi}, \route{perfusion} d \drug{entyvio} tous les mois. \ldots}
-    {Ich habe das leider nur mit \route{Tabletten} gemacht (mir wollte keiner meiner \doctor{Ärzte} eine \route{Infusion} verschreiben).}
-    {*現在\route{内服}しているのは\drug{レトロゾール}です} 
-
-\subsection{Medication Status} \label{ent_drug_status}
-Here, we annotate phrases describing or triggering a change in medication intake.
-To specify the change, we add the attributes \texttt{start} (the trigger specifies that a medication was just started), \texttt{stop} (a medication was stopped), \texttt{increase} (the dosage was increased), \texttt{decrease} (the dosage was decreased), and \texttt{unique\_dose} (the medication was only given/taken once) \emph{to the \dr they refer to}.
-
-\examples{ex:change}
-    {I now have \trigger{increased} my intake of \drugInc{Vitamin C} to \measure{16,000 mg / day}, and we'll see how this works out.}
-    {
-        \drawRelations{*I took \& \measure{{three days' worth}} \& of \drugInc{medicines} \& \measure{at once} \& \timexDate{today}.}{
-        \discontRel{2}{4}
-        }
-    }
-    {}
-    {Ich hatte \timex{vor einer Woche} die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \trigger{auf die Hälfte}.}
-    {} 
+    {It has not eliminated the need for \route{oral} \drug{pain meds} in all situatations but \opPos{has helped}.}
+    {\ldots, \timexDur{depuis 1 an et demi}, \route{perfusion} d \drug{entyvio} \timexFreq{tous les mois}. \ldots \translation{\timexDur{for the past 18 months}, I get \drug{entyvio} \route{IV}  \timexFreq{every month}.}}
+    {Ich habe das leider nur mit \route{Tabletten} gemacht (mir wollte keiner meiner \doctor{Ärzte} eine \route{Infusion} verschreiben). \translation{Unfortunately, I only did this with \route{pills} (none of my \doctor{doctors} would prescribe me an \route{infusion}).}}
+    {*現在\route{内服}しているのは\drug{レトロゾール}です \translation{I am currently taking \drug{letrozole} \route{orally}.}} 
 
 
-\subsection{User} \label{ent_user}
+\subsection{Doctor} \label{ent_doctor}
+We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurse, (psycho) therapist \ldots).
+This entity tag is for job descriptions\textit{not} for the names of the doctors.
+
+\examples{ex:doctor}
+    {I took \drugInc{lipitor} \measure{10mg} \timexDur{for only about two months},then \doctor{cardiologist} \trigger{increased} it to \measure{20mg}.}
+    {( peut etre de \disorder{l'arthrose} dixit mon \doctor{docteur traitant}) \ldots \translation{(could be \disorder{arthritis} according to my \doctor{GP})}}
+    {(\ldots), hatte ich \timexPIT{gestern}~einen Termin bei meinem \doctor{Internisten}. \translation{\ldots, I had an appointment with my \doctor{internist} \timexPIT{yesterday}}}
+    {**病院の\doctor{先生}がこの薬を\route{飲め}って言うんです。でも信用できません \translation{The \doctor{doctor} at the hospital says I should \route{drink} this medicine. But I don't trust him.}} 
+
+
+\subsection{Entities for De-Identification}\label{sec:deident}
+
+To make sure personal information like user names, URLs, e-mail addresses, etc. do not end up in the final corpus, even if we pre-processed the data, we also mark these information with the respective labels to later apply a final post-processing.
+Replacing those entities with their corresponding marker, e.g. $<$user$>$, should not change the content of the document.
+
+\subsubsection*{User} \label{ent_user}
 
 Since social media users use creative names that are not necessarily easy to find using pre-processing tools, we mark ``left-over'' user names as well, to de-identify them afterwards if necessary.
-The examples below were randomly generated.
+The examples below were randomly generated from scratch and not taken from real existing data.
 
 \examples{ex:user}
     {*Dear \user{Leopard Footballer}, thank you for your message.}
-    {Bonjour \user{Mûre Vive} pour ma part ils n'ont pas été efficace (\ldots)}
-    {Liebe \user{Broccoli Klarinette} danke für deinen Bericht.}
-    {\user{ゆーりん}さん、ありがとうございます！} 
+    {Bonjour \user{Mûre Vive} pour ma part ils \opNeg{n'ont pas été efficace} (\ldots) \translation{Hi \user{Mûre Vive}, for me they were \opNeg{not effective}}}
+    {Liebe \user{Broccoli Klarinette} danke für deinen Bericht. \translation{Dear \user{Broccoli Klarinette}, thanks for your report.}}
+    {\user{ゆーりん}さん、ありがとうございます！\translation{Thank you, \user{Yurin}!}} 
 
-\subsection{URL} \label{ent_url}
+\subsubsection*{URL} \label{ent_url}
 In case there are any URLs or e-mail addresses missed when de-identifying the data, we mark them to be removed later.
 
 \examples{ex:url}
     {Go to \link{www.xxxxx.xx.xx} for more info.}
-    {Si vous souhaitez discuter plus avant: \link{www.xxx xxxx xxx xxx}.}
-    {Wenn du möchtest, geh doch mal auf die Seite \link{www.xxx xxxx xxx xxx}.}
-    {} 
+    {Si vous souhaitez discuter plus avant: \link{www.xxx xxxx xxx xxx}. \translation{If you wish to discuss further: \link{www.xxx xxxx xxx xxx}.}}
+    {Wenn du möchtest, geh doch mal auf die Seite \link{www.xxx xxxx xxx xxx}. \translation{If you like, take a look at this website: \link{www.xxx xxxx xxx xxx}.}}
+    {ここに詳しく載ってます \link{www．ｘｘｘ．ｘｘ}} 
 
-\subsection{Personal information} \label{ent_personal}
+\subsubsection*{Personal information} \label{ent_personal}
 
 With this marker, we annotate all other personal information that needs to be removed before data publication (jobs, city, doctor/hospital' names ..).
 This kind of annotation is only necessary if the de-identification failed.
@@ -623,117 +776,23 @@ The examples below were randomly generated.
 
 \examples{ex:info}
     {**My name is \info{Emanuel Streich} and I am \info{16 years old}.}
-    {}
-    {*Ich wohne in \info{Lilly Schlitzer}, das kennst du sicher.}
-    {**\info{伊藤晴美}、\info{大学2年生}です。} 
+    {J'ai appris que j'avais \disorder{crohn} \timexPIT{il y a cinq ans}. J’avais \info{20 ans}. \translation{I was diagnosed with \disorder{crohn} \timexPIT{five years ago}. I was \info{20 years old}.}}
+    {*Ich wohne in \info{Musterhausen}, das kennst du sicher. \translation{I live in \info{Musterhausen}, you probably know it.}}
+    {**\info{伊藤晴美}、\info{大学2年生}です。\translation{I am 
+\info{Harumi Ito}, a \info{second-year college student}.}} 
 
 
-\subsection{Doctor} \label{ent_doctor}
-We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurse, (psycho) therapist \ldots).
-
-\examples{ex:doctor}
-    {I took \drugInc{lipitor} \measure{10mg} \timexDur{for only about two months},then \doctor{cardiologist} \trigger{increased} it to \measure{20mg}.}
-    {( peut etre de \disorder{l'arthrose} dixit mon \doctor{docteur traitant}).......}
-    {(...), hatte ich \timexPIT{gestern}~einen Termin bei meinem \doctor{Internisten}.}
-    {**病院の\doctor{先生}がこの薬を\route{飲め}って言うんです。でも信用できません} 
-
-% \subsection{EXPERIENCER} 
-% The person experiencing the \sout{side effects} disorder or function.
-
-% \textcolor{green}{ABANDON?}
-
-% \textcolor{blue}{Find some other way to make a difference between (1) self-reported events and (2) general knowledge / hearsay? $\rightarrow$ postpone this annotation to a future task.}
 
 \subsection{Other} \label{ent_other}
-With \other{other}, we annotate all other entities that refer to a kind of treatment or medical event (pregnancy, wound etc.), but for which we do not have a category.
+
+With \other{other}, we annotate all remaining entities that refer to a kind of treatment or medical event (pregnancy, wound etc.), but for which we do not have a category.
 For example, since we do not have an entity for treatments that are not drugs (e.g., \textit{cognitive behavioral therapy}), we would annotate this term as \other{cognitive behavioral therapy}.
 Possible examples in addition are clinical tools (e.g. ``syringe'') and medical devices (e.g. ``wig'', ``dental implant'', and ``pacemaker'')
 \examples{ex:other}
     {Just \other{physical therapy} and \drug{pain medication}.}
-    {Suite à ma \other{deuxième grossesse} j'ai souhaité passé sur un traitement à faire à domicile, (\ldots)}
-    {Ohne BH fallen die \other{Implantate} runter.}
-    {*\drug{抗がん剤}の\disorder{副作用}で\anatomy{髪}が\disorder{抜け}て、\other{ウィッグ}を着用していました。} % Wore a wig because of hair loss due to side effects of anti-cancer drugs
-
-
-\section{Attributes \textcolor{red}{→ move to each entity's section}}\label{sec:attributes}
-
-Attributes are used to add more precise semantics to some of the entity annotations.
-In Table \ref{tab:attributes}, we show all available attributes.
-
-\begin{table}[h]
-\centering
-\begin{tabular}{@{}lll@{}}
-\toprule
-\textbf{section} & \textbf{entity} & \textbf{attributes} \\ \midrule
-\ref{sec:neg} & \texttt{disorder} & negated \\
-\ref{sec:sent}& \texttt{evaluation} & positive; negative; neutral\\
-\ref{sec:timex_attributes}& \texttt{time} & frequency; duration; date; relative point in time \\
-\ref{sec:durg_change_attributes}& \textbf{\dr} & started; stopped; increased; decreased; unique dose  \\ \bottomrule
-\end{tabular}
-\caption{The available attributes of the entities \dis, \texttt{evaluation}, \texttt{time}, and \dr.}
-\label{tab:attributes}
-\end{table}
-
-\subsection{Negation}\label{sec:neg}
-
-Currently, we only apply the negation attribute to the entity annotation \dis, as negated \texttt{function} entities are annotated as \dis. 
-A negation of drugs is not necessary, since we cover a stopped medication treatment using the \dr attributes.
-
-Note that we do not give ``negated'' value to the disorders that do not completely disappear (e.g. ``a \disorder{long-running headache} was \evalPos{almost eased}'') because they still exist at least a little.
-Most such cases would accompany \texttt{evaluation} entities, which are regarded as richer descriptions of the disorders' status.
-
-% \examples{ex:neg_attribute}
-%     {The \disorderNeg{headaches} are gone.}
-%     {}
-%     {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da ...}
-%     {} 
-    
-% If an entity mention is negated, we add a negation attribute to the entity (see Section~\ref{sec:attributes}). 
-% The negation clue itself is not included in the span of the entity mention.
-% Currently, only \dis entities can carry a negation attribute.
-% We provide more details on negation in section \ref{sec:neg}.
-
-\examples{negation}
-    {There is no \disorderNeg{abnormality}.}
-    {Par contre j'étais pas plus \disorderNeg{fatigué} que la normale.}
-    {Folgende Beschwerden sind schon weg: \disorderNeg{Nackenschmerzen}, ...}
-    {*\disorderNeg{イライラ}などはしなかった} % I didn't feel irritated or something
-
-
-
-\subsection{Sentiment}\label{sec:sent}
-
-When patients describe their current state of health or when they assess the consequences of a medication they took, they often use emotional words.
-Therefore, we add, if applicable, the sentiment markers \texttt{positive}, \texttt{negative}, or \texttt{neutral} to the phrases annotated with \texttt{eval}.
-
-\examples{ex:sentiment}
-    {I really made a difference, \evalPos{improvement of quality of life}.}
-    {Bonjour \user{xxxxxxxx} j'ai \evalPos{très bien toléré} \drug{entyvio} \evalPos{aucun effet indésirable}.}
-    {Dann, nachdem ich mit \drugStart{Triseqenz Hormontabl.} \trigger{angefangen} habe, nur \timexDur{1 Woche später}~war ich \evalPos{wie im 7. Himmel}.}
-    {} 
-
-\subsection{Temporality}\label{sec:timex_attributes}
-
-The following attributes of timex expressions are considered in our annotations:
-\texttt{frequency}, \texttt{duration}, \texttt{date} and \texttt{relative point in time}. 
-The attributes should help to specify the annotated timex expressions in more detail. See examples in section \ref{ent_timex}.
-If none of the attributes fits, we do not need it.
-% \examples{ex:att_timex}
-%     {}
-%     {}
-%     {}
-%     {} 
-
-\subsection{Drug Changes}\label{sec:durg_change_attributes}
-
-The attributes referring to the entity \dr provide additional details about the context in which the medication is taken. We consider the attributes \texttt{started}, \texttt{stopped}, \texttt{increased}, \texttt{decreased} and \texttt{unique dose}. Some examples are provided below:
-
-\examples{ex:att_drug}
-    {I now have \trigger{increased} my intake of \drugInc{Vitamin C} to \measure{16,000 mg / day}, and we'll see how this works out.}
     {}
-    {Ich hatte \timexPIT{vor einer Woche}. die \drugDec{Betablocker} \trigger{reduziert} aber nur von einer \measure{23mg} \trigger{auf die Hälfte}.}
-    {} 
-
+    {Ohne BH fallen die \other{Implantate} runter. \translation{Without bra the \other{implants} fall off}.}
+    {*\drug{抗がん剤}の\disorder{副作用}で\anatomy{髪}が\disorder{抜け}て、\other{ウィッグ}を着用していました。\translation{Wore a \other{wig} because of \disorder{hair loss} due to \disorder{side effects} of \drug{anti-cancer drugs}}} % Wore a wig because of hair loss due to side effects of anti-cancer drugs
 
 
 \section{Relations}\label{sec:relations}
@@ -744,25 +803,38 @@ Also, we cut off parts of the original documents to keep every example on one li
 In Table \ref{sec:relations} we provide an overview of all relations and their arguments.
 Exceptionally, \other{other} can take and accept all relations, for a practical reason.
 
+We do \emph{not} annotate relations if one of the following points apply:
 
-\begin{table}[h]
+\begin{itemize}
+    \item The above-mentioned entities are not concerned.
+    \item The document at hand is hypothetical or speculative (from the patient's perspective).
+    \item The document is formulated as a question.
+    % \item The cause--consequence is not explicitly attributed to the author of the text, nor to a particular person or group of people identified via co-text or context (including the metadata of the document).
+\end{itemize}
+
+\begin{table}[H]
 \centering
 \begin{tabular}{@{}llll@{}}
 \toprule
 \textbf{section} & \textbf{relation} & \textbf{argument 1} & \textbf{argument 2}\\ \midrule
-\ref{rel_caused} & \colorbox{brass}{\texttt{caused}} & \{\dr, \dis\} & \{\dis\} \\
+\ref{rel_caused} & \texttt{caused} & \{\dr, \dis\} & \{\dis, \texttt{function}\} \\
 \ref{rel_treat} & \texttt{treatment\_for} & \{\dr\} & \{\dis, \texttt{function}\} \\
-\ref{rel_dosage} & \texttt{dosage} & \{\dr\} & \{\texttt{measure}\} \\
-\ref{rel_experienced} & \colorbox{airforceblue}{\texttt{experienced\_in}} & \{\dis\} & \{\texttt{anatomy}\} \\
-\ref{rel_examined} & \texttt{examined\_with} & \{\dis\} & \{\texttt{test}\} \\
-\ref{rel_refers} & \texttt{refers\_to} & \{\dis\} & \{\dis\} \\
- & \texttt{refers\_to} & \{\dr\} & \{\dr\} \\
-\ref{rel_resulted} & \texttt{resulted\_in} & \{\texttt{test}\} & \{\texttt{measure}\} \\
+\ref{rel_dosage} & \texttt{has\_dosage} & \{\dr\} & \{\texttt{measure}\} \\
+\ref{rel_experienced} & \texttt{experienced\_in} & \{\dis\} & \{\texttt{anatomy}\} \\
+\ref{rel_examined} & \texttt{examined\_with} & \{\dis, \texttt{anatomy}, \texttt{function}\} & \{\texttt{test}\} \\
+\ref{rel_resulted} & \texttt{has\_result} & \{\texttt{test}\} & \{\texttt{measure}, \texttt{disorder}, \texttt{function}\} \\
+\ref{rel_refers} & \texttt{refers\_to} & \{\dis\} & \{\dis, \texttt{function}$^{negated}$\} \\
+\ref{rel_refers} & \texttt{refers\_to} & \{\dr\} & \{\dr\} \\
+\ref{rel_refers} & \texttt{refers\_to} & \{\texttt{anatomy}\} & \{\texttt{anatomy}\} \\
+\ref{rel_refers} & \texttt{refers\_to} & \{\texttt{function}\} & \{\texttt{function}\} \\
 \ref{rel_interacted} & \texttt{interacted\_with} & \{\dr\} & \{\dr\} \\
-\ref{rel_change} & \texttt{change} & \{\texttt{drug\_status\_change\_trigger}\} & \{\dr\} \\
-\ref{rel_time} & \texttt{time} & \{\texttt{time}\} & \{\dr, \dis\} \\
-& \textcolor{red}{\texttt{misc}} & \{\texttt{ANY}\} & \{\texttt{ANY}\} \\
-& \textcolor{red}{not tracked} & \textcolor{red}{\textbf{route}}, URL, personal info, doctor & \\
+\ref{rel_change} & \texttt{signals\_change\_of} & \{\texttt{drug\_status\_change\_trigger}\} & \{\dr\} \\
+\ref{rel_time} & \texttt{has\_time} & \{\dr, \dis\} & \{\texttt{time}\} \\
+\ref{rel_means} & \texttt{has\_route} & \{\dr\} & \{\texttt{route}\} \\
+\ref{rel_eval} & \texttt{is\_opinion\_about} & \{\texttt{opinion}\} & \{\dr, \dis, \texttt{function}\} \\
+\ref{rel_misc}& \texttt{misc} & \{\texttt{ANY}\} & \{\texttt{ANY}\} \\
+
+& \textit{not tracked} & \texttt{URL, personal info, doctor} & \\
 \bottomrule
 \end{tabular}
 \caption{Overview of available relations and the entities they associate.}
@@ -770,26 +842,19 @@ Exceptionally, \other{other} can take and accept all relations, for a practical 
 \end{table}
 
 
-\textcolor{green}{
-\begin{enumerate}
-% \item link all mentions sharing a concept (those with the same surface form do not need to be linked (e.g.~ Lipitor \& Lipitor)
-    \item link super/subordinate/generic concepts? 
-    \item use ``chaining rule'' to link same concepts
-\end{enumerate}
-}
 
 
-\subsection{Caused}\label{rel_caused}
+\subsection{caused}\label{rel_caused}
 
-\textcolor{green}{Patrick's proposal}
+
 
 The \texttt{caused} relation was defined to be language independent and to be used also with little linguistic knowledge.
 We only annotate a \texttt{caused} relation, when the entities \dr, \dis, or \texttt{function} are concerned. 
 For this, we take into account the following:
 \begin{itemize}
     \item The interpreted intention of the author if the annotator(s) judges it to be clearly identifiable.
-    \item Common world knowledge (e.g., the action -- reaction principle) and common sense (e.g., a broken leg can not be caused by brushing one's teeth).
-    \item A possible contextual cue from meta data (e.g., the meta data might contain the drug name, which is not necessarily mentioned in the text itself).
+    \item Common world knowledge (e.g., the action -- reaction principle) and common sense (e.g., a broken leg can not be caused by brushing one's teeth even if the text author insisted that it was).
+    \item A possible contextual cue from metadata (e.g., the metadata might contain the drug name, which is not necessarily mentioned in the text itself).
     \item Explicit formulation of a \cause-- \conseq relation, i.e., supported by linguistic markers like:
     \begin{itemize}
         \item explicit discourse inter-clause/sentence articulators: \textit{because}, \textit{so}, \textit{then}, \ldots (including conjunction coordination hinting at  causal entailment like ``and'', ``then'') %      <cause clause> then <consequence clause>
@@ -833,14 +898,7 @@ For this, we take into account the following:
 \end{itemize}
 
 
-However, we do \emph{not} annotate this relation if one of the following points apply:
 
-\begin{itemize}
-    \item The above mentioned entities are not concerned.
-    \item The document at hand is hypothetical or speculative.
-    \item The document is formulated as a question.
-    \item The cause--consequence is not explicitly attributed to the author of the text, nor to a particular person or group of people identified via co-text or context (including the metadata of the document).
-\end{itemize}
 
 
 \examples{ex:caused}
@@ -864,10 +922,11 @@ However, we do \emph{not} annotate this relation if one of the following points 
         }
     }
     {\drawRelations{
-        \drug{レクサプロ} \& \trigger{飲み始めてから} \& \disorder{吐き気} \& はするし \& \disorder{食欲無い} \& し 
+        % \drug{レクサプロ} \& \trigger{飲み始めてから} \& \disorder{吐き気} \& はするし \& \disorder{食欲無い} \& し 
+        \drug{レクサプロ} \& 飲み始めてから \& \disorder{吐き気} \& はするし \& \disorder{食欲無い} \& し 
         }{
         \causedRel{1}{3}
-        \changeRel{2}{1}
+        % \changeRel{2}{1}
         \causedRel{1}{5}
         }
     } 
@@ -875,27 +934,44 @@ However, we do \emph{not} annotate this relation if one of the following points 
 %Ensuite elle a pris infliximab mais au bout de 3 perfusion elle a développé des anticorps et grosse réaction allergique avec tachycardie importante et malaise, elle devient tout rouge et nausée, donc arrêt aussi.
 % Hatte in meiner Verzweiflung ja auch ein AD ausprobiert. Bei mir hat es den TSH voll hochgetrieben!
 
-\subsection{Treatment\_for}\label{rel_treat}
+\subsection{treatment\_for}\label{rel_treat}
 
-This relation connects a \dr and the targeted \dis. 
+This relation connects a \dr and the targeted \dis, describing the medication that was used to treat the patient's symptoms.
 
 \examples{ex:treatment}
-    {I have insomnia and fibromyalgia. The pain from the fibromyalgia is worsened when I can't sleep well.  My doctor prescribed this medication to me mainly for better sleep.}
-    {atteinte de Crohn depuis 2017, actuellement sous perfusion entyvio depuis début 2019, le remsima ayant eu trop d'effets secondaires pour moi a  été abandonné.}
-    {\drawRelations{habe \timex{vor 4-5 jahren} \& \drug{antibiotikum} und \drug{isotretinoin} wegen \disorder{starker akne} eingenommen}{\treatmentRel{2}{4}\treatmentRel{3}{4}}}
     {\drawRelations{
-        \timexDate{先週から} \& \disorder{乳がん} \& の \& \drug{ホルモン剤} \& を \& \route{服用} \& \trigger{開始しました}
+        I have \& \disorder{insomnia} \&. My doctor prescribed this \& \drug{medication} \& to me for better sleep.
         }{
-        \timeRel{1}{4}
         \treatmentRel{4}{2}
-        \trigger{7}{4}
+        }
+    }
+%drawRelations{
+%        I have \& \disorder{insomnia} \& and \& fibromyalgia. \\My doctor prescribed this \& \drug{medication} \& to me mainly for better sleep.
+%        }{
+%        \treatmentRel{5}{2}
+%        }
+%    }
+    {atteinte de Crohn depuis 2017, actuellement sous perfusion entyvio depuis début 2019, le remsima ayant eu trop d'effets secondaires pour moi a  été abandonné.}
+    {\drawRelations{
+        habe vor 4-5 jahren \& \drug{isotretinoin} \& wegen \& \disorder{starker akne} \& eingenommen
+        }{
+        \treatmentRel{2}{4}
+        }
+    }
+    {\drawRelations{
+        % \timexDate{先週から} \& \disorder{乳がん} \& の \& \drug{ホルモン剤} \& を \& \route{服用} \& \trigger{開始しました}
+        先週から \& \disorder{乳がん} \& の \& \drug{ホルモン剤} \& を \& \route{服用} \& \trigger{開始しました}
+        }{
+        % \timeRel{1}{4}
+        \treatmentRel{4}{2}
+        % \trigger{7}{4}
         }
     } 
 
 
-\subsection{Dosage}\label{rel_dosage}
+\subsection{has\_dosage}\label{rel_dosage}
 
-\texttt{Dosage} relates a measurement, e.g.~the number of pills (\texttt{measure}), with a medication name (\dr).
+\texttt{has\_dosage} relates a measurement, e.g.~the number of pills (\texttt{measure}), with a medication name (\dr).
 
 \examples{ex:dosage}
     {\drawRelations{
@@ -906,18 +982,19 @@ This relation connects a \dr and the targeted \dis.
         % \dosageRel{2}{5}
         }
     }
-    {}
-    {}
+    {} 
+    % {\drawRelations{\timeDur{depuis 1 an et demi} \& ,perfusions d \& \drug{entyvio} \& tous les mois. \& \drug{pentasa}\& , \& \drug{cortancyl} \&  (\& \measure{10mg}), , \ldots }{\dosageRel{4}{5}}}
+    {\drawRelations{\drug{Utrogest} sind verschreibungspflichtige Kapseln mit \& \measure{100 mg} \&  \& \drug{naturid.~Progesteron} \& .}{\dosageRel{4}{2}}}
     {\drawRelations{
-        \drug{エビリファイ} \& \timexDate{初日} \& ですが \& \measure{3mg} \& からなので \& \evalNeut{効き目はよくわかりません}
+        \drug{エビリファイ} \& \timexDate{初日} \& ですが \& \measure{3mg} \& からなので \& \opNeut{効き目はよくわかりません}
         }{
-        \timeRel{2}{1}
-        \dosageRel{4}{1}
+        % \timeRel{2}{1}
+        \dosageRel{3}{1}
         }
     } 
     
 
-\subsection{Experienced\_in}\label{rel_experienced}
+\subsection{experienced\_in}\label{rel_experienced}
 
 This relation associates a \dis with the location it is felt / experienced in, i.e.~a part of the body (\texttt{anatomy}).
 
@@ -936,8 +1013,8 @@ This relation associates a \dis with the location it is felt / experienced in, i
         \experiencedRel{1}{3}
         }
     }
-    {}
-    {}
+    {\drawRelations{j'ai eu un gros souci de \& \disorder{désydrose} \& aux \& \anatomy{pieds}}{\experiencedRel{2}{4}}}
+    {\drawRelations{**Ich hatte einen \& \disorder{seltsamen Schmerz} \& im \& \anatomy{Bein} \& .}{\experiencedRel{2}{4}}}
     {\drawRelations{
         \anatomy{顔} \& と \& \anatomy{足} \& が \& \disorder{凄くむくむ}
         }{
@@ -946,56 +1023,36 @@ This relation associates a \dis with the location it is felt / experienced in, i
         }
     } 
 
-\subsection{Examined\_with}\label{rel_examined}
+\subsection{examined\_with}\label{rel_examined}
 
-This relation associates a \dis with a \texttt{test}: the \texttt{test} is used to examine the \dis.
+This relation associates a \dis or a \texttt{function} with a \texttt{test}: the \texttt{test} is used to examine the \dis.
+\texttt{anatomy} entities can be examined with a test, too.
 
 \examples{ex:examined}
     {}
-    {}
-    {}
+    {\drawRelations{je passe une \& \test{radio} \& des 2 \& \anatomy{mains} \& mercredi matin, \ldots}{
+        \examinedRel{2}{4}
+        }}
     {\drawRelations{
-        \timexDate{先月} \& の \& \test{検査} \& で \& \anatomy{肝臓} \& の \& \disorder{転移} \& を言われてしまいました
+        **Meine \& \disorder{Schmerzen} \& wurden dann mit einer \& \test{Magenspiegelung} \& untersucht.
         }{
-        \timeRel{1}{2}
-        \examinedRel{7}{3}
-        \experiencedRel{7}{5}
+        \examinedRel{2}{4}
+        }
+    }
+    {\drawRelations{
+        % \timexDate{先月} \& の \& \test{検査} \& で \& \anatomy{肝臓} \& の \& \disorder{転移} \& を言われてしまいました
+        先月 \& の \& \test{検査} \& で \& \anatomy{肝臓} \& の \& 転移 \& を言われてしまいました
+        }{
+        % \timeRel{1}{3}
+        \examinedRel{3}{5}
+        % \experiencedRel{7}{5}
         }
     }    
     
     
+\subsection{has\_result}\label{rel_resulted}
 
-
-\subsection{Refers\_to (formerly is\_identical)}\label{rel_refers}
-
-The \texttt{refers\_to} relation represents a unidirectional link for the entities \dr, \dis, \texttt{anatomy}, and \texttt{function}.
-It is used to associate similar concepts, but \emph{not} to connect the same surface forms (e.g.~ ``Lipitor'' and ``Lipitor''). 
-
-Further, via the \texttt{refers\_to} relation, we can propagate the \texttt{caused} relation to all connected targets.
-
-\begin{enumerate}
-    \item \texttt{refers\_to} relations can be chained between corresponding entity mentions
-    \item The first relation (\texttt{caused} / \texttt{treatment\_for}) is drawn to the concept the annotator thinks is most important to the understanding of the meaning of the sentences / document.
-\end{enumerate}
-
-\examples{ex:refers}
-    {}
-    {}
-    {}
-    {\drawRelations{
-        \timexPIT{最近} \& \drug{抗うつ剤} \& の \& \drug{レクサプロ錠} \& \measure{10mg} \& も処方になった
-        }{
-        \timeRel{1}{2}
-        \refersRel{2}{4}
-        \dosageRel{5}{4}
-        }
-    }
-
-
-    
-\subsection{Resulted\_in}\label{rel_resulted}
-
-Following the line of thought from above, the \texttt{resulted\_in} relation then relates the \texttt{test} with its result, usually a \texttt{measure}.
+Following the line of thought from above, the \texttt{has\_result} relation then relates the \texttt{test} with its result, usually a \texttt{measure}.
 This relation should not be used for \texttt{caused} scenarios.
 
 \examples{ex:resulted}
@@ -1005,30 +1062,89 @@ This relation should not be used for \texttt{caused} scenarios.
     \resultedRel{1}{3}
     }}
     {}
-    {}
-    {} 
+    {\drawRelations{
+        **Die \& \test{Spiegelung} \& zeigte \& \measure{keinerlei Ergebnisse}.
+        }{
+        \resultedRel{2}{4}
+        }
+    }
+    {\drawRelations{
+        **先月 \& の \& \test{検査} \& では \& 白血球 \& は \& \measure{5000} \& でした
+        }{
+        % \timeRel{1}{3}
+        % \examinedRel{3}{5}
+        \resultedRel{3}{7}
+        }
+    } 
     
-\subsection{Interacted\_with}\label{rel_interacted}
 
-In some cases, a \dr--\dr interaction results in a \dis. 
+\subsection{refers\_to}\label{rel_refers}
+
+The \texttt{refers\_to} relation represents a unidirectional link for the entities \dr, \dis, \texttt{anatomy}, and \texttt{function}, and also for the link between \dis and \texttt{function}$^{negated}$
+It is used to associate similar concepts, but \emph{not necessarily} to connect the same surface forms (e.g.~``Lipitor'' and ``Lipitor''). 
+Via the \texttt{refers\_to} relation, we can automatically propagate the relation to all connected targets.
+The relation allows to chain corresponding entities.
+
+% \begin{enumerate}
+%     \item \texttt{refers\_to} relations can be chained between corresponding entity mentions
+%     % \item The first relation (\texttt{caused} / \texttt{treatment\_for}) is drawn to the concept the annotator thinks is most important to the understanding of the meaning of the sentences / document.
+% \end{enumerate}
+
+\examples{ex:refers}
+    {}
+    {}
+    {\drawRelations{
+        **Ich hatte \& \disorder{Schüttelfrost} \& und \& \disorder{zitterte} \& am ganzen Körper.
+        }{
+        \refersRel{2}{4}
+        }
+    }
+    {\drawRelations{
+        % \timexPIT{最近} \& \drug{抗うつ剤} \& の \& \drug{レクサプロ錠} \& \measure{10mg} \& も処方になった
+        最近 \& \drug{抗うつ剤} \& の \& \drug{レクサプロ錠} \& 10mg \& も処方になった
+        }{
+        % \timeRel{1}{2}
+        \refersRel{2}{4}
+        % \dosageRel{5}{4}
+        }
+    }
+
+
+% \textcolor{green}{
+% TODO for refers\_to
+% \begin{enumerate}
+% % \item link all mentions sharing a concept (those with the same surface form do not need to be linked (e.g.~ Lipitor \& Lipitor)
+%     \item link super/subordinate/generic concepts? 
+% \end{enumerate}
+% }
+    
+
+\subsection{interacted\_with}\label{rel_interacted}
+
+In some cases, a \dr-- \dr interactions result in a \dis. 
 The relation \texttt{interacted\_with} is defined for exactly this purpose.
 
 \examples{ex:interacted}
     {}
     {}
-    {}
+    {\drawRelations{
+        **Die Kombination aus \& \drug{Grapefruitsaft} \& und \& \drug{Aspirin} \& hat meine Schmerzen nur verschlimmert.
+        }{
+        \interactedRel{2}{4}
+        }
+    }
     {\drawRelations{
         * \& \drug{レクサプロ} \& と \& \drug{ビール} \& \route{飲んだら} \& \disorder{嘔吐} \& した
         }{
         \interactedRel{2}{4}
-        \causedRel{2}{6}
-        \causedRel{4}{6}
+        % \causedRel{2}{6}
+        % \causedRel{4}{6}
         }
     }
 
-\subsection{Change}\label{rel_change}
+\subsection{signals\_change\_of}\label{rel_change}
 
-For connecting the \texttt{drug status change triggers} with the \dr that is affected, we use the \texttt{change} relation.
+For connecting the \texttt{change triggers} with the \dr that is affected, we use the \texttt{signals\_change\_of} relation.
 
 \examples{ex:re_change}
     {}
@@ -1039,16 +1155,21 @@ For connecting the \texttt{drug status change triggers} with the \dr that is aff
         \changeRel{2}{5}
         }
     }
-    {}
+    {\drawRelations{
+        **Ich habe mit \& \drugStart{Triseqenz Hormontabl.} \& \trigger{angefangen} \& und fühle mich super.
+        }{
+        \changeRel{2}{3}
+        }
+    }
     {\drawRelations{
         \drug{リフレックス} \& から \& \drug{レクサプロ} \& に \& \trigger{変えて} \& \disorderNeg{ふらつき} \& が \& 治まった    
         }{
         \changeRel{5}{1}
-        \causedRel{1}{6}
+        % \causedRel{1}{6}
         }
     } 
 
-\subsection{Time}\label{rel_time}
+\subsection{has\_time}\label{rel_time}
 
 The relation time connects a \texttt{time} expression with either a \texttt{drug} or a \texttt{disorder}.
 
@@ -1062,22 +1183,84 @@ The relation time connects a \texttt{time} expression with either a \texttt{drug
     }
     {\timeRel{3}{2}}
     }
-    {}
-    {\drawRelations{
-        \drug{レクサプロ} \& \trigger{飲み始めて} \& \timexDur{2週間} \& たちました
+     {\drawRelations{
+        \timexDur{**Seit einer Woche} \& nehme ich \& \drugStart{Triseqenz Hormontabl.} \&  und fühle mich super.
         }{
-        \changeRel{2}{1}
+        \timeRel{2}{1}
+        }
+    }
+    {\drawRelations{
+        % \drug{レクサプロ} \& \trigger{飲み始めて} \& \timexDur{2週間} \& たちました
+        \drug{レクサプロ} \& 飲み始めて \& \timexDur{2週間} \& たちました
+        }{
+        % \changeRel{2}{1}
         \timeRel{3}{1}
         }
     } 
-    
-    
+
+
+\subsection{has\_route}\label{rel_means}
+The \texttt{has\_route} relation associates a drug with the way it is consumed, i.e.~the means of intake.
+
+\examples{ex:means}
+    {}
+    {}
+     {\drawRelations{**Ich hatte gestern leider vergessen mit das  \& \drug{Insulin} \& zu \& \route{spritzen} \& .}{\meansRel{2}{4}}}
+    {\drawRelations{%
+        \disorder{生理不順} \& のため \& \drug{低用量ピル} \& を \& \route{飲んでます}
+        }{%
+        \meansRel{3}{5}
+        }%
+     \translation{I \route{orally take} \drug{low-dose pills} for \disorder{irregular periods}.}
+    } 
+
+
+
+\subsection{is\_opinion\_about}\label{rel_eval}
+
+The \texttt{is\_opinion\_about} relation connects any entity with an \texttt{opinion} entity. 
+Mostly, these will be \texttt{drug} or \texttt{function} entities.
+Note that sometimes it is not possible to find two explicit entities to be connected. 
+
+\examples{ex:re_eval}
+    {}
+    {}
+    {\drawRelations{**Seit ich  \& \drugStart{Triseqenz Hormontabl.} \& nehme, fühle ich mich \& \opPos{super} \& .}{\evalRel{4}{2}}}
+    {\drawRelations{%
+        私は \& \drug{レクサプロ} \& が \& \opPos{正解} \& 。 \& \drug{ラミクタール} \& は \& \opNeg{最低} \& だった。 
+        }{%
+        \evalRel{4}{2}
+        \evalRel{8}{6}
+        }%
+        \translation{\drug{Lexapro} was \opPos{the right choice} for me. \drug{Lamictal} was \opNeg{the worst}.}
+    } 
+
+
+
+\subsection{misc}\label{rel_misc}
+
+This relation is a joker similar to the \texttt{other} entity label. 
+If we clearly see a worthwhile relation between two entities in terms of adverse drug events, but there is no relation defined (yet), we can use the \texttt{misc} link.
+
+\examples{ex:misc}
+    {}
+    {}
+    {}
+    {\drawRelations{%
+        \other{放射線治療} \& \timexFreq{3回} \& したら， \& \function{白血球} \& の値が\& \measure{半分} \& になっていました。 
+        }{%
+        \miscRel{1}{6}
+        }%
+        \translation{After \timexFreq{three rounds} of \other{radiotherapy}, the count of \function{white blood cells} was \measure{halved}.}
+    } 
+
+
 \section{Difficult Cases}
 
 In the following sections, we show examples that we found difficult to annotate.
 They are either ambiguous or it is in general not clear what is meant by the patient.
 
-\subsection{English}
+\subsection{English}\label{sec:diff_cases_en}
 
 \begin{description}
     \item[Semantics] \drawRelations{
@@ -1087,10 +1270,28 @@ They are either ambiguous or it is in general not clear what is meant by the pat
         \experiencedRel{5}{7}
         
         }
-
+        
+    \item[Discontinuity]
+        \drawRelations{*I took \& \measure{{three days' worth}} \& of \drugInc{medicines} \& \measure{at once} \& \timexDate{today}.}{
+        \discontRel{2}{4}
+        }
+    
+    \item[Ambiguity]
+    \test{EKG} \measure{perfect}, \test{tri's} were \measure{perfect}, \function{blood sugar} \measure{perfect}, etc \\ Is \textit{blood sugar} a \texttt{function} or a \texttt{test}? Following up on this, if \textit{perfect} an \texttt{opinion} or a \texttt{measure}?
+    
+    \item[...] {\drug{Lipidor} \opPos{did the job} on my \function{cholesterol} both LDL and HDL.}\\
+    Should \textit{LDL} and \textit{HDL} be annotated as \texttt{function}?
 \end{description}
 
 \subsection{French}
+
+\begin{description}
+    \item[...] \ldots, des \disorder{boutons} \anatomy{de la tête au pied}, \ldots
+    
+    \item[Function or not?] Suite à ma deuxième \other{grossesse} j'ai souhaité passé sur un traitement à faire à domicile, (\ldots) \translation{After my second \other{pregnancy} I wanted to go ahead with home care, (\ldots)}\\
+    Depending on the context, \textit{grossesse} (pregnancy) might be a function. UMLS is not clear about that.
+
+\end{description}
 
 \subsection{German}
 
