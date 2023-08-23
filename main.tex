@@ -288,7 +288,7 @@ We now define general rules for the annotation of entities.
 
 \subsubsection*{Scope}
 
-Regarding scope, we annotate entities in form of noun or verb phrases together with their modifying parts, e.g.~adjectives, adverbs etc., though complex post modifiers (e.g., relative clauses: ``a pain that is \ldots"; and PP modifiers: ``a neck pain from yesterday") are excluded.
+Regarding scope, we annotate entities in form of noun or verb phrases together with their modifying parts, e.g.~adjectives, adverbs etc., though complex post modifiers (e.g., relative clauses: ``a pain that is \ldots"; and prepositional-phrase modifiers: ``a neck pain from yesterday") are excluded.
 We always prefer the smallest core noun phrase. 
 If this does not work, a long span of the whole verb phrase (or even the whole clause/sentence) is allowed.
 
@@ -348,7 +348,7 @@ Consecutive entities or enumerations that are, for example, separated by commas 
     {\timexPIT{Vor einem Jahr}~ bekam ich \timexFreq{kurz hintereinander} zwei \disorder{Herzinfarkte}, einen \disorder{Schlaganfall} und eine \disorder{Embolie}. \translation{\timexPIT{A year ago} I had two \disorder{heart attacks}, a \disorder{stroke} and an \disorder{embolism} in \timexFreq{quick succession}.}}
     {\anatomy{まつ毛}や\anatomy{眉毛}も\disorder{抜けてしまった}ので \translation{Because my \anatomy{eyelashes} and \anatomy{eyebrows} have \disorder{fallen out} too.}}
 
-\subsubsection*{Nested Entities}
+\subsubsection*{Nested and Overlapping Entities}
 
 Nested entities are not permitted; we always annotate the largest phrase.
 For example, in the case of ``headache,'' we do not split the word into ``head'' and ``ache''. 
@@ -365,7 +365,7 @@ This is also language-dependant:
     
     \item French: basic noun phrase (``\disorder{douleur thoracique}'') \textit{[chest pain]} is annotated as one \dis, otherwise we separate the annotations, e.g.~``\disorder{douleur} au \anatomy{thorax}'' \textit{[chest pain]}.
 \end{itemize}
-
+\textcolor{red}{This approach also automatically excludes overlapping entities. For specific entity types, we also added prioritization rules to help in the decision of which mention to annotate.}
 
 \subsubsection*{Discontinuous Entities}
 
@@ -393,11 +393,8 @@ Please see the following examples:
             (discontinuous entity)
         \item ``nerves / \disorder{muscle cramps}'' (continuous entity)
     \end{itemize}
-
-
 \end{enumerate}
-
-
+\textcolor{red}{In case a discontinuous entity is necessary, we limit the number of entity fragments to two.}
 
 \subsubsection*{Punctuation}
 
@@ -440,6 +437,14 @@ However, we label completely non-drug involving therapies \texttt{other} instead
     {Ich nehme \drug{Betablocker}. \translation{I take \drug{beta blockers}.}}
     {\timexFreq{夜}は\drug{デパス}で\function{眠れている}んですけど、(\ldots) \translation{I can \function{sleep} \timexFreq{at night}~ with \drug{Etizolam}}}
 
+
+\paragraph{\textcolor{red}{Prioritization of \dr}} \textcolor{red}{In case the \texttt{route} and \dr are one word (e.g., a compound) or connected by a hyphen, which might be the case for German, we prioritize \dr over \texttt{route} and label the entire spans as \dr.}
+
+\examples{prioritize_drug}
+    {}
+    {``\drug{Urogestgel}'' or ``\drug{Estradiol-Creme}'' \translation{\drug{Urogest} gel / \drug{Estradiol} cream}}
+    {}
+    {}
 
 \subsubsection{Triggers for Medication Status Changes} \label{ent_drug_status}
 Here, we annotate phrases describing or triggering a change in medication intake with the entity tag \trigger{\texttt{change\_trigger}}.
@@ -548,6 +553,15 @@ Most such cases would accompany \texttt{opinion} entities, which are regarded as
     {Folgende Beschwerden sind schon weg: \disorderNeg{Nackenschmerzen}, \ldots \translation{The following ailments are already gone: \disorderNeg{neck pain}, }}
     {*\disorderNeg{イライラ}などはしなかった \translation{I didn't \disorderNeg{feel irritated} or something}} % I didn't feel irritated or something
 
+\subsubsection{\textcolor{red}{Partial Negation (of Disorders)}}\label{sec:partial_negation}
+
+\textcolor{red}{We \emph{do not} annotate partial negations since these require a more detailed annotation which is, for now, out of scope.}
+
+\examples{ex:partial_negation}
+    {My \anatomy{hair} was \emph{not lost entirely}.}
+    {}
+    {Die \anatomy{Brust} tut schon viel weniger weh. \translation{The \anatomy{chest} hurts much less already.}}
+    {}
 
 % \examples{ex:dis_vs_func}
 %     {(\ldots) \disorder{could not urinate} (\ldots)}
@@ -558,7 +572,7 @@ Most such cases would accompany \texttt{opinion} entities, which are regarded as
 \subsection{Function} \label{ent_function}
 
 With \texttt{function}, we mark all body functions and processes.
-Body functions are often represented in biomarkers (e.g., ``HDL'' and ``white blood cells (WBC)''.
+Body functions are often represented in biomarkers (e.g., ``HDL'' and ``white blood cells (WBC)'').
 This includes mental functions, too. 
 
 %(e.g. ``I feel \function{anxiety} about how long this \disorder{pain} continues'') ; feeling anxiety against a pain seems a working mental function although it should be a \texttt{disorder} if it appeared as a mental issue). ← not applicable. negative mental function should be disorder always.
@@ -637,7 +651,8 @@ With \texttt{test}, we mark all medical tests, interviews, examinations or any o
 
 
 \subsection{Opinion} \label{ent_eval}
-This denotes the patient's \textit{personal} evaluation or opinion of a medication (\dr), health state (\dis) or biological process (\texttt{function}).
+
+This denotes the \textcolor{red}{writer's} \textit{personal} evaluation or opinion of a medication (\dr), health state (\dis) or biological process (\texttt{function}).
 This entity could be a detailed description of a mental function or disorder (e.g. ``My \function{feeling} is \opPos{stable}'').
 % ``the \disorder{side effect} was \opNeg{so terrible}''
 % I'm so sad that I lost my appetite.
@@ -647,6 +662,9 @@ Therefore, we follow again the principle of taking the shortest span possible.
 The opinion always comes with a sentiment attribute: either \texttt{positive}, \texttt{negative}, or \texttt{neutral}.
 A \texttt{positive} assessment is often associated with an improvement of a disease or with a good experience of the patient with medication.
 We do not give \textit{negated} (the \textit{negation} attribute) to the corresponding \texttt{disorder}.
+\textcolor{red}{We annotate \emph{all} opinions to make it easier for the annotators and keep annotation consistent with the other entities. 
+Patient-related opinions are then explicitly expressed by relations.}
+
 
 \examples{ex:eval}
     % {*I also \trigger{had} \drugStop{antibiotics} but that \opNeut{didn't change anything}.\\ Then, after \trigger{starting} \drugStart{Trisequen's hormone pills}, just \timexDur{1 week later}, I was \opPos{like in 7th heaven}.}
@@ -656,7 +674,15 @@ We do not give \textit{negated} (the \textit{negation} attribute) to the corresp
     {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \opPos{lief auch richtig gut}. \translation{I \trigger{did not take} \drug{Lyrica} for \timexDur{12 weeks}~ and \trigger{instead} took \measure{50mg} of \drug{Opi} and that \opPos{went really well}, too.}}
     {*\drug{アモキサン}\opPos{効いてる}おかげか\function{気持ち}は\opPos{少し楽になった} \translation{My \function{feeling} becomes \opPos{a little better} now that the \drug{amoxan} \opPos{is working}.}} % I'm feeling a little better now that the amoxan is working.
     
-    
+\paragraph{\textcolor{red}{Emojis / Emoticons}} \textcolor{red}{We include emojis or emoticons if they explicitly encode an opinion. }
+
+\examples{emoji}
+    {**This drug was ��}
+    {}
+    {}
+    {}
+
+
 \subsubsection{Attribute: Sentiment}\label{sec:sent}
 
 
@@ -734,7 +760,7 @@ If a mention like ``pill'' refers to a drug (and not to the means of intake), it
 
 \subsection{Doctor} \label{ent_doctor}
 We moreover annotate all medical job descriptions (e.g.~physician, dentist, nurse, (psycho) therapist \ldots).
-This entity tag is for job descriptions\textit{not} for the names of the doctors.
+This entity tag is for job descriptions \textit{not} for the names of the doctors.
 
 \examples{ex:doctor}
     {I took \drugInc{lipitor} \measure{10mg} \timexDur{for only about two months},then \doctor{cardiologist} \trigger{increased} it to \measure{20mg}.}
@@ -794,6 +820,9 @@ Possible examples in addition are clinical tools (e.g. ``syringe'') and medical 
     {Ohne BH fallen die \other{Implantate} runter. \translation{Without bra the \other{implants} fall off}.}
     {*\drug{抗がん剤}の\disorder{副作用}で\anatomy{髪}が\disorder{抜け}て、\other{ウィッグ}を着用していました。\translation{Wore a \other{wig} because of \disorder{hair loss} due to \disorder{side effects} of \drug{anti-cancer drugs}}} % Wore a wig because of hair loss due to side effects of anti-cancer drugs
 
+\textcolor{red}{what about OPs? e.g. aesthetic surgery?}
+
+\textcolor{red}{partial negation \& entailment are future work; see difficult cases section}
 
 \section{Relations}\label{sec:relations}
 
@@ -871,7 +900,7 @@ For this, we take into account the following:
         \item \cause is correlated with \conseq and \cause is preceding \conseq
         \item \cause is probably linked with \conseq and \cause is preceding \conseq
     \end{itemize}
-    \item ($R_0$ is a \texttt{refers\_to} relation) and (\conseq is the target of a \texttt{caused} relation) and (\cause is the source of a \texttt{caused} relation pointing  to the source of $R_0$)
+    \item ($R_0$ is a \texttt{refers\_to} relation) and (\conseq is the target of a \texttt{caused} relation) and (\cause is the source of a \texttt{caused} relation pointing  to the source of $R_0$) 
     \item \cause \conseq relations are reported by the author of the text (first person) or attributed to another person by the author of the text (second/third person, like parents or siblings)
     \item Being part of a juxtaposition of linguistic element/clauses/sentences (but only if supported by other context, either cotext and/or metadata elements):
     \begin{itemize}
@@ -933,6 +962,15 @@ For this, we take into account the following:
 
 %Ensuite elle a pris infliximab mais au bout de 3 perfusion elle a développé des anticorps et grosse réaction allergique avec tachycardie importante et malaise, elle devient tout rouge et nausée, donc arrêt aussi.
 % Hatte in meiner Verzweiflung ja auch ein AD ausprobiert. Bei mir hat es den TSH voll hochgetrieben!
+
+
+\subsubsection{\textcolor{red}{Special Case: Effects of Stopping Medication Intake}}
+
+\textcolor{red}{Officially, drug withdrawal is an adverse drug reaction. Therefore, we include it in the annotations and draw a \texttt{caused} relation between the \dr and the withdrawal symptoms (\dis).}
+
+\textcolor{red}{Stopping a medication might, however, also bring back the original symptoms or disorder. To ease the annotation burden and make the annotation consistent, we always draw a \texttt{caused} relation between a \textit{stopped} \dr and the resulting \dis. Note that for the latter, there is most probably also a \texttt{treatment\_for} relation.}
+
+
 
 \subsection{treatment\_for}\label{rel_treat}
 
@@ -1260,6 +1298,34 @@ If we clearly see a worthwhile relation between two entities in terms of adverse
 In the following sections, we show examples that we found difficult to annotate.
 They are either ambiguous or it is in general not clear what is meant by the patient.
 
+
+\subsection{Entailment}
+
+Implicit statements entailing or implying disorders or functions are ignored for now and are a subject of future work.
+
+\examples{ex:entailment1}
+    {My eyebrows remain halfway. \textit{(meaning the other half is gone)}}
+    {}
+    {}
+    {}
+    
+\examples{ex:entailment2}
+    {I only eat bread. \textit{(meaning the person cannot eat anything else)}}
+    {}
+    {}
+    {}
+
+\subsection{\textcolor{red}{Advice from other Users}}
+
+\textcolor{red}{In some cases, one user is repeating the symptoms of another user in their own text and gives some advice. Since we are annotating the data document-wise, we do not take the original patient's view into account in this case. Therefore, we only annotate the entities, but not the relations.}
+
+\examples{advice}
+    {**\emph{Your} \disorder{fatigue} is certainly due to the \disorder{heavy bleeding}.}
+    {}
+    {}
+    {}
+
+
 \subsection{English}\label{sec:diff_cases_en}
 
 \begin{description}
@@ -1296,5 +1362,64 @@ They are either ambiguous or it is in general not clear what is meant by the pat
 \subsection{German}
 
 \subsection{Japanese}
-    
+
+Some may be regarded as language-agnostic difficulty.
+
+\subsubsection{Distinction of Disorder, Function, and Opinion for sentiment expressions}
+
+Sentiment words such as ``afraid'' and ``scare'' may represent signs of mental disorders in some cases (\dis), whereas they may exhibit just functional psychological reactions in yet other cases (\texttt{function}).
+Also, they form opinions towards drugs (\texttt{opinion}).
+We need to distinguish them according to the local context.
+
+\begin{itemize}
+    \item \drug{レクサプロ}。\disorder{副作用}が\function{怖い}。
+        \translation{\drug{Lexapro}. \function{Afraid} of \disorder{side effects}.}
+
+    \item \timexDur{今日から}\drug{漢方}のみにされるらしい、\function{こわ}  % possibly opinion?
+        \translation{They are going to make me take only \drug{Chinese medicine} \timexDur{from today}, \function{scary}!}
+
+    \item \disorder{不眠}の\disorder{症状}も\opNeg{酷い}。\disorder{辛い}。
+        \translation{I also have \opNeg{terrible} \disorder{symptoms} of \disorder{insomnia}. \disorder{Painful}.}
+
+    \item \anatomy{髪の毛}が\disorder{なくなる}ということは女性にとって、\opNeg{最も辛い}ことです。
+        \translation{The \disorder{loss} of \anatomy{hair} is the \opNeg{most painful} thing for a woman.}
+
+\end{itemize}
+
+\subsubsection{Disorder expressions using general words}
+
+\begin{itemize}
+    \item \disorder{体力がガクンと落ちて}しまった
+        \translation{\disorder{My physical strength has gone through the roof}.}
+
+        ``体力 (my physical strength)'' itself does not fall into an entity, but the whole phrase means a disorder.
+
+    \item 何をするにも\anatomy{体}が\disorder{重い}、\disorder{だるい}、\disorder{きつい}
+        \translation{My \anatomy{body} feels \disorder{heavy}, \disorder{sluggish}, and \disorder{tired} in any way}
+
+        ``重い (heavy)'' itself does not fall into an entity, but it represents a disorder in combination with ``体 (body)''.
+
+    \item \opNeg{地獄}のように\disorder{体調が悪い}
+        \translation{My \disorder{body condition goes bad} as \opNeg{hell}}
+
+        The phrase ``体調が悪い (body condition goes bad)'' forms a disorder only when it appears as a whole.
+        Although it looks like a clause, we did not annotate it with Function (``\functionNeg{体調} が悪い (\functionNeg{body condition} goes bad)'').
+        This is because this particular phrase ``体調が悪い (body condition goes bad)'' is often used like an adjective ``体調悪い (bad-feeling)'', which should be labeled ``\disorder{体調悪い} (bad-feeling)''.
+
+\end{itemize}
+
+\subsubsection{Body weight changes with weight values}
+
+\begin{itemize}
+    \item 突然の\disorder{嘔吐}と\disorder{下痢}で、\timexDur{1日で}\disorder{体重}2キロ\disorder{減った}
+        \translation{Due to sudden \disorder{vomiting} and \disorder{diarrhea}, \disorder{my weight} \disorder{dropped} 2 kilograms \timexDur{in one day}.}
+
+        Here, ``2キロ (two kilograms)'' is inserted between ``体重 (my weight)'' and ``減った (dropped)'' in the original Japanese sentence, which forced the annotation to be \textit{discontinuous}.
+
+    \item \other{手術}前にくらべ\disorder{体重}が8キロ\disorder{増加}しました
+        \translation{\disorder{My weight} has \disorder{increased} by 8 kg compared to before the \other{surgery}.}
+
+        ``8キロ (8 kg)'' also splits the ``体重が増加 (my weight has increased'' in this case, resulting in a discontinuous annotation
+\end{itemize}
+
 \end{document}
