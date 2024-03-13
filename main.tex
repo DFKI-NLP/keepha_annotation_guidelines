@@ -13,6 +13,18 @@
 \usepackage{tcolorbox}
 \usepackage{tablefootnote}
 \usepackage{float}
+\usepackage{natbib}
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm]{geometry}
+
+
+% ↓ this package enables Japanese-text input anywhere without using commands (added by Yada 2022-05-20)
+\usepackage[whole]{bxcjkjatype}
+\usepackage{ulem}
+\usepackage{xspace}
+\usepackage[hidelinks]{hyperref}
+
+
+\usepackage{cleveref}
 
 % FOR EMOJIS (Needs LuaLaTex)
 % \usepackage{fontspec}
@@ -29,13 +41,7 @@
 }
 \theoremstyle{definition}
 \newtheorem{exmp}{Example}[section]
-\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=1.5cm, right=1.5cm]{geometry}
 
-
-% ↓ this package enables Japanese-text input anywhere without using commands (added by Yada 2022-05-20)
-\usepackage[whole]{bxcjkjatype}
-\usepackage{ulem}
-\usepackage{xspace}
 \xspaceaddexceptions{\}} % for \dis\}
 
 % colors: https://latexcolor.com/
@@ -165,21 +171,36 @@
     }}
 }
 
+\newcommand{\translated}{$^{\ast}$\xspace}
+\newcommand{\madeup}{$^{\ast\ast}$\xspace}
+
 % the translation environment; set to 0 to hide translations
 % \newcommand{\translation}[1]{\begin{ocg}{translation}{translation}{1}\footnotesize{\\\begin{tcolorbox}[hbox]\textit{#1}\end{tcolorbox}}\end{ocg}}
 \newcommand{\translation}[1]{\begin{ocg}{translation}{translation}{1}\footnotesize{\\\textit{[#1]}}\end{ocg}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%% MAIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Annotation Guidelines\\ Version 09/23}
+\title{KEEPHA Annotation Guidelines\\ Version 03/24}
 
-\author{KEEPHA team}
+\author{Lisa Raithel$^\ast$, Shuntaro Yada$^\ast$, KEEPHA team}
+
+% Lisa Raithel
+% Shuntaro Yada
+% Pierre Zweigenbaum
+% Roland Roller
+% Patrick Paroubek
+% Aurélie Névéol
+% Hui-Syuan Yeh
+
+% Agata Savary
+% Cyril Grouin
+
 \date{\today}
 
-\usepackage[hidelinks]{hyperref}
 \begin{document}
 
 \maketitle
 
+\setcounter{tocdepth}{2}
 \tableofcontents
 % \vspace{2cm}
 
@@ -187,56 +208,58 @@
 
 \section{Overview}
 In the following, we describe the annotation scheme we developed for our multi-lingual corpus KEEPHA.
-The data for this corpus consists of different sources, for example, patient fora like Yahoo Q\&A, or social media like Twitter.
-In Table \ref{tab:data}, we give an overview of the current annotated documents, their origin, and the language they are written in.
-Table \ref{tab:overview_detailed_annos} shows the number of annotations per language. 
+The data for this corpus consists of different sources, for example, patient fora like Yahoo Q\&A or social media like Twitter (X).
+% In Table \ref{tab:data}, we give an overview of the current annotated documents, their origin, and the language they are written in.
+% Table \ref{tab:overview_detailed_annos} shows the number of annotations per language. 
 
 
-\begin{table}[h]
-\centering
-\begin{tabular}{@{}llll@{}}
-\toprule
-\textbf{name}   & {\textbf{language}}   & \textbf{\#documents}   & \textbf{source}\\ \midrule
-Lifeline-v1-de      & German (de)   & 118   &  www.lifeline.de  \\ 
-Lifeline-v1-fr      & French (fr)   & 100   &  www.lifeline.de (translated) \\
-lexapro\_ade        & Japanese (ja) & 560   & Twitter           \\
-chiebukuro          & Japanese (ja) & 59    & Yahoo! JAPAN Q\&A \\ \midrule
-Total               & de, fr, ja    & 837   &                   \\
-\bottomrule
-\end{tabular}
-\caption{Overview of the current KEEPHA dataset as of October 2023.}
-\label{tab:data}
-\end{table}
+% \begin{table}[h]
+% \centering
+% \begin{tabular}{@{}llll@{}}
+% \toprule
+% \textbf{name}   & {\textbf{language}}   & \textbf{\#documents}   & \textbf{source}\\ \midrule
+% Lifeline-v1-de      & German (de)   & 118   &  www.lifeline.de  \\ 
+% Lifeline-v1-fr      & French (fr)   & 100   &  www.lifeline.de (translated) \\
+% lexapro\_ade        & Japanese (ja) & 560   & Twitter           \\
+% chiebukuro          & Japanese (ja) & 59    & Yahoo! JAPAN Q\&A \\ \midrule
+% Total               & de, fr, ja    & 837   &                   \\
+% \bottomrule
+% \end{tabular}
+% \caption{Overview of the current KEEPHA dataset as of October 2023.}
+% \label{tab:data}
+% \end{table}
 
-\begin{table}[h]
-\centering
-\begin{tabular}{@{}lllll@{}}
-\toprule
-\textbf{language} & \textbf{\#documents} & \textbf{\#entities} & \textbf{\#relations} & \textbf{\#attributes}         \\ \midrule
-de & 118                  & 3,487               & 2,163                & 1,141             \\
-fr & 100                  & 1,939               & 1,129                & 537                \\ 
-ja & 619                   & 9,464               & 5,083                & 2,364                   \\ 
-\bottomrule
-\end{tabular}
-\caption{Number of documents (\#doc) in total per language with the number of entities, relations, and attributes.}
-\label{tab:overview_detailed_annos}
-\end{table}
+% \begin{table}[h]
+% \centering
+% \begin{tabular}{@{}lllll@{}}
+% \toprule
+% \textbf{language} & \textbf{\#documents} & \textbf{\#entities} & \textbf{\#relations} & \textbf{\#attributes}         \\ \midrule
+% de & 118                  & 3,487               & 2,163                & 1,141             \\
+% fr & 100                  & 1,939               & 1,129                & 537                \\ 
+% ja & 619                   & 9,464               & 5,083                & 2,364                   \\ 
+% \bottomrule
+% \end{tabular}
+% \caption{Number of documents (\#doc) in total per language with the number of entities, relations, and attributes.}
+% \label{tab:overview_detailed_annos}
+% \end{table}
 
 
 
-% \paragraph{Lifeline-v1} DESCRIPTION OF DATASET 
-% \paragraph{french\_data} DESCRIPTION OF DATASET 
-% \paragraph{lexapro\_ade} DESCRIPTION OF DATASET 
-% \paragraph{chiebukuro} DESCRIPTION OF DATASET 
 
-The annotation schema includes entities, attributes, and relations. First, we define the annotated entities (Section \ref{sec:entities}), including possible attributes. Moreover, together with each entity different examples of their usage are presented. Examples marked with \textbf{*} denote sentences that have been translated from a different language, and sentences marked with \textbf{**} denote `artificial' examples, which have been completely made up. All other examples are real.
+Our annotation scheme includes entities, attributes, and relations. First, we define the annotated entities (Section \ref{sec:entities}), including possible attributes. Moreover, different examples of their usage are presented for each entity. 
 Subsequently, we define the relations connecting these entities (Section \ref{sec:relations}).
-English examples are extracted from the CADEC corpus\footnote{Karimi et al. (2015): \url{https://pubmed.ncbi.nlm.nih.gov/25817970/}}, while German examples are taken from the German patient forum Lifeline\footnote{\url{https://fragen.lifeline.de/forum/}}.
-The French examples are from the translated Lifeline-v1 documents, which were translated using DeepL\footnote{\url{https://www.deepl.com/translator}} and then manually verified and corrected if necessary.
+
+Examples marked with \translated denote sentences that have been translated from a different language, and sentences marked with \madeup denote `artificial' examples, which have been completely made up. All other examples are taken from existing corpora.
+English examples are extracted from the \textsc{CADEC} corpus\footnote{\url{https://pubmed.ncbi.nlm.nih.gov/25817970/}} \citep{karimi_cadec_2015}, while German examples are taken from the German patient forum Lifeline\footnote{\url{https://fragen.lifeline.de/forum/}}.
+French examples are translated from German using DeepL\footnote{\url{https://www.deepl.com/translator}} and manual verification.
+% The French examples are taken from Lifeline-v1 documents, which were translated using DeepL\footnote{\url{https://www.deepl.com/translator}} and then manually verified and corrected if necessary.
 Lastly, the Japanese examples are taken from social media (Twitter) and forum (Yahoo! JAPAN Q\&A) posts.
+Note that sometimes, the translated sentences do not perfectly fit the original translations of the target languages. 
+However, we keep the original annotation of the target language.
 
-
-\textcolor{blue}{You can toggle the translations of the non-English examples by clicking here\footnote{This feature is unfortunately not supported by all PDF viewers.}:}
+\begin{center}
+\textcolor{blue}{You can toggle the translations of the non-English examples by clicking here\footnote{This feature is unfortunately not supported by all PDF viewers.}:}    
+\end{center}
 
 \begin{center}
 \begin{tcolorbox}[hbox]
@@ -246,8 +269,6 @@ Lastly, the Japanese examples are taken from social media (Twitter) and forum (Y
 \end{tcolorbox}
 \end{center}
 
-Sometimes, the translated sentences do not perfectly fit the original translations of the target languages. 
-However, we keep the original annotation of the target language.
 
 \begin{table}[htbp]
 \centering
@@ -286,33 +307,13 @@ However, we keep the original annotation of the target language.
 In Table \ref{tab:all_entities}, we show all available entities and their respective attributes.
 Attributes are used to add more precise semantics to some of the entity annotations.
 
-% In Table \ref{tab:attributes}, we show all available attributes.
-
-% \begin{table}[ht]
-% \centering
-% \begin{tabular}{@{}lll@{}}
-% \toprule
-% \textbf{section} & \textbf{entity} & \textbf{attributes} \\ \midrule
-% \ref{sec:dis_neg} & \texttt{disorder} & negated \\
-% \ref{sec:func_neg} & \texttt{function} & negated \\
-% \ref{sec:sent}& \texttt{evaluation} & positive; negative; neutral\\
-% \ref{sec:timex_attributes}& \texttt{time} & frequency; duration; date; relative point in time \\
-% \ref{sec:durg_change_attributes}& \textbf{\dr} & started; stopped; increased; decreased; unique dose  \\ \bottomrule
-% \end{tabular}
-% \caption{The available attributes of the entities \dis, \texttt{evaluation}, \texttt{time}, and \dr.}
-% \label{tab:attributes}
-% \end{table}
-
-
-
-
 \subsection{General Guidelines for Entity Annotation}
 
 We now define general rules for the annotation of entities.
 
 \subsubsection*{Scope}
 
-Regarding scope, we annotate entities in the form of noun or verb phrases together with their modifying parts, e.g., adjectives, adverbs, etc., though complex post modifiers (e.g., relative clauses: ``a pain that is \ldots", and prepositional-phrase modifiers: ``a neck pain from yesterday") are excluded.
+Regarding scope, we annotate entities in the form of noun or verb phrases together with their modifying parts, e.g., adjectives, adverbs, etc., though complex post modifiers (e.g., relative clauses: ``a pain that is \ldots'', and prepositional-phrase modifiers: ``a neck pain from yesterday'') are excluded.
 We always prefer the smallest core noun phrase. 
 If this does not work, a long span of the whole verb phrase (or even the whole clause/sentence) is allowed.
 
@@ -320,7 +321,7 @@ If this does not work, a long span of the whole verb phrase (or even the whole c
     {I have \disorder{absolutely no appetite} and \disorder{constantly feel sick} to my \anatomy{stomach}.}
     {(\ldots) ça fait \disorder{drolement mal} et c'est \disorder{très gênant}. \translation{It \disorder{hurts awfully}, and it is a \disorder{great discomfort} }} 
     {(\ldots) ich hatte in der Situation auch \disorder{absolut keinen Hunger}. \translation{I was also \disorder{absolutely not hungry} in this situation.}}
-    {**\disorder{激しい嘔吐}に見舞われました \translation{I suffered \disorder{severe vomiting}.}} % I suffered severe vomiting.
+    {\madeup \disorder{激しい嘔吐}に見舞われました \translation{I suffered \disorder{severe vomiting}.}} % I suffered severe vomiting.
 
 
 \subsubsection*{Metaphors and descriptive language}
@@ -347,7 +348,7 @@ Later, we can re-investigate those ``special disorders''.
     {I felt always like I had a \disorder{veil over my head} and \disorder{lead in my legs}.}
     {(\ldots) à chaque effort, mon \anatomy{cœur} \disorder{bat la chamade} et jai ne n'ai \\ \disorder{pas beaucoup de souffle}. \translation{With every effort, my \anatomy{heart} is \disorder{racing} and I am \disorder{out of breath}}}
     {(\ldots) nur \timexPIT{1 Woche später}~war ich \opPos{wie im 7. Himmel}. \translation{Just \timexPIT{one week later}, I was \opPos{on cloud nine}.}}
-    {*\drug{マイスリー}を飲むと\anatomy{脳}が\disorder{強制終了}する \translation{\drug{Zolpidem} makes my \anatomy{brain} \disorder{shut down}}}
+    {\translated \drug{マイスリー}を飲むと\anatomy{脳}が\disorder{強制終了}する \translation{\drug{Zolpidem} makes my \anatomy{brain} \disorder{shut down}}}
 
 
 
@@ -356,10 +357,10 @@ Later, we can re-investigate those ``special disorders''.
 We do not include determiners or possessive pronouns in an entity.
 
 \examples{determiners}
-    {*I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
+    {\translated I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
     {(\ldots) J'ai développé une \disorder{très forte sinusite chronique},(\ldots) \translation{I have developed \disorder{severe chronic sinusitis}}}
     {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da \ldots \translation{\timexDur{Since two days}~ my \disorderNeg{nausea} is gone again, but since \ldots}}
-    {**この\drug{薬}は\opNeg{効かなかった} \translation{This \drug{drug} \opNeg{didn't work}.}}
+    {\madeup この\drug{薬}は\opNeg{効かなかった} \translation{This \drug{drug} \opNeg{didn't work}.}}
 
 
 \subsubsection*{Enumerations}
@@ -379,37 +380,44 @@ For example, in the case of ``headache,'' we do not split the word into ``head''
 The general rule is to apply a syntax-based decision, i.e., basic noun phrases (without prepositions, particles, etc.) are annotated as one entity.
 This is also language-dependant:
 
-\begin{itemize}
-    \item German: do not split compound words, e.g.~``\disorder{Kopfschmerzen}'' \textit{[headache]} is annotated as one entity.
-    \item Japanese: 
-    \begin{itemize}
-        \item do not split compound words based on standard tokenization
-        \item split noun phrases (including compound nouns) at ``prepositions'' (particles て, に, を, は, の)
-    \end{itemize}
+\paragraph{German:} 
+Do not split compound words, e.g., ``\disorder{Kopfschmerzen}'' \textit{[headache]} is annotated as one entity.
     
-    \item French: basic noun phrase (``\disorder{douleur thoracique}'') \textit{[chest pain]} is annotated as one \dis, otherwise we separate the annotations, e.g., ``\disorder{douleur} au \anatomy{thorax}'' \textit{[chest pain]}.
-\end{itemize}
-\textcolor{red}{This approach also automatically excludes overlapping entities. For specific entity types, we also added prioritization rules to help in the decision of which mention to annotate.}
+\paragraph{Japanese:} 
+Do not split compound words based on standard tokenization, but split noun phrases (including compound nouns) at ``prepositions'' (particles て, に, を, は, の).
+    
+\paragraph{French:} Basic noun phrases (``\disorder{douleur thoracique}'') \textit{[chest pain]} are annotated as one \dis, otherwise we separate the annotations, e.g., ``\disorder{douleur} au \anatomy{thorax}'' \textit{[chest pain]}.
+
+\medskip
+
+% This approach also automatically excludes overlapping entities. 
+For specific entity types, we provide prioritization rules to help in the decision of which mention to annotate.
+The prioritization is mentioned for the entity types in their respective sections in these guidelines. 
 
 \subsubsection*{Discontinuous Entities}
 
 Discontinuous entities are allowed if there is no easier solution, i.e., when annotation as one entity is not possible or does not make sense. 
 Please see the following examples for a comparison of different cases:
 
-% Example with ``lung'':
 \begin{enumerate}
-    \item ``it hurts in the \anatomy{left lung} and \anatomy{right lung}'' (two entities)
+    \item ``it hurts in the left lung and right lung''\\
+     $\rightarrow$ Here, two entities are annotated separately:
+     \begin{itemize}
+         \item ``it hurts in the \anatomy{left lung} and \anatomy{right lung}''
+     \end{itemize}
     
-    \item ``pain on the left lung, but no issues were found on the right'' $\rightarrow$ annotation using two separate, partially overlapping entities, one continuous and one discontinuous, as shown below:
+    \item ``pain on the left lung, but no issues were found on the right''\\
+    $\rightarrow$ The annotation uses two separate, partially overlapping entities, one continuous and one discontinuous, as shown below:
     \begin{itemize}
-        \item ``\disorder{pain} on the \anatomy{left lung}, but no issues were found on the right'' (continuous entity)
+        \item ``pain on the \anatomy{left lung}, but no issues were found on the right'' (continuous entity)
         \item \drawRelations
-            {pain \& on the  \& left \anatomy{lung} \& , but \disorderNeg{no issues} were found on the \& \anatomy{right}}
+            {pain \& on the  \& left \anatomy{lung} \& , but no issues were found on the \& \anatomy{right}}
             {\discontRel{3}{5}}\\
             (discontinuous entity) 
     \end{itemize}
 
-    \item Similarly as above, the phrase ``nerves / muscle cramps'' is annotated as two separate, \textit{partially overlapping} entities:
+    \item ``nerves / muscle cramps''\\
+    $\rightarrow$ Similarly as above, the phrase ``nerves / muscle cramps'' is annotated as two separate, \textit{partially overlapping} entities:
     \begin{itemize}
         \item \drawRelations
             {\disorder{nerves} \& / muscle \& \disorder{cramps}}
@@ -418,11 +426,20 @@ Please see the following examples for a comparison of different cases:
         \item ``nerves / \disorder{muscle cramps}'' (continuous entity)
     \end{itemize}
 \end{enumerate}
-\textcolor{red}{In case a discontinuous entity is necessary, we limit the number of entity fragments to two to reduce the burden for the annotators.}
+
+In case a discontinuous entity is necessary, we limit the number of entity fragments to two to reduce the burden for the annotators.
+
+\examples{discontinuous}
+    {\translated \drawRelations{\ldots although my \& \disorder{progesterone values} \& have been in the \& \disorder{lowest levels} \& for years.}{\discontRel{2}{4}}}
+    {\drawRelations{\ldots et tous mes \& \disorder{symptômes} \& se sont à nouveau \& \disorder{intensifiés}, \ldots}{\discontRel{2}{4}} 
+    \translation{\ldots and all my \disorder{symptoms} have \disorder{intensified} again, \ldots}}
+    {\drawRelations{\ldots obgleich meine \& \disorder{Progesteronwerte} \& seit Jahren \& \disorder{im Keller} \& waren.}{\discontRel{2}{4}} \translation{\ldots although my \disorder{progesterone values} have been in the \disorder{lowest levels} for years.}}
+    {...}
+
 
 \subsubsection*{Punctuation}
 
-Punctuation is not to be included in the annotation (except for, e.g., hyphens, abbreviations, etc.).
+Punctuation markers are not included in the annotation (except for, e.g., hyphens, abbreviations, etc.).
 
 \subsubsection*{Spelling Mistakes / Colloquial Language}
 
@@ -459,19 +476,19 @@ Therapies that do not involve any drugs whatsoever are labeled as \texttt{other}
     {\timexFreq{夜}は\drug{デパス}で\function{眠れている}んですけど、(\ldots) \translation{I can \function{sleep} \timexFreq{at night}~ with \drug{Etizolam}}}
 
 
-\paragraph{\textcolor{red}{Prioritization of \dr}} \textcolor{red}{In case the \texttt{route} and \dr are one word (e.g., a compound) or connected by a hyphen, which might be the case for German, we prioritize \dr over \texttt{route} and label the entire spans as \dr.}
+\paragraph{Prioritization of \dr} In case \texttt{route} or \texttt{anatomy} and \dr are one word (e.g., a compound) or connected by a hyphen, which might be the case for German, we prioritize \dr over \texttt{route} and label the entire spans as \dr.
 
 \examples{prioritize_drug}
-    {-}
-    {-}
+    {\translated Have the greatest respect for \drug{pills} in general, \ldots}
+    {\ldots que tu prenais un peu de \drug{crème} le matin.}
     {``\drug{Urogestgel}'' or ``\drug{Estradiol-Creme}'' \translation{\drug{Urogest} gel / \drug{Estradiol} cream}}
-    {-}
+    {吐き気を抑えるのに\drug{飲み薬}と\drug{胃薬}を使いました \translation{I used an \drug{internal medicine} and a \drug{stomach medicine} to control the nausea.}}
 
 \subsubsection{Triggers for Medication Status Changes} \label{ent_drug_status}
 Here, we annotate phrases describing or triggering a change in medication intake with the entity tag \trigger{\texttt{change\_trigger}}.
 Typical words might be, for example, \textit{increase}, \textit{reduce}, \textit{begin}, \textit{one dose of}, etc.
 
-To specify what kind of change occurred, we add the attributes \texttt{start} (the trigger specifies that medication was just started), \texttt{stop} (a medication was stopped), \texttt{increase} (the dosage was increased), \texttt{decrease} (the dosage was decreased), and \texttt{unique\_dose} (the medication was only given/taken once) \emph{to the \dr they refer to} (see below in Section \ref{sec:drug_change_attributes}).
+To specify what kind of change occurred, we add the attributes \texttt{start} (the trigger specifies that medication was just started), \texttt{stop} (a medication was stopped), \texttt{increase} (the dosage was increased), \texttt{decrease} (the dosage was decreased), and \texttt{unique\_dose} (the medication was only given/taken once) \textit{to the} \dr \textit{they refer to} (see below in \Cref{sec:drug_change_attributes}).
 
 \examples{ex:change}
     {I now have \trigger{increased} my intake of \drugInc{Vitamin C} to \measure{16,000 mg / day}, and we'll see how this works out.}
@@ -583,12 +600,12 @@ Most such cases would accompany \texttt{opinion} entities, which are regarded as
 \textcolor{red}{We \emph{do not} annotate partial negations since these require a more detailed annotation, which is, for now, out of scope.}
 
 \examples{ex:partial_negation}
-    {My \anatomy{hair} was \emph{not lost entirely}.}
-    {**Les \disorder{attaques de panique} ont \emph{presque disparu}.
+    {\translated My \anatomy{hair} was \emph{not lost entirely}.}
+    {\translated Les \disorder{attaques de panique} ont \emph{presque disparu}.
     \translation{The \disorder{panic attacks} are \emph{almost gone}.}}
     {Die \anatomy{Brust} tut schon \emph{viel weniger weh}. 
     \translation{The \anatomy{chest} \emph{hurts much less} already.}}
-    {}
+    {\anatomy{髪}が\emph{完全に抜けたわけではありません}}
 
 % \examples{ex:dis_vs_func}
 %     {(\ldots) \disorder{could not urinate} (\ldots)}
@@ -656,7 +673,7 @@ However, if a sentence describes a disorder found in a cell, the cell could be a
     {**\anatomy{お腹}が\disorder{刺すように痛い} \translation{I feel a \disorder{stabbing pain} in my \anatomy{stomach}}} % I feel a stabbing pain in my stomach (範囲は全体を対象とする：e.g. お腹から頭にかけて）
 
 
-\noindent \texttt{Anatomy} entities are \textit{not annotated} when within a larger entity such as within a \dis or \texttt{test}.
+\noindent \texttt{Anatomy} entities are \emph{not annotated} when within a larger entity such as within a \dis or \texttt{test}.
 Therefore, we prioritize the annotation of \dis and \texttt{test}.
 
 \examples{ex:anatomy_embedded}
@@ -682,7 +699,7 @@ With \texttt{test}, we mark all medical tests, interviews, examinations or any o
 
 \subsection{Opinion} \label{ent_eval}
 
-This denotes the \textcolor{red}{writer's} \textit{personal} evaluation or opinion of a medication (\dr), health state (\dis) or biological process (\texttt{function}).
+This denotes the \emph{personal} evaluation or opinion of a medication (\dr), health state (\dis) or biological process (\texttt{function}).
 This entity could be a detailed description of a mental function or disorder (e.g., ``My \function{feeling} is \opPos{stable}'').
 % ``the \disorder{side effect} was \opNeg{so terrible}''
 % I'm so sad that I lost my appetite.
@@ -692,9 +709,10 @@ Therefore, we once again follow the principle of taking the shortest span possib
 The opinion entity always comes with a sentiment attribute: either \texttt{positive}, \texttt{negative}, or \texttt{neutral}.
 A \texttt{positive} assessment is often associated with an improvement of a disease or with a good experience of the patient with a certain medication.
 We do not assign \textit{negated} (the \textit{negation} attribute) to the corresponding \texttt{disorder}.
-\textcolor{red}{We annotate \emph{all} opinions to make it easier for the annotators and keep the annotation consistent with the other entities. 
-Patient-related opinions are then explicitly expressed by relations.}
+We annotate \emph{all} opinions to make it easier for the annotators and keep the annotation consistent with the other entities. 
+Patient-related opinions are then explicitly expressed by relations.
 
+% Painkiller[DRUG_stopped] –CAUSED→ Pain (TREATMENT_FOR also applies here)
 
 \examples{ex:eval}
     % {*I also \trigger{had} \drugStop{antibiotics} but that \opNeut{didn't change anything}.\\ Then, after \trigger{starting} \drugStart{Trisequen's hormone pills}, just \timexDur{1 week later}, I was \opPos{like in 7th heaven}.}
@@ -704,7 +722,7 @@ Patient-related opinions are then explicitly expressed by relations.}
     {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \opPos{lief auch richtig gut}. \translation{I \trigger{did not take} \drug{Lyrica} for \timexDur{12 weeks}~ and \trigger{instead} took \measure{50mg} of \drug{Opi} and that \opPos{went really well}, too.}}
     {*\drug{アモキサン}\opPos{効いてる}おかげか\function{気持ち}は\opPos{少し楽になった} \translation{My \function{feeling} becomes \opPos{a little better} now that the \drug{amoxan} \opPos{is working}.}} % I'm feeling a little better now that the amoxan is working.
     
-\paragraph{\textcolor{red}{Emojis / Emoticons}} \textcolor{red}{We include emojis or emoticons if they explicitly encode an opinion. }
+\paragraph{Emojis / Emoticons} We include emojis or emoticons if they explicitly encode an opinion.
 
 % get code points here: https://ctan.math.washington.edu/tex-archive/macros/luatex/latex/emoji/emoji-doc.pdf
 % \examples{emoji}
@@ -985,7 +1003,7 @@ For this, we take into account the following:
     }
     {\drawRelations{
         % \drug{レクサプロ} \& \trigger{飲み始めてから} \& \disorder{吐き気} \& はするし \& \disorder{食欲無い} \& し 
-        \drug{レクサプロ} \& 飲み始めてから \& \disorder{吐き気} \& はするし \& \disorder{食欲無い} \& し 
+        \drug{レクサプロ} \& 飲み始めてから \& \disorder{吐き気} \& はするし \& \functionNeg{食欲} \& 無いし 
         }{
         \causedRel{1}{3}
         % \changeRel{2}{1}
@@ -1157,47 +1175,7 @@ This relation should not be used for \texttt{caused} scenarios.
     } 
     
 
-\subsection{refers\_to}\label{rel_refers}
 
-The \texttt{refers\_to} relation represents a unidirectional link for the entities \dr, \dis, \texttt{anatomy}, and \texttt{function}, and also for the link between \dis and \texttt{function}$^{negated}$
-It is used to associate similar concepts, but \emph{not necessarily} to connect the same surface forms (e.g., ``Lipitor'' and ``Lipitor''). 
-Via the \texttt{refers\_to} relation, we can automatically propagate the relation to all connected targets.
-The relation allows for chaining corresponding entities.
-
-% \begin{enumerate}
-%     \item \texttt{refers\_to} relations can be chained between corresponding entity mentions
-%     % \item The first relation (\texttt{caused} / \texttt{treatment\_for}) is drawn to the concept the annotator thinks is most important to the understanding of the meaning of the sentences / document.
-% \end{enumerate}
-
-\examples{ex:refers}
-    {*\drawRelations{I had \& \disorder{chills} \& and my \anatomy{whole body} was \& \disorder{shaking}}{
-        \refersRel{4}{2}
-    }}
-    {\drawRelations{\ldots, des \& \disorder{bourdonnements} \& dans la \anatomy{tête} \& (des \disorder{bruits} \& \anatomy{d'oreille} )\& \ldots}{\refersRel{4}{2}}}
-    {\drawRelations{
-        **Ich hatte \& \disorder{Schüttelfrost} \& und \& \disorder{zitterte} \& am ganzen Körper.
-        }{
-        \refersRel{2}{4}
-        }
-    }
-    {\drawRelations{
-        % \timexPIT{最近} \& \drug{抗うつ剤} \& の \& \drug{レクサプロ錠} \& \measure{10mg} \& も処方になった
-        最近 \& \drug{抗うつ剤} \& の \& \drug{レクサプロ錠} \& 10mg \& も処方になった
-        }{
-        % \timeRel{1}{2}
-        \refersRel{2}{4}
-        % \dosageRel{5}{4}
-        }
-    }
-
-
-% \textcolor{green}{
-% TODO for refers\_to
-% \begin{enumerate}
-% % \item link all mentions sharing a concept (those with the same surface form do not need to be linked (e.g.~ Lipitor \& Lipitor)
-%     \item link super/subordinate/generic concepts? 
-% \end{enumerate}
-% }
     
 
 \subsection{interacted\_with}\label{rel_interacted}
@@ -1249,16 +1227,17 @@ For connecting the \texttt{change triggers} with the \dr that is affected, we us
         }
     }
     {\drawRelations{
-        \drug{リフレックス} \& から \& \drug{レクサプロ} \& に \& \trigger{変えて} \& \disorderNeg{ふらつき} \& が \& 治まった    
+        \drug{リフレックス} \& から \& \drug{レクサプロ} \& に \& \trigger{変えた}     
         }{
         \changeRel{5}{1}
-        % \causedRel{1}{6}
+        % \causedRel{1}{6} % \& \disorderNeg{ふらつき} \& が \& 治まった
         }
     } 
 
 \subsection{has\_time}\label{rel_time}
 
-The relation time connects a \texttt{time} expression with either a \texttt{drug} or a \texttt{disorder}.
+The relation time connects a \texttt{time} expression with anything except other \texttt{time} expressions.
+% either a \texttt{drug} or a \texttt{disorder}.
 
 \examples{ex:re_time}
     {\drawRelations{
@@ -1316,12 +1295,12 @@ The \texttt{has\_route} relation associates a drug with how it is consumed, i.e.
 \subsection{is\_opinion\_about}\label{rel_eval}
 
 The \texttt{is\_opinion\_about} relation connects any entity with an \texttt{opinion} entity. 
-Mostly, these will be \texttt{drug} or \texttt{function} entities.
+Mostly, these will be \texttt{drug} or \texttt{function} entities, along with \texttt{disorder} and \texttt{other} ones.
 Note that sometimes, it is not possible to find two explicit entities to be connected. 
 
 \examples{ex:re_eval}
-    {}
-    {\drawRelations{J'ai pris (\ldots) la mirtazapine. L'année dernière, j'ai recommencé à en prendre, et je me suis sentie beaucoup mieux.}{}}
+    {\drawRelations{*I started taking the \& \drug{mirtazapine} \& again, and I \& \opPos{felt much better}.}{\evalRel{4}{2}}}
+    {\drawRelations{J'ai recommencé à prendre la \& \drug{mirtazapine} \&, et \& \opPos{je me suis sentie beaucoup mieux}.}{\evalRel{4}{2}}}
     {\drawRelations{**Seit ich  \& \drugStart{Triseqenz Hormontabl.} \& nehme, fühle ich mich \& \opPos{super} \& .}{\evalRel{4}{2}}}
     {\drawRelations{%
         私は \& \drug{レクサプロ} \& が \& \opPos{正解} \& 。 \& \drug{ラミクタール} \& は \& \opNeg{最低} \& だった。 
@@ -1332,17 +1311,63 @@ Note that sometimes, it is not possible to find two explicit entities to be conn
         \translation{\drug{Lexapro} was \opPos{the right choice} for me. \drug{Lamictal} was \opNeg{the worst}.}
     } 
 
+\subsection{refers\_to}\label{rel_refers}
 
+The \texttt{refers\_to} relation represents a unidirectional link for the entities \dr, \dis, \texttt{anatomy}, and \texttt{function}, and also for the link between \dis and \texttt{function}$^{negated}$
+It is used to associate similar concepts, but \emph{not necessarily} to connect the same surface forms (e.g., ``Lipitor'' and ``Lipitor''). 
+Via the \texttt{refers\_to} relation, we can automatically propagate the relation to all connected targets.
+The relation allows for chaining corresponding entities.
+
+% \begin{enumerate}
+%     \item \texttt{refers\_to} relations can be chained between corresponding entity mentions
+%     % \item The first relation (\texttt{caused} / \texttt{treatment\_for}) is drawn to the concept the annotator thinks is most important to the understanding of the meaning of the sentences / document.
+% \end{enumerate}
+
+\examples{ex:refers}
+    {*\drawRelations{I had \& \disorder{chills} \& and my \anatomy{whole body} was \& \disorder{shaking}}{
+        \refersRel{4}{2}
+    }}
+    {\drawRelations{\ldots, des \& \disorder{bourdonnements} \& dans la \anatomy{tête} \& (des \disorder{bruits} \& \anatomy{d'oreille} )\& \ldots}{\refersRel{4}{2}}}
+    {\drawRelations{
+        **Ich hatte \& \disorder{Schüttelfrost} \& und \& \disorder{zitterte} \& am ganzen Körper.
+        }{
+        \refersRel{2}{4}
+        }
+    }
+    {\drawRelations{
+        % \timexPIT{最近} \& \drug{抗うつ剤} \& の \& \drug{レクサプロ錠} \& \measure{10mg} \& も処方になった
+        最近 \& \drug{抗うつ剤} \& の \& \drug{レクサプロ錠} \& 10mg \& も処方になった
+        }{
+        % \timeRel{1}{2}
+        \refersRel{2}{4}
+        % \dosageRel{5}{4}
+        }
+    }
+
+
+% \textcolor{green}{
+% TODO for refers\_to
+% \begin{enumerate}
+% % \item link all mentions sharing a concept (those with the same surface form do not need to be linked (e.g.~ Lipitor \& Lipitor)
+%     \item link super/subordinate/generic concepts? 
+% \end{enumerate}
+% }
 
 \subsection{misc}\label{rel_misc}
 
 This relation is a joker similar to the \texttt{other} entity label. 
-If we clearly see a worthwhile relation between two entities in terms of adverse drug events, but there is no relation defined (yet), we can use the \texttt{misc} link.
+If we clearly see a worthwhile medical relation between two entities in terms of adverse drug events, but there is no relation defined (yet), we can use the \texttt{misc} link.
 
 \examples{ex:misc}
-    {}
-    {}
-    {}
+    {\drawRelations{*(\ldots) in between a \& \other{cardioversion} \& in mid-May between the \& \other{ablations}.}{
+        \miscRel{2}{4}
+    }}
+    {\drawRelations{J'ai passé les derniers \& \test{examens}\& -- \& \anatomy{poumons}\&, vaisseaux sanguins - tout va bien.}{
+        \miscRel{2}{4}}
+    }
+    {\drawRelations{(\ldots), dazwischen Mitte Mai eine \& \other{Kardioversion} \& zwischen den \& \other{Ablationen}.}{
+        \miscRel{2}{4}
+    }}
     {\drawRelations{%
         \other{放射線治療} \& \timexFreq{3回} \& したら， \& \function{白血球} \& の値が\& \measure{半分} \& になっていました。 
         }{%
@@ -1363,68 +1388,28 @@ They are either ambiguous or it is in general not clear what is meant by the pat
 Implicit statements entailing or implying disorders or functions are ignored for now and are a subject of future work.
 
 \examples{ex:entailment1}
-    {My eyebrows remain halfway. \textit{(meaning the other half is gone)}}
+    {**My eyebrows remain halfway. \textit{(meaning the other half is gone)}}
     {}
     {}
-    {}
+    {まつ毛は半分残りました}
     
-\examples{ex:entailment2}
-    {I only eat bread. \textit{(meaning the person cannot eat anything else)}}
-    {}
-    {}
-    {}
+% \examples{ex:entailment2}
+%     {I only eat bread. \textit{(meaning the person cannot eat anything else)}}
+%     {}
+%     {}
+%     {}
 
 \subsection{\textcolor{red}{Advice from other Users}}
 
-\textcolor{red}{In some cases, one user is repeating the symptoms of another user in their own text and gives some advice. Since we are annotating the data document-wise, we do not take the original patient's view into account in this case. Therefore, we only annotate the entities, but not the relations.}
+\textcolor{red}{In some cases, one user repeats the symptoms of another user in their own text and gives some advice. Since we are annotating the data document-wise, we do not take the original patient's view into account in this case. Therefore, we only annotate the entities, but not the relations.}
 
 \examples{advice}
     {**\emph{Your} \disorder{fatigue} is certainly due to the \disorder{heavy bleeding}.}
     {}
+    {**Gegen die \disorder{Hitzewellen} \emph{würde ich} \drug{Johanniskraut} nehmen.}
     {}
-    {}
 
-
-\subsection{English}\label{sec:diff_cases_en}
-
-\begin{description}
-    \item[Semantics] \drawRelations{
-        \disorder{pain} \& on the \& \anatomy{left lung} \&, but \& \disorderNeg{no issues} \& were found on the \& \anatomy{right}}{
-        \discontRel{3}{7}
-        \experiencedRel{1}{3}
-        \experiencedRel{5}{7}
-        
-        }
-        
-    \item[Discontinuity]
-        \drawRelations{*I took \& \measure{{three days' worth}} \& of \drugInc{medicines} \& \measure{at once} \& \timexDate{today}.}{
-        \discontRel{2}{4}
-        }
-    
-    \item[Ambiguity]
-    \test{EKG} \measure{perfect}, \test{tri's} were \measure{perfect}, \function{blood sugar} \measure{perfect}, etc \\ Is \textit{blood sugar} a \texttt{function} or a \texttt{test}? Following up on this, if \textit{perfect} an \texttt{opinion} or a \texttt{measure}?
-    
-    \item[...] {\drug{Lipidor} \opPos{did the job} on my \function{cholesterol} both LDL and HDL.}\\
-    Should \textit{LDL} and \textit{HDL} be annotated as \texttt{function}?
-\end{description}
-
-\subsection{French}
-
-\begin{description}
-    \item[...] \ldots, des \disorder{boutons} \anatomy{de la tête au pied}, \ldots
-    
-    \item[Function or not?] Suite à ma deuxième \other{grossesse} j'ai souhaité passé sur un traitement à faire à domicile, (\ldots) \translation{After my second \other{pregnancy} I wanted to go ahead with home care, (\ldots)}\\
-    Depending on the context, \textit{grossesse} (pregnancy) might be a function. UMLS is not clear about that.
-
-\end{description}
-
-\subsection{German}
-
-\subsection{Japanese}
-
-Some may be regarded as language-agnostic difficulty.
-
-\subsubsection{Distinction of Disorder, Function, and Opinion for sentiment expressions}
+\subsection{Distinction of Disorder, Function, and Opinion for sentiment expressions}
 
 Sentiment words such as ``afraid'' and ``scare'' may represent signs of mental disorders in some cases (\dis), whereas they may exhibit just functional psychological reactions in yet other cases (\texttt{function}).
 Also, they form opinions towards drugs (\texttt{opinion}).
@@ -1445,7 +1430,7 @@ We need to distinguish them according to the local context.
 
 \end{itemize}
 
-\subsubsection{Disorder expressions using general words}
+\subsection{Disorder expressions using general words}
 
 \begin{itemize}
     \item \disorder{体力がガクンと落ちて}しまった
@@ -1467,18 +1452,73 @@ We need to distinguish them according to the local context.
 
 \end{itemize}
 
+\subsection{English}\label{sec:diff_cases_en}
+
+\begin{description}
+    \item[Semantics] \drawRelations{
+        \disorder{pain} \& on the \& \anatomy{left lung} \&, but \& \disorderNeg{no issues} \& were found on the \& \anatomy{right}}{
+        \discontRel{3}{7}
+        \experiencedRel{1}{3}
+        \experiencedRel{5}{7}
+        
+        }\\
+        $\rightarrow$ right \emph{lung} or right side of the entire body?
+        
+    \item[Discontinuity]
+        \drawRelations{*I took \& \measure{{three days' worth}} \& of \drugInc{medicines} \& \measure{at once} \& \timexDate{today}.}{
+        \discontRel{2}{4}
+        }\\
+        $\rightarrow$ discontinuous entities in general are often difficult
+    
+    \item[Ambiguity]
+    ``\test{EKG} \measure{perfect}, \test{tri's} were \measure{perfect}, \function{blood sugar} \measure{perfect}, etc.'' \\ $\rightarrow$  Is \textit{blood sugar} a \texttt{function} or a \texttt{test}? Following up on this, if \textit{perfect} an \texttt{opinion} or a \texttt{measure}?
+    
+    \item[Specific manifestations of the same function] {\drug{Lipidor} \opPos{did the job} on my \function{cholesterol} both \emph{LDL} and \emph{HDL}.}\\
+    $\rightarrow$ Should \textit{LDL} and \textit{HDL} be annotated as \texttt{function}?
+\end{description}
+
+\subsection{French}
+
+\begin{description}
+    \item[Unclear metaphors] \ldots, des \disorder{boutons} \anatomy{de la tête au pied}, \ldots\\
+    $\rightarrow$ What exactly does the person mean?
+    
+    \item[Function or not?] Suite à ma deuxième \other{grossesse} j'ai souhaité passé sur un traitement à faire à domicile, (\ldots) \translation{After my second \other{pregnancy} I wanted to go ahead with home care, (\ldots)}\\
+    Depending on the context, \textit{grossesse} (pregnancy) might be a function. UMLS is not clear about that.
+
+\end{description}
+
+\subsection{German}
+
+\begin{description}
+    \item[Descriptive Language] ``Danach bin ich erstmal immer im Tal.''
+\end{description}
+
+\subsection{Japanese}
+
 \subsubsection{Body weight changes with weight values}
 
 \begin{itemize}
-    \item 突然の\disorder{嘔吐}と\disorder{下痢}で、\timexDur{1日で}\disorder{体重}2キロ\disorder{減った}
-        \translation{Due to sudden \disorder{vomiting} and \disorder{diarrhea}, \disorder{my weight} \disorder{dropped} 2 kilograms \timexDur{in one day}.}
-
+    \item \drawRelations{%
+        \timexDur{1日で} \& \disorder{体重} \& 2キロ \& \disorder{減った}
+        }{
+        \discontRel{1}{4}
+        }
+        \translation{\disorder{my weight} \disorder{dropped} 2 kilograms \timexDur{in one day}.}
+        
         Here, ``2キロ (two kilograms)'' is inserted between ``体重 (my weight)'' and ``減った (dropped)'' in the original Japanese sentence, which forced the annotation to be \textit{discontinuous}.
 
-    \item \other{手術}前にくらべ\disorder{体重}が8キロ\disorder{増加}しました
+    \item \drawRelations{%
+        \other{手術}前にくらべ \& \disorder{体重} \& が8キロ\& \disorder{増加} \& しました}{
+        \discontRel{2}{4}
+        }
         \translation{\disorder{My weight} has \disorder{increased} by 8 kg compared to before the \other{surgery}.}
 
         ``8キロ (8 kg)'' also splits the ``体重が増加 (my weight has increased'' in this case, resulting in a discontinuous annotation
 \end{itemize}
+
+
+
+% Potential additional entities: health-improvement, lifestyle (change)
 
 \end{document}
