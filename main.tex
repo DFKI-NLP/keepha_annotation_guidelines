@@ -249,7 +249,7 @@ The data for this corpus consists of different sources, for example, patient for
 Our annotation scheme includes entities, attributes, and relations. First, we define the annotated entities (Section \ref{sec:entities}), including possible attributes. Moreover, different examples of their usage are presented for each entity. 
 Subsequently, we define the relations connecting these entities (Section \ref{sec:relations}).
 
-Examples marked with \translated denote sentences that have been translated from a different language, and sentences marked with \madeup denote `artificial' examples, which have been completely made up. All other examples are taken from existing corpora.
+Examples marked with \translated denote sentences that have been translated from a different language, and sentences marked with \madeup denote `artificial' examples that have been completely made up. All other examples are taken from existing corpora.
 English examples are extracted from the \textsc{CADEC} corpus\footnote{\url{https://pubmed.ncbi.nlm.nih.gov/25817970/}} \citep{karimi_cadec_2015}, while German examples are taken from the German patient forum Lifeline\footnote{\url{https://fragen.lifeline.de/forum/}}.
 French examples are translated from German using DeepL\footnote{\url{https://www.deepl.com/translator}} and manual verification.
 % The French examples are taken from Lifeline-v1 documents, which were translated using DeepL\footnote{\url{https://www.deepl.com/translator}} and then manually verified and corrected if necessary.
@@ -304,7 +304,7 @@ However, we keep the original annotation of the target language.
 
 \section{Entities}\label{sec:entities}
 
-In Table \ref{tab:all_entities}, we show all available entities and their respective attributes.
+In \Cref{tab:all_entities}, we show all available entities and their respective attributes.
 Attributes are used to add more precise semantics to some of the entity annotations.
 
 \subsection{General Guidelines for Entity Annotation}
@@ -359,7 +359,7 @@ We do not include determiners or possessive pronouns in an entity.
 \examples{determiners}
     {\translated I only really felt the \disorder{burning sensation} in the \anatomy{arms} and \anatomy{chest} when I ...}
     {(\ldots) J'ai développé une \disorder{très forte sinusite chronique},(\ldots) \translation{I have developed \disorder{severe chronic sinusitis}}}
-    {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da \ldots \translation{\timexDur{Since two days}~ my \disorderNeg{nausea} is gone again, but since \ldots}}
+    {\timexDur{Seit zwei Tagen}~ist meine \disorderNeg{Übelkeit} wieder weg, doch da (\ldots) \translation{\timexDur{Since two days}~ my \disorderNeg{nausea} is gone again, but since (\ldots)}}
     {\madeup この\drug{薬}は\opNeg{効かなかった} \translation{This \drug{drug} \opNeg{didn't work}.}}
 
 
@@ -369,7 +369,7 @@ Consecutive entities or enumerations that are, for example, separated by commas 
 
 \examples{enumerations}
     {I felt \disorder{pain} in my \anatomy{arms}, \anatomy{legs}, \anatomy{ears} and \anatomy{toes}.}
-    {\measure{4} \other{opérations},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, (\ldots) \translation{\measure{4} \other{surgeries},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, \ldots}}
+    {\measure{4} \other{opérations},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, (\ldots) \translation{\measure{4} \other{surgeries},  \drug{himurel}, \drug{pentasa}, \drug{methotrexate}, (\ldots)}}
     {\timexPIT{Vor einem Jahr}~ bekam ich \timexFreq{kurz hintereinander} zwei \disorder{Herzinfarkte}, einen \disorder{Schlaganfall} und eine \disorder{Embolie}. \translation{\timexPIT{A year ago} I had two \disorder{heart attacks}, a \disorder{stroke} and an \disorder{embolism} in \timexFreq{quick succession}.}}
     {\anatomy{まつ毛}や\anatomy{眉毛}も\disorder{抜けてしまった}ので \translation{Because my \anatomy{eyelashes} and \anatomy{eyebrows} have \disorder{fallen out} too.}}
 
@@ -431,9 +431,10 @@ In case a discontinuous entity is necessary, we limit the number of entity fragm
 
 \examples{discontinuous}
     {\translated \drawRelations{(\ldots) although my \& \disorder{progesterone values} \& have been in the \& \disorder{lowest levels} \& for years.}{\discontRel{2}{4}}}
-    {\drawRelations{(\ldots) et tous mes \& \disorder{symptômes} \& se sont à nouveau \& \disorder{intensifiés}, \ldots}{\discontRel{2}{4}} 
+    {\drawRelations{(\ldots) et tous mes \& \disorder{symptômes} \& se sont à nouveau \& \disorder{intensifiés}, (\ldots)}{\discontRel{2}{4}} 
     \translation{(\ldots) and all my \disorder{symptoms} have \disorder{intensified} again, \ldots}}
-    {\drawRelations{(\ldots) obgleich meine \& \disorder{Progesteronwerte} \& seit Jahren \& \disorder{im Keller} \& waren.}{\discontRel{2}{4}} \translation{\ldots although my \disorder{progesterone values} have been in the \disorder{lowest levels} for years.}}
+    {\drawRelations{(\ldots) obgleich meine \& \disorder{Progesteronwerte} \& seit Jahren \& \disorder{im Keller} \& waren.}{\discontRel{2}{4}} 
+    \translation{(\ldots) although my \disorder{progesterone values} have been in the \disorder{lowest levels} for years.}}
     {...}
 
 
@@ -479,7 +480,7 @@ Therapies that do not involve any drugs whatsoever are labeled as \texttt{other}
 \paragraph{Prioritization of \dr} In case \texttt{route} or \texttt{anatomy} and \dr are one word (e.g., a compound) or connected by a hyphen, which might be the case for German, we prioritize \dr over \texttt{route} and label the entire spans as \dr.
 
 \examples{prioritize_drug}
-    {\translated Have the greatest respect for \drug{pills} in general, \ldots}
+    {\translated Have the greatest respect for \drug{pills} in general, (\ldots)}
     {(\ldots) que tu prenais un peu de \drug{crème} le matin.}
     {``\drug{Urogestgel}'' or ``\drug{Estradiol-Creme}'' \translation{\drug{Urogest} gel / \drug{Estradiol} cream}}
     {吐き気を抑えるのに\drug{飲み薬}と\drug{胃薬}を使いました \translation{I used an \drug{internal medicine} and a \drug{stomach medicine} to control the nausea.}}
@@ -544,7 +545,7 @@ Further, mentions referring to a drug but not clearly stating the drug's name ar
             }}
     }
     {Ich nehme die \drug{Tabletten} \timexDur{seit 2 Tagen}. \translation{I have been taking the \drug{pills} \timexDur{for two days}.}}
-    {\drug{漢方薬}を購入して\trigger{飲み始めた}所、(\ldots) \translation{Once I \trigger{started} taking purchased \drug{Chinese medicine}, \ldots}}
+    {\drug{漢方薬}を購入して\trigger{飲み始めた}所、(\ldots) \translation{Once I \trigger{started} taking purchased \drug{Chinese medicine}, (\ldots)}}
 
 
 \subsection{Disorder}\label{ent_disorder}
@@ -589,7 +590,7 @@ Most such cases would accompany \texttt{opinion} entities, which are regarded as
     {There is no \disorderNeg{abnormality}.}
     {Par contre j'étais pas plus \disorderNeg{fatigué} que la normal.
     \translation{however, I wasn't more \disorderNeg{tired} than usual.}}
-    {Folgende Beschwerden sind schon weg: \disorderNeg{Nackenschmerzen}, \ldots 
+    {Folgende Beschwerden sind schon weg: \disorderNeg{Nackenschmerzen}, (\ldots )
     \translation{The following ailments are already gone: \disorderNeg{neck pain}, }}
     {*\disorderNeg{イライラ}などはしなかった 
     \translation{I didn't \disorderNeg{feel irritated} or something}} % I didn't feel irritated or something
@@ -717,7 +718,7 @@ Patient-related opinions are then explicitly expressed by relations.
 \examples{ex:eval}
     % {*I also \trigger{had} \drugStop{antibiotics} but that \opNeut{didn't change anything}.\\ Then, after \trigger{starting} \drugStart{Trisequen's hormone pills}, just \timexDur{1 week later}, I was \opPos{like in 7th heaven}.}
     % 
-    {*This \drug{drug} is a \opNeg{nightmare} and \opNeg{should be discontinued}.}
+    {\translated This \drug{drug} is a \opNeg{nightmare} and \opNeg{should be discontinued}.}
     {l'\drug{entyvio} c 'est pas miracle mais bon \opPos{ça aide}. \translation{\drug{entyvio} is no miracle, but well, \opPos{it does help}.}}
     {Ich nehme doch jetzt \timexDur{12 Wochen}~\trigger{kein} \drugStop{Lyrica} \trigger{mehr} und \trigger{dafür} \measure{50mg} \drugStart{Opi} und das \opPos{lief auch richtig gut}. \translation{I \trigger{did not take} \drug{Lyrica} for \timexDur{12 weeks}~ and \trigger{instead} took \measure{50mg} of \drug{Opi} and that \opPos{went really well}, too.}}
     {\translated \drug{アモキサン}\opPos{効いてる}おかげか\function{気持ち}は\opPos{少し楽になった} \translation{My \function{feeling} becomes \opPos{a little better} now that the \drug{amoxan} \opPos{is working}.}} % I'm feeling a little better now that the amoxan is working.
@@ -753,9 +754,12 @@ The expression is typically a numerical value that accompanies a measurement uni
 \examples{ex:measure}
     {Started \timexPIT{2 years ago}~ with \measure{10 mg} then \timexDur{6 mos later}\\ \doctor{doc} upped to \measure{20}.}
     % {\ldots, bon ça fait beaucoup, \timexDur{depuis 1 an et demi} ,perfusions d entyvio tous les mois. 
-    {\drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), \ldots \translation{\drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), \ldots}}
-    {Das \drug{Utrogest} sind \route{Weichkapseln} mit \measure{100 mg} \drug{naturid.~Progesteron} und sie sind verschreibungspflichtig. \translation{\drug{Utrogest} are \route{soft capsules} with \measure{100 mg} of \drug{nature-id. progesterone} and they are prescription-only.}}
-    {\test{生検}の結果\function{Ki67}が\measure{46％}だったため、通院にて治療中です \translation{The \test{biopsy} results showed a \function{Ki67} of \measure{46\%}, and I am in the hospital for treatment. }} % The biopsy results showed a Ki67 of 46\%, and I am in the hospital for treatment. 
+    {\drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), (\ldots) 
+    \translation{\drug{pentasa}, \drug{cortancyl}  (\measure{10mg}), \ldots}}
+    {Das \drug{Utrogest} sind \route{Weichkapseln} mit \measure{100 mg} \drug{naturid.~Progesteron} und sie sind verschreibungspflichtig. 
+    \translation{\drug{Utrogest} are \route{soft capsules} with \measure{100 mg} of \drug{nature-id. progesterone} and they are prescription-only.}}
+    {\test{生検}の結果\function{Ki67}が\measure{46％}だったため、通院にて治療中です 
+    \translation{The \test{biopsy} results showed a \function{Ki67} of \measure{46\%}, and I am in the hospital for treatment. }} % The biopsy results showed a Ki67 of 46\%, and I am in the hospital for treatment. 
 
 In some cases, it might happen that it is difficult to distinguish between a phrase being a \texttt{opinion} or a \texttt{measure} when they occur together with a \texttt{test} (see, for example, \Cref{sec:diff_cases_en}, Ambiguity). 
 In these cases, we prioritize \texttt{measure.}
@@ -802,9 +806,12 @@ We, thus, annotate verbs indicating medication intake, such as ``drink'' or ``in
 If a mention like ``pill'' refers to a drug (and not to the means of intake), it should be annotated as \dr.
 \examples{ex:route}
     {It has not eliminated the need for \route{oral} \drug{pain meds} in all situatations but \opPos{has helped}.}
-    {\ldots, \timexDur{depuis 1 an et demi}, \route{perfusion} d \drug{entyvio} \timexFreq{tous les mois}. \ldots \translation{\timexDur{for the past 18 months}, I get \drug{entyvio} \route{IV}  \timexFreq{every month}.}}
-    {Ich habe das leider nur mit \route{Tabletten} gemacht (mir wollte keiner meiner \doctor{Ärzte} eine \route{Infusion} verschreiben). \translation{Unfortunately, I only did this with \route{pills} (none of my \doctor{doctors} would prescribe me an \route{infusion}).}}
-    {\translated 現在\route{内服}しているのは\drug{レトロゾール}です \translation{I am currently taking \drug{letrozole} \route{orally}.}} 
+    {(\ldots), \timexDur{depuis 1 an et demi}, \route{perfusion} d \drug{entyvio} \timexFreq{tous les mois}. (\ldots) 
+    \translation{\timexDur{for the past 18 months}, I get \drug{entyvio} \route{IV}  \timexFreq{every month}.}}
+    {Ich habe das leider nur mit \route{Tabletten} gemacht (mir wollte keiner meiner \doctor{Ärzte} eine \route{Infusion} verschreiben). 
+    \translation{Unfortunately, I only did this with \route{pills} (none of my \doctor{doctors} would prescribe me an \route{infusion}).}}
+    {\translated 現在\route{内服}しているのは\drug{レトロゾール}です 
+    \translation{I am currently taking \drug{letrozole} \route{orally}.}} 
 
 
 \subsection{Doctor} \label{ent_doctor}
@@ -813,8 +820,8 @@ This entity label is for job descriptions, \textit{not} for the given names of d
 
 \examples{ex:doctor}
     {I took \drugInc{lipitor} \measure{10mg} \timexDur{for only about two months},then \doctor{cardiologist} \trigger{increased} it to \measure{20mg}.}
-    {( peut etre de \disorder{l'arthrose} dixit mon \doctor{docteur traitant}) \ldots \translation{(could be \disorder{arthritis} according to my \doctor{GP})}}
-    {(\ldots), hatte ich \timexPIT{gestern}~einen Termin bei meinem \doctor{Internisten}. \translation{\ldots, I had an appointment with my \doctor{internist} \timexPIT{yesterday}}}
+    {( peut etre de \disorder{l'arthrose} dixit mon \doctor{docteur traitant}) (\ldots) \translation{(could be \disorder{arthritis} according to my \doctor{GP}) (\ldots)}}
+    {(\ldots), hatte ich \timexPIT{gestern}~einen Termin bei meinem \doctor{Internisten}. \translation{(\ldots), I had an appointment with my \doctor{internist} \timexPIT{yesterday}}}
     {\madeup 病院の\doctor{先生}がこの薬を\route{飲め}って言うんです。でも信用できません \translation{The \doctor{doctor} at the hospital says I should \route{drink} this medicine. But I don't trust him.}} 
 
 
@@ -1065,7 +1072,7 @@ This relation connects a \dr and the targeted \dis, describing the medication th
 
 \examples{ex:dosage}
     {\drawRelations{
-        I took \& \drugInc{lipitor} \& \measure{10mg} \& \timexDur{for only about two months}, \ldots
+        I took \& \drugInc{lipitor} \& \measure{10mg} \& \timexDur{for only about two months}, (\ldots)
     % then \doctor{cardiologist} \trigger{increased} it to \& \measure{20mg}.}
         }{
         \dosageRel{2}{3}
@@ -1122,11 +1129,11 @@ This relation associates a \dis or a \texttt{function} with a \texttt{test}: the
 \texttt{anatomy} entities can be examined with a \texttt{test}, too.
 
 \examples{ex:examined}
-    {\translated\drawRelations{I'm having \& \anatomy{both hands} \& \test{x-rayed} \& \timexPIT{on Wednesday morning}~, \ldots}{
+    {\translated \drawRelations{I'm having \& \anatomy{both hands} \& \test{x-rayed} \& \timexPIT{on Wednesday morning}~, (\ldots)}{
         \examinedRel{2}{3}
         }
     }
-    {\drawRelations{je passe une \& \test{radio} \& des 2 \& \anatomy{mains} \& \timexPIT{mercredi matin}~, \ldots}{
+    {\drawRelations{je passe une \& \test{radio} \& des 2 \& \anatomy{mains} \& \timexPIT{mercredi matin}~, (\ldots)}{
         \examinedRel{4}{2}
         }
     }
@@ -1327,10 +1334,10 @@ The relation allows for chaining corresponding entities.
 % \end{enumerate}
 
 \examples{ex:refers}
-    {\translated \drawRelations{I had \& \disorder{chills} \& and my \anatomy{whole body} was \& \disorder{shaking}}{
+    {\drawRelations{\translated I had \& \disorder{chills} \& and my \anatomy{whole body} was \& \disorder{shaking}}{
         \refersRel{4}{2}
     }}
-    {\drawRelations{(\ldots), des \& \disorder{bourdonnements} \& dans la \anatomy{tête} \& (des \disorder{bruits} \& \anatomy{d'oreille} )\& \ldots}{\refersRel{4}{2}}}
+    {\drawRelations{(\ldots), des \& \disorder{bourdonnements} \& dans la \anatomy{tête} \& (des \disorder{bruits} \& \anatomy{d'oreille} )\& (\ldots)}{\refersRel{4}{2}}}
     {\drawRelations{
         \madeup Ich hatte \& \disorder{Schüttelfrost} \& und \& \disorder{zitterte} \& am ganzen Körper.
         }{
@@ -1462,33 +1469,53 @@ We need to distinguish them according to the local context.
 
 \subsection{English}\label{sec:diff_cases_en}
 
-\begin{description}
-    \item[Semantics] \drawRelations{
+    \paragraph{Semantics} Some descriptions can be ambiguous.
+
+\begin{flushleft}
+\drawRelations{
         \disorder{pain} \& on the \& \anatomy{left lung} \&, but \& \disorderNeg{no issues} \& were found on the \& \anatomy{right}}{
         \discontRel{3}{7}
         \experiencedRel{1}{3}
         \experiencedRel{5}{7}
         
-        }\\
-        $\rightarrow$ right \emph{lung} or right side of the entire body?
+        }
+\end{flushleft}
+Here, it is not entirely clear whether the right \textit{lung} or right side of the entire body is meant.
         
-    \item[Discontinuity]
-        \drawRelations{*I took \& \measure{{three days' worth}} \& of \drugInc{medicines} \& \measure{at once} \& \timexDate{today}.}{
-        \discontRel{2}{4}
-        }\\
-        $\rightarrow$ discontinuous entities in general are often difficult
+\paragraph{Discontinuity} As mentioned before, some entity spans need to be constructed from several sub-spans to correctly capture the meaning.
+This can lead to difficult constructions and makes the processing of the data more complex. 
+
+\begin{flushleft}
+\drawRelations{\translated I took \& \measure{{three days' worth}} \& of \drugInc{medicines} \& \measure{at once} \& \timexDate{today}.}{
+\discontRel{2}{4}
+}
+\end{flushleft}
+
+
+\paragraph{Ambiguity} Natural language is often ambiguous, and more so for colloquial language taken out of a conversation online. 
+In many cases, users are no explicitly stating, e.g., a specific test they did.
+
+\begin{flushleft}
+\test{EKG} \measure{perfect}, \test{tri's} were \measure{perfect}, \test{blood sugar} \measure{perfect}, etc.
+\end{flushleft}
+In the above example, it is not entirely clear whether \textit{blood sugar} is a \texttt{function} or a \texttt{test}. 
+Following up on this, is \textit{perfect} an \texttt{opinion} or a \texttt{measure}?
+We decide to treat implicit mentions as if they were explicit, therefore, in this example, we annotate \textit{EKG}, \textit{tri}, as well as \textit{blood sugar} as \texttt{test}, and \textit{perfect} as \texttt{measure}, as if the person would have given exact test results an reported that they did a ``blood sugar test'', e.g., a A1C test.
     
-    \item[Ambiguity]
-    ``\test{EKG} \measure{perfect}, \test{tri's} were \measure{perfect}, \function{blood sugar} \measure{perfect}, etc.'' \\ $\rightarrow$  Is \textit{blood sugar} a \texttt{function} or a \texttt{test}? Following up on this, if \textit{perfect} an \texttt{opinion} or a \texttt{measure}?
-    
-    \item[Specific manifestations of the same function] {\drug{Lipidor} \opPos{did the job} on my \function{cholesterol} both \emph{LDL} and \emph{HDL}.}\\
-    $\rightarrow$ Should \textit{LDL} and \textit{HDL} be annotated as \texttt{function}?
-\end{description}
+
+\paragraph{Specific manifestations of the same function} 
+
+\begin{flushleft}
+\drug{Lipidor} \opPos{did the job} on my \function{cholesterol} both \emph{LDL} and \emph{HDL}.
+\end{flushleft}
+
+$\rightarrow$ Should \textit{LDL} and \textit{HDL} be annotated as \texttt{function}?
+
 
 \subsection{French}
 
 \begin{description}
-    \item[Unclear metaphors] \ldots, des \disorder{boutons} \anatomy{de la tête au pied}, \ldots\\
+    \item[Unclear metaphors] (\ldots), des \disorder{boutons} \anatomy{de la tête au pied}, (\ldots)\\
     $\rightarrow$ What exactly does the person mean?
     
     \item[Function or not?] Suite à ma deuxième \other{grossesse} j'ai souhaité passé sur un traitement à faire à domicile, (\ldots) \translation{After my second \other{pregnancy} I wanted to go ahead with home care, (\ldots)}\\
