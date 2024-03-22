@@ -181,7 +181,23 @@
 %%%%%%%%%%%%%%%%%%%%%%%%% MAIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{KEEPHA Annotation Guidelines\\ Version 03/24}
 
-\author{Lisa Raithel$^\ast$, Shuntaro Yada$^\ast$, KEEPHA team}
+% \author{Lisa Raithel$^\ast$, Shuntaro Yada$^\ast$, KEEPHA team}
+
+
+\author{Lisa Raithel$^{\ast}$, Shuntaro Yada\thanks{Equal contribution; Corresponding author: raithel@tu-berlin.de},\\
+      Hui-Syuan Yeh, Cyril Grouin, Thomas Lavergne,\\
+      Aurélie Névéol, Patrick Paroubek, Philippe Thomas,\\
+      Tomohiro Nishiyama, Sebastian Möller, Eiji Aramaki,\\
+      Yuji Matsumoto, Roland Roller, Pierre Zweigenbaum}
+
+% \address{$^1$BIFOLD, Ernst-Reuter Platz 7, 10587 Berlin, Germany;\\
+%          $^2$Quality \& Usability Lab, TU Berlin, Ernst-Reuter Platz 7, 10587 Berlin, Germany;\\
+%          $^3$German Research Center for Artificial Intelligence (DFKI), Alt-Moabit 91c, 10559 Berlin, Germany;\\
+%          $^4$Université Paris-Saclay, CNRS, LISN, Rue du Belvédère, 91405 - Orsay, France;\\
+%          $^5$Nara Institute of Science and Technology, 8916-5 Takayama-cho, Ikoma, Nara 630-0192, Japan;\\
+%          $^6$RIKEN, Nihonbashi 1-chome Mitsui Building, 1-4-1 Nihonbashi, Chuo-ku, Tokyo 103-0027, Japan
+%          }
+
 
 % Lisa Raithel
 % Shuntaro Yada
@@ -1025,8 +1041,9 @@ For this, we take into account the following:
 
 \subsubsection{Special Case: Effects of Stopping Medication Intake}
 
-Officially, drug withdrawal is an adverse drug event. 
-Therefore, we include it in the annotations and draw a \texttt{caused} relation between the \dr and the withdrawal symptoms (\dis).
+% Officially, drug withdrawal is an adverse drug event. 
+% Therefore, 
+We include ``drug withdrawal'' (i.e., symptoms often caused by discontinuation of an addictive drug) and draw a \texttt{caused} relation between the \dr and the withdrawal symptoms (\dis).
 
 Stopping a medication might, however, also bring back the original symptoms or disorder. To ease the annotation burden and make the annotation consistent, we always draw a \texttt{caused} relation between a \textit{stopped} \dr and the resulting \dis, if there is any. 
 Note that for the latter, there is most probably also a \texttt{treatment\_for} relation.
@@ -1184,8 +1201,8 @@ This relation should not be used for \texttt{caused} scenarios.
         }
     } 
     
-
-
+Note that the mention of a \texttt{function} can implicitly refer to a test, resulting in a measure.
+Therefore, we also allow \texttt{has\_result} relations between functions and measures. 
     
 
 \subsection{interacted\_with}\label{rel_interacted}
